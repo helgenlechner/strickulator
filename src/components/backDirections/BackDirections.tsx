@@ -14,6 +14,7 @@ import {
   getNumberOfStraightRowsBetweenArmholes,
   getSlopeForNeckDecreases,
   getNumberOfStitchesAtNeck,
+  getNumberOfRowsBelowNeck,
 } from '../../state/back/back.selectors';
 import { HighlightedValue } from '../highlightedValue/HighlightedValue';
 
@@ -96,7 +97,7 @@ export const BackDirections: React.FunctionComponent = () => {
       <p>
         Knit for{' '}
         <HighlightedValue>
-          {useRecoilValue(getNumberOfRowsOfBottomArmhole)}
+          {useRecoilValue(getNumberOfRowsBelowNeck)}
         </HighlightedValue>{' '}
         rows, decreasing{' '}
         <HighlightedValue>
@@ -111,7 +112,7 @@ export const BackDirections: React.FunctionComponent = () => {
           {useRecoilValue(getNumberOfStitchesAtNeck)}
         </HighlightedValue>{' '}
         stitches.
-        {slopeForNeckDecreases?.excess !== 0 &&
+        {slopeForNeckDecreases?.excess &&
           ` Excess: ${slopeForNeckDecreases?.excess}`}
       </p>
       <p>

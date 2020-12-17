@@ -19,6 +19,11 @@ export const LabeledInput: React.FunctionComponent<Props> = ({
 }) => {
   const onChange_ = (value: number | undefined) => {
     onChange(name, value);
+
+    window.localStorage.setItem(
+      name,
+      value === undefined ? '' : value.toString(10),
+    );
   };
 
   return (

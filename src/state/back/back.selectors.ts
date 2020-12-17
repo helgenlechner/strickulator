@@ -183,6 +183,20 @@ export const getNumberOfStitchesAtNeck = selector({
   },
 });
 
+export const getNumberOfRowsBelowNeck = selector({
+  key: 'getNumberOfRowsBelowNeck',
+  get: ({ get }) => {
+    const back = get(backState);
+    const heightOfOneRow = get(getHeightOfOneRow);
+
+    if (!back.heightAtShoulders || !heightOfOneRow) {
+      return undefined;
+    }
+
+    return roundToEvenNumber(back.heightAtShoulders / heightOfOneRow);
+  },
+});
+
 export const getSlopeForNeckDecreases = selector({
   key: 'getSlopeForNeckDecreases',
   get: ({ get }) => {
@@ -190,12 +204,12 @@ export const getSlopeForNeckDecreases = selector({
       getNumberOfStitchesBetweenArmholes,
     );
     const numberOfStitchesAtNeck = get(getNumberOfStitchesAtNeck);
-    const numberOfRowsOfBottomArmhole = get(getNumberOfRowsOfBottomArmhole);
+    const numberOfRowsBelowNeck = get(getNumberOfRowsBelowNeck);
 
     return calculateSlope(
       numberOfStitchesBetweenArmholes,
       numberOfStitchesAtNeck,
-      numberOfRowsOfBottomArmhole,
+      numberOfRowsBelowNeck,
     );
   },
 });

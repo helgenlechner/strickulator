@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import { localStorageEffect } from '../effects/localStorage.effect';
 
 export interface SwatchState {
   numberOfStitches?: number;
@@ -10,4 +11,5 @@ export interface SwatchState {
 export const swatchState = atom<SwatchState>({
   key: 'swatchState',
   default: {},
+  effects_UNSTABLE: [localStorageEffect<SwatchState>('swatch')],
 });

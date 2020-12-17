@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import { localStorageEffect } from '../effects/localStorage.effect';
 
 export interface BackState {
   hemWidth?: number;
@@ -16,4 +17,5 @@ export interface BackState {
 export const backState = atom<BackState>({
   key: 'backState',
   default: {},
+  effects_UNSTABLE: [localStorageEffect<BackState>('back')],
 });
