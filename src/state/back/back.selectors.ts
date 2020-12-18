@@ -17,7 +17,7 @@ export const getNumberOfHemStitches = selector({
       return undefined;
     }
 
-    return roundToEvenNumber(back.hemWidth / widthOfOneStitch);
+    return roundToEvenNumber(back.hemWidth / widthOfOneStitch) / 2;
   },
 });
 
@@ -49,8 +49,8 @@ export const getNumberOfBodiceRows = selector({
   },
 });
 
-export const getNumberOfStitchesBeforeArmhole = selector({
-  key: 'getNumberOfStitchesBeforeArmhole',
+export const getNumberOfStitchesBelowArmhole = selector({
+  key: 'getNumberOfStitchesBelowArmhole',
   get: ({ get }) => {
     const back = get(backState);
     const widthOfOneStitch = get(getWidthOfOneStitch);
@@ -59,7 +59,7 @@ export const getNumberOfStitchesBeforeArmhole = selector({
       return undefined;
     }
 
-    return roundToEvenNumber(back.widthBelowArmhole / widthOfOneStitch);
+    return roundToEvenNumber(back.widthBelowArmhole / widthOfOneStitch) / 2;
   },
 });
 
@@ -67,7 +67,7 @@ export const getSlopeForBodiceIncreases = selector({
   key: 'getSlopeForBodiceIncreases',
   get: ({ get }) => {
     const numberOfHemStitches = get(getNumberOfHemStitches);
-    const numberOfStitchesBeforeArmhole = get(getNumberOfStitchesBeforeArmhole);
+    const numberOfStitchesBeforeArmhole = get(getNumberOfStitchesBelowArmhole);
     const numberOfBodiceRows = get(getNumberOfBodiceRows);
 
     return calculateSlope(
@@ -98,13 +98,13 @@ export const getNumberOfStitchesAtBottomOfArmhole = selector({
     const numberOfArmholeStitchesToCastOff = get(
       getNumberOfArmholeStitchesToCastOff,
     );
-    const numberOfStitchesBeforeArmhole = get(getNumberOfStitchesBeforeArmhole);
+    const numberOfStitchesBeforeArmhole = get(getNumberOfStitchesBelowArmhole);
 
     if (!numberOfArmholeStitchesToCastOff || !numberOfStitchesBeforeArmhole) {
       return undefined;
     }
 
-    return numberOfStitchesBeforeArmhole - numberOfArmholeStitchesToCastOff * 2;
+    return numberOfStitchesBeforeArmhole - numberOfArmholeStitchesToCastOff;
   },
 });
 
@@ -132,7 +132,7 @@ export const getNumberOfStitchesBetweenArmholes = selector({
       return undefined;
     }
 
-    return roundToEvenNumber(back.widthBetweenArmholes / widthOfOneStitch);
+    return roundToEvenNumber(back.widthBetweenArmholes / widthOfOneStitch) / 2;
   },
 });
 
@@ -179,7 +179,7 @@ export const getNumberOfStitchesAtNeck = selector({
       return undefined;
     }
 
-    return roundToEvenNumber(back.neckWidth / widthOfOneStitch);
+    return roundToEvenNumber(back.neckWidth / widthOfOneStitch) / 2;
   },
 });
 

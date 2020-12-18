@@ -1,13 +1,13 @@
 export const calculateSlope = (
-  wideMeasurement: number | undefined,
-  narrowMeasurement: number | undefined,
+  wideNumberOfStitches: number | undefined,
+  narrowNumberOfStitches: number | undefined,
   numberOfRows: number | undefined,
 ) => {
-  if (!wideMeasurement || !narrowMeasurement || !numberOfRows) {
+  if (!wideNumberOfStitches || !narrowNumberOfStitches || !numberOfRows) {
     return undefined;
   }
 
-  const numberOfStitchesToAdd = wideMeasurement - narrowMeasurement;
+  const numberOfStitchesToAdd = wideNumberOfStitches - narrowNumberOfStitches;
 
   if (numberOfStitchesToAdd >= numberOfRows) {
     // steep slope
@@ -19,16 +19,21 @@ export const calculateSlope = (
     const totalStitchesThatWouldBeIncreased =
       numberOfStitchesToAddEveryTime * (numberOfRows / 2);
 
+    const excessStitchesThatWouldBeIncreased =
+      totalStitchesThatWouldBeIncreased - numberOfStitchesToAdd;
+
     return {
       numberOfRows: 2,
       numberOfStitches: numberOfStitchesToAddEveryTime,
-      excess: totalStitchesThatWouldBeIncreased - numberOfStitchesToAdd,
+      ...(excessStitchesThatWouldBeIncreased !== 0 && {
+        excess: excessStitchesThatWouldBeIncreased,
+      }),
     };
   }
 
   // shallow slope
 
-  const numberOfIncreaseRows = numberOfStitchesToAdd / 2;
+  const numberOfIncreaseRows = numberOfStitchesToAdd;
 
   if (numberOfIncreaseRows === 0) {
     return { numberOfRows, numberOfStitches: 0 };
@@ -44,6 +49,6 @@ export const calculateSlope = (
 
   return {
     numberOfRows: numberOfRowsBetweenIncreases,
-    numberOfStitches: 2,
+    numberOfStitches: 1,
   };
 };

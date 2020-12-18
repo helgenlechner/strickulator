@@ -9,13 +9,14 @@ import {
   getSlopeForBottomArmholeDecreases,
   getNumberOfRowsOfBottomArmhole,
   getNumberOfStitchesAtBottomOfArmhole,
-  getNumberOfStitchesBeforeArmhole,
+  getNumberOfStitchesBelowArmhole,
   getNumberOfStitchesBetweenArmholes,
   getNumberOfStraightRowsBetweenArmholes,
   getSlopeForNeckDecreases,
   getNumberOfStitchesAtNeck,
   getNumberOfRowsBelowNeck,
 } from '../../state/back/back.selectors';
+import { BackPreview } from '../backPreview/BackPreview';
 import { HighlightedValue } from '../highlightedValue/HighlightedValue';
 
 export const BackDirections: React.FunctionComponent = () => {
@@ -28,7 +29,7 @@ export const BackDirections: React.FunctionComponent = () => {
         <HighlightedValue>
           {useRecoilValue(getNumberOfHemStitches)}
         </HighlightedValue>{' '}
-        stitches in 2:2 industrial rib.
+        &times; 2 stitches in 2:2 industrial rib.
       </p>
       <p>
         Knit ribbing for{' '}
@@ -47,26 +48,26 @@ export const BackDirections: React.FunctionComponent = () => {
         <HighlightedValue>
           {useRecoilValue(getSlopeForBodiceIncreases)?.numberOfStitches}
         </HighlightedValue>{' '}
-        stitches total every{' '}
+        stitches on either end every{' '}
         <HighlightedValue>
           {useRecoilValue(getSlopeForBodiceIncreases)?.numberOfRows}
         </HighlightedValue>{' '}
         rows. There should be{' '}
         <HighlightedValue>
-          {useRecoilValue(getNumberOfStitchesBeforeArmhole)}
+          {useRecoilValue(getNumberOfStitchesBelowArmhole)}
         </HighlightedValue>{' '}
-        stitches on the needles.
+        &times; 2 stitches on the needles.
       </p>
       <p>
         Cast off{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfArmholeStitchesToCastOff)}
         </HighlightedValue>{' '}
-        stitches at either end. There should be{' '}
+        stitches on either side. There should be{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfStitchesAtBottomOfArmhole)}
         </HighlightedValue>{' '}
-        stitches.
+        &times; 2 stitches.
       </p>
       <p>
         Knit for{' '}
@@ -77,7 +78,7 @@ export const BackDirections: React.FunctionComponent = () => {
         <HighlightedValue>
           {useRecoilValue(getSlopeForBottomArmholeDecreases)?.numberOfStitches}
         </HighlightedValue>{' '}
-        stitches total every{' '}
+        stitches on either end every{' '}
         <HighlightedValue>
           {useRecoilValue(getSlopeForBottomArmholeDecreases)?.numberOfRows}
         </HighlightedValue>{' '}
@@ -85,7 +86,7 @@ export const BackDirections: React.FunctionComponent = () => {
         <HighlightedValue>
           {useRecoilValue(getNumberOfStitchesBetweenArmholes)}
         </HighlightedValue>{' '}
-        stitches.
+        &times; 2 stitches.
       </p>
       <p>
         Knit straight for{' '}
@@ -103,7 +104,7 @@ export const BackDirections: React.FunctionComponent = () => {
         <HighlightedValue>
           {slopeForNeckDecreases?.numberOfStitches}
         </HighlightedValue>{' '}
-        stitches total every{' '}
+        stitches on either end every{' '}
         <HighlightedValue>
           {slopeForNeckDecreases?.numberOfRows}
         </HighlightedValue>{' '}
@@ -111,7 +112,7 @@ export const BackDirections: React.FunctionComponent = () => {
         <HighlightedValue>
           {useRecoilValue(getNumberOfStitchesAtNeck)}
         </HighlightedValue>{' '}
-        stitches.
+        &times; 2 stitches.
         {slopeForNeckDecreases?.excess &&
           ` Excess: ${slopeForNeckDecreases?.excess}`}
       </p>
@@ -120,8 +121,9 @@ export const BackDirections: React.FunctionComponent = () => {
         <HighlightedValue>
           {useRecoilValue(getNumberOfStitchesAtNeck)}
         </HighlightedValue>{' '}
-        stitches at neck.
+        &times; 2 stitches at neck.
       </p>
+      <BackPreview />
     </>
   );
 };
