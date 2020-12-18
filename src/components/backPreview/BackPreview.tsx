@@ -77,6 +77,7 @@ export const BackPreview: FunctionComponent = () => {
   const context = canvasRef?.current?.getContext('2d');
 
   if (context) {
+    context.clearRect(0, 0, canvasCenter * 2, canvasHeight);
     let y = canvasHeight - hemHeight - 1;
 
     context.strokeRect(canvasCenter - hemWidth, y, hemWidth * 2, hemHeight);

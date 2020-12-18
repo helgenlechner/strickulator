@@ -16,14 +16,13 @@ import {
   getNumberOfStitchesAtNeck,
   getNumberOfRowsBelowNeck,
 } from '../../state/back/back.selectors';
-import { BackPreview } from '../backPreview/BackPreview';
 import { HighlightedValue } from '../highlightedValue/HighlightedValue';
 
 export const BackDirections: React.FunctionComponent = () => {
   const slopeForNeckDecreases = useRecoilValue(getSlopeForNeckDecreases);
 
   return (
-    <>
+    <section>
       <p>
         Cast on{' '}
         <HighlightedValue>
@@ -123,7 +122,6 @@ export const BackDirections: React.FunctionComponent = () => {
         </HighlightedValue>{' '}
         &times; 2 stitches at neck.
       </p>
-      <BackPreview />
-    </>
+    </section>
   );
 };

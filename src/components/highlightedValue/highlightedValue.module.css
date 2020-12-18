@@ -1,8 +1,8 @@
 .highlight {
   border-radius: 2px;
   background-color: lightgray;
-  min-width: 10px;
+  min-width: 7px;
   display: inline-block;
-  height: 1em;
+  height: 16px;
   padding: 1px 3px 4px;
 }

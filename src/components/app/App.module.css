@@ -1,0 +1,11 @@
+.app {
+  margin: 20px;
+}
+
+.directions {
+  display: flex;
+}
+
+.directions canvas {
+  margin-left: 20px;
+}

@@ -2,12 +2,14 @@ import React from 'react';
 import { RecoilRoot } from 'recoil';
 import { BackDirections } from '../backDirections/BackDirections';
 import { BackInput } from '../backInput/BackInput';
+import { BackPreview } from '../backPreview/BackPreview';
 import { SwatchInput } from '../swatchInput/SwatchInput';
-import './App.css';
+
+const styles = require('./App.module.css');
 
 function App() {
   return (
-    <div className="App">
+    <div className={styles.app}>
       <RecoilRoot>
         <h1>Swatch</h1>
         <SwatchInput />
@@ -15,7 +17,10 @@ function App() {
         <h2>Input</h2>
         <BackInput />
         <h2>Directions</h2>
-        <BackDirections />
+        <section className={styles.directions}>
+          <BackDirections />
+          <BackPreview />
+        </section>
       </RecoilRoot>
     </div>
   );
