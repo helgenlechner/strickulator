@@ -12,21 +12,60 @@ import {
 import { frontState } from './front.state';
 
 export const getNumberOfStitchesBetweenArmholes = selector({
-  key: 'getNumberOfStitchesBetweenArmholes',
+  key: 'getFrontNumberOfStitchesBetweenArmholes',
   get: ({ get }) => {
-    const back = get(frontState);
+    const front = get(frontState);
     const widthOfOneStitch = get(getWidthOfOneStitch);
 
-    if (!back.widthBetweenArmholes || !widthOfOneStitch) {
+    if (!front.widthBetweenArmholes || !widthOfOneStitch) {
       return undefined;
     }
 
-    return roundToEvenNumber(back.widthBetweenArmholes / widthOfOneStitch) / 2;
+    return roundToEvenNumber(front.widthBetweenArmholes / widthOfOneStitch) / 2;
   },
 });
 
-export const getSlopeForBottomArmholeDecreases = selector({
-  key: 'getSlopeForBottomArmholeDecreases',
+export const getNumberOfLowerBottomArmholeRows = selector({
+  key: 'getNumberOfLowerBottomArmholeRows',
+  get: ({ get }) => {
+    const numberOfRowsOfBottomArmhole = get(getNumberOfRowsOfBottomArmhole);
+
+    if (!numberOfRowsOfBottomArmhole) {
+      return undefined;
+    }
+
+    return roundToEvenNumber(numberOfRowsOfBottomArmhole * 0.4);
+  },
+});
+
+export const getNumberOfStitchesAfterLowerBottomArmholeDecreases = selector({
+  key: 'getNumberOfStitchesAfterLowerBottomArmholeDecreases',
+  get: ({ get }) => {
+    const numberOfStitchesBetweenArmholes = get(
+      getNumberOfStitchesBetweenArmholes,
+    );
+    const numberOfStitchesAtBottomOfArmhole = get(
+      getNumberOfStitchesAtBottomOfArmhole,
+    );
+
+    if (
+      !numberOfStitchesBetweenArmholes ||
+      !numberOfStitchesAtBottomOfArmhole
+    ) {
+      return undefined;
+    }
+
+    const stitchesToDecrease = Math.round(
+      (numberOfStitchesAtBottomOfArmhole - numberOfStitchesBetweenArmholes) *
+        0.6,
+    );
+
+    return numberOfStitchesAtBottomOfArmhole - stitchesToDecrease;
+  },
+});
+
+export const getSlopeForLowerBottomArmholeDecreases = selector({
+  key: 'getSlopeForLowerBottomArmholeDecreases',
   get: ({ get }) => {
     const numberOfStitchesAtBottomOfArmhole = get(
       getNumberOfStitchesAtBottomOfArmhole,
@@ -34,57 +73,71 @@ export const getSlopeForBottomArmholeDecreases = selector({
     const numberOfStitchesBetweenArmholes = get(
       getNumberOfStitchesBetweenArmholes,
     );
-    const numberOfRowsOfBottomArmhole = get(getNumberOfRowsOfBottomArmhole);
+    const numberOfRowsOfLowerBottomArmhole = get(
+      getNumberOfLowerBottomArmholeRows,
+    );
+    const numberOfStitchesAfterLowerBottomArmholeDecreases = get(
+      getNumberOfStitchesAfterLowerBottomArmholeDecreases,
+    );
+
+    if (
+      !numberOfStitchesAtBottomOfArmhole ||
+      !numberOfStitchesBetweenArmholes ||
+      !numberOfRowsOfLowerBottomArmhole ||
+      !numberOfStitchesAfterLowerBottomArmholeDecreases
+    ) {
+      return undefined;
+    }
 
     return calculateSlope(
       numberOfStitchesAtBottomOfArmhole,
-      numberOfStitchesBetweenArmholes,
-      numberOfRowsOfBottomArmhole,
+      numberOfStitchesAfterLowerBottomArmholeDecreases,
+      numberOfRowsOfLowerBottomArmhole,
     );
   },
 });
 
-export const getNumberOfStitchesAtNeck = selector({
-  key: 'getNumberOfStitchesAtNeck',
+export const getNumberOfUpperBottomArmholeRows = selector({
+  key: 'getNumberOfUpperBottomArmholeRows',
   get: ({ get }) => {
-    const back = get(frontState);
-    const widthOfOneStitch = get(getWidthOfOneStitch);
+    const numberOfRowsOfBottomArmhole = get(getNumberOfRowsOfBottomArmhole);
+    const numberOfRowsOfLowerBottomArmhole = get(
+      getNumberOfLowerBottomArmholeRows,
+    );
 
-    if (!back.neckWidth || !widthOfOneStitch) {
+    if (!numberOfRowsOfBottomArmhole || !numberOfRowsOfLowerBottomArmhole) {
       return undefined;
     }
 
-    return roundToEvenNumber(back.neckWidth / widthOfOneStitch) / 2;
+    return numberOfRowsOfBottomArmhole - numberOfRowsOfLowerBottomArmhole;
   },
 });
 
-export const getNumberOfRowsBelowNeck = selector({
-  key: 'getNumberOfRowsBelowNeck',
-  get: ({ get }) => {
-    const back = get(frontState);
-    const heightOfOneRow = get(getHeightOfOneRow);
-
-    if (!back.heightAtShoulders || !heightOfOneRow) {
-      return undefined;
-    }
-
-    return roundToEvenNumber(back.heightAtShoulders / heightOfOneRow);
-  },
-});
-
-export const getSlopeForNeckDecreases = selector({
-  key: 'getSlopeForNeckDecreases',
+export const getSlopeForUpperBottomArmholeDecreases = selector({
+  key: 'getSlopeForUpperBottomArmholeDecreases',
   get: ({ get }) => {
     const numberOfStitchesBetweenArmholes = get(
       getNumberOfStitchesBetweenArmholes,
     );
-    const numberOfStitchesAtNeck = get(getNumberOfStitchesAtNeck);
-    const numberOfRowsBelowNeck = get(getNumberOfRowsBelowNeck);
+    const numberOfRowsOfUpperBottomArmhole = get(
+      getNumberOfUpperBottomArmholeRows,
+    );
+    const numberOfStitchesAfterLowerBottomArmholeDecreases = get(
+      getNumberOfStitchesAfterLowerBottomArmholeDecreases,
+    );
+
+    if (
+      !numberOfStitchesBetweenArmholes ||
+      !numberOfRowsOfUpperBottomArmhole ||
+      !numberOfStitchesAfterLowerBottomArmholeDecreases
+    ) {
+      return undefined;
+    }
 
     return calculateSlope(
+      numberOfStitchesAfterLowerBottomArmholeDecreases,
       numberOfStitchesBetweenArmholes,
-      numberOfStitchesAtNeck,
-      numberOfRowsBelowNeck,
+      numberOfRowsOfUpperBottomArmhole,
     );
   },
 });

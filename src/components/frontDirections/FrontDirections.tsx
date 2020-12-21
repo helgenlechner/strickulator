@@ -1,12 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import { useRecoilValue } from 'recoil';
+import { pluralizeStitch } from '../../helpers/pluralize';
 import {
-  getSlopeForBottomArmholeDecreases,
   getNumberOfStitchesBetweenArmholes,
-  getSlopeForNeckDecreases,
-  getNumberOfStitchesAtNeck,
-  getNumberOfRowsBelowNeck,
-} from '../../state/back/back.selectors';
+  getSlopeForUpperBottomArmholeDecreases,
+  getSlopeForLowerBottomArmholeDecreases,
+  getNumberOfUpperBottomArmholeRows,
+  getNumberOfLowerBottomArmholeRows,
+  getNumberOfStitchesAfterLowerBottomArmholeDecreases,
+} from '../../state/front/front.selectors';
 import {
   getNumberOfArmholeStitchesToCastOff,
   getNumberOfBodiceRows,
@@ -14,19 +16,18 @@ import {
   getNumberOfHemStitches,
   getNumberOfStraightRowsBetweenArmholes,
   getSlopeForBodiceIncreases,
-  getNumberOfRowsOfBottomArmhole,
   getNumberOfStitchesAtBottomOfArmhole,
   getNumberOfStitchesBelowArmhole,
 } from '../../state/sharedMeasurements/sharedMeasurements.selectors';
 import { Directions } from '../directions/Directions';
 import { HighlightedValue } from '../highlightedValue/HighlightedValue';
+import { Section } from '../section/Section';
+import { SlopeDescription } from '../slopeDescription/SlopeDescription';
 import { Step } from '../step/Step';
 
-export const FrontDirections: FunctionComponent = () => {
-  const slopeForNeckDecreases = useRecoilValue(getSlopeForNeckDecreases);
-
-  return (
-    <Directions>
+export const FrontDirections: FunctionComponent = () => (
+  <Directions>
+    <Section>
       <Step>
         Cast on{' '}
         <HighlightedValue>
@@ -42,55 +43,69 @@ export const FrontDirections: FunctionComponent = () => {
         rows.
       </Step>
       <Step>Transfer all stitches to front bed.</Step>
+    </Section>
+    <Section>
       <Step>
-        Knit for{' '}
-        <HighlightedValue>
-          {useRecoilValue(getNumberOfBodiceRows)}
-        </HighlightedValue>{' '}
-        rows, increasing{' '}
-        <HighlightedValue>
-          {useRecoilValue(getSlopeForBodiceIncreases)?.numberOfStitches}
-        </HighlightedValue>{' '}
-        stitches on either end every{' '}
-        <HighlightedValue>
-          {useRecoilValue(getSlopeForBodiceIncreases)?.numberOfRows}
-        </HighlightedValue>{' '}
-        rows. There should be{' '}
+        <SlopeDescription
+          numberOfRows={useRecoilValue(getNumberOfBodiceRows)}
+          slope={useRecoilValue(getSlopeForBodiceIncreases)}
+          isDecrease={false}
+        />
+      </Step>
+      <Step>
+        There should be{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfStitchesBelowArmhole)}
         </HighlightedValue>{' '}
         &times; 2 stitches on the needles.
       </Step>
+    </Section>
+    <Section>
       <Step>
         Cast off{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfArmholeStitchesToCastOff)}
         </HighlightedValue>{' '}
-        stitches on either side. There should be{' '}
+        {pluralizeStitch(useRecoilValue(getNumberOfArmholeStitchesToCastOff))}{' '}
+        on either side.
+      </Step>
+      <Step>
+        There should be{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfStitchesAtBottomOfArmhole)}
         </HighlightedValue>{' '}
         &times; 2 stitches.
       </Step>
       <Step>
-        Knit for{' '}
+        <SlopeDescription
+          numberOfRows={useRecoilValue(getNumberOfLowerBottomArmholeRows)}
+          slope={useRecoilValue(getSlopeForLowerBottomArmholeDecreases)}
+        />
+      </Step>
+      <Step>
+        There should be{' '}
         <HighlightedValue>
-          {useRecoilValue(getNumberOfRowsOfBottomArmhole)}
+          {useRecoilValue(getNumberOfStitchesAfterLowerBottomArmholeDecreases)}
         </HighlightedValue>{' '}
-        rows, decreasing{' '}
-        <HighlightedValue>
-          {useRecoilValue(getSlopeForBottomArmholeDecreases)?.numberOfStitches}
-        </HighlightedValue>{' '}
-        stitches on either end every{' '}
-        <HighlightedValue>
-          {useRecoilValue(getSlopeForBottomArmholeDecreases)?.numberOfRows}
-        </HighlightedValue>{' '}
-        rows. There should be{' '}
+        &times; 2 stitches.
+      </Step>
+    </Section>
+    <Section>
+      <Step>
+        <SlopeDescription
+          numberOfRows={useRecoilValue(getNumberOfUpperBottomArmholeRows)}
+          slope={useRecoilValue(getSlopeForUpperBottomArmholeDecreases)}
+        />
+      </Step>
+      <Step>
+        There should be{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfStitchesBetweenArmholes)}
         </HighlightedValue>{' '}
         &times; 2 stitches.
       </Step>
+    </Section>
+    <Section>
       <Step>
         Knit straight for{' '}
         <HighlightedValue>
@@ -98,34 +113,6 @@ export const FrontDirections: FunctionComponent = () => {
         </HighlightedValue>{' '}
         rows.
       </Step>
-      <Step>
-        Knit for{' '}
-        <HighlightedValue>
-          {useRecoilValue(getNumberOfRowsBelowNeck)}
-        </HighlightedValue>{' '}
-        rows, decreasing{' '}
-        <HighlightedValue>
-          {slopeForNeckDecreases?.numberOfStitches}
-        </HighlightedValue>{' '}
-        stitches on either end every{' '}
-        <HighlightedValue>
-          {slopeForNeckDecreases?.numberOfRows}
-        </HighlightedValue>{' '}
-        rows. There should be{' '}
-        <HighlightedValue>
-          {useRecoilValue(getNumberOfStitchesAtNeck)}
-        </HighlightedValue>{' '}
-        &times; 2 stitches.
-        {slopeForNeckDecreases?.excess &&
-          ` Excess: ${slopeForNeckDecreases?.excess}`}
-      </Step>
-      <Step>
-        Cast off{' '}
-        <HighlightedValue>
-          {useRecoilValue(getNumberOfStitchesAtNeck)}
-        </HighlightedValue>{' '}
-        &times; 2 stitches at neck.
-      </Step>
-    </Directions>
-  );
-};
+    </Section>
+  </Directions>
+);

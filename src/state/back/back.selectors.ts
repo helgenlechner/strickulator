@@ -12,7 +12,7 @@ import {
 import { backState } from './back.state';
 
 export const getNumberOfStitchesBetweenArmholes = selector({
-  key: 'getNumberOfStitchesBetweenArmholes',
+  key: 'getBackNumberOfStitchesBetweenArmholes',
   get: ({ get }) => {
     const back = get(backState);
     const widthOfOneStitch = get(getWidthOfOneStitch);
