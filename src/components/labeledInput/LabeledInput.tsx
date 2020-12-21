@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Input } from '../input/Input';
 import { Label } from '../label/Label';
 
 type Props = {
   name: string;
+  placeholder: number;
   children: string;
   onChange: (name: string, value: number | undefined) => void;
-  value: string | number;
-  type: 'number';
+  value: number | string;
 };
 
-export const LabeledInput: React.FunctionComponent<Props> = ({
+export const LabeledInput: FunctionComponent<Props> = ({
   name,
   children,
   value,
-  type,
+  placeholder,
   onChange,
 }) => {
   const onChange_ = (value: number | undefined) => {
@@ -29,7 +29,12 @@ export const LabeledInput: React.FunctionComponent<Props> = ({
   return (
     <>
       <Label forInput={name}>{children}</Label>
-      <Input type={type} name={name} onChange={onChange_} value={value ?? ''} />
+      <Input
+        name={name}
+        placeholder={placeholder}
+        onChange={onChange_}
+        value={value ?? ''}
+      />
     </>
   );
 };

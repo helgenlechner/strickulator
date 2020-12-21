@@ -9,3 +9,19 @@
 .directions canvas {
   margin-left: 20px;
 }
+
+.inputs {
+  display: flex;
+}
+
+.inputs > div {
+  flex-basis: 50%;
+}
+
+.inputs > div:first-child {
+  margin-right: 10px;
+}
+
+.inputs > div + div {
+  margin-left: 10px;
+}

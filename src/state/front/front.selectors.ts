@@ -9,12 +9,12 @@ import {
   getHeightOfOneRow,
   getWidthOfOneStitch,
 } from '../swatch/swatch.selectors';
-import { backState } from './back.state';
+import { frontState } from './front.state';
 
 export const getNumberOfStitchesBetweenArmholes = selector({
   key: 'getNumberOfStitchesBetweenArmholes',
   get: ({ get }) => {
-    const back = get(backState);
+    const back = get(frontState);
     const widthOfOneStitch = get(getWidthOfOneStitch);
 
     if (!back.widthBetweenArmholes || !widthOfOneStitch) {
@@ -47,7 +47,7 @@ export const getSlopeForBottomArmholeDecreases = selector({
 export const getNumberOfStitchesAtNeck = selector({
   key: 'getNumberOfStitchesAtNeck',
   get: ({ get }) => {
-    const back = get(backState);
+    const back = get(frontState);
     const widthOfOneStitch = get(getWidthOfOneStitch);
 
     if (!back.neckWidth || !widthOfOneStitch) {
@@ -61,7 +61,7 @@ export const getNumberOfStitchesAtNeck = selector({
 export const getNumberOfRowsBelowNeck = selector({
   key: 'getNumberOfRowsBelowNeck',
   get: ({ get }) => {
-    const back = get(backState);
+    const back = get(frontState);
     const heightOfOneRow = get(getHeightOfOneRow);
 
     if (!back.heightAtShoulders || !heightOfOneRow) {

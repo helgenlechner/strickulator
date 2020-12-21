@@ -22,7 +22,7 @@ import { Directions } from '../directions/Directions';
 import { HighlightedValue } from '../highlightedValue/HighlightedValue';
 import { Step } from '../step/Step';
 
-export const BackDirections: FunctionComponent = () => {
+export const FrontDirections: FunctionComponent = () => {
   const slopeForNeckDecreases = useRecoilValue(getSlopeForNeckDecreases);
 
   return (
@@ -33,15 +33,15 @@ export const BackDirections: FunctionComponent = () => {
           {useRecoilValue(getNumberOfHemStitches)}
         </HighlightedValue>{' '}
         &times; 2 stitches in 2:2 industrial rib.
-        <br />
+      </Step>
+      <Step>
         Knit ribbing for{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfHemRows)}
         </HighlightedValue>{' '}
         rows.
-        <br />
-        Transfer all stitches to front bed.
       </Step>
+      <Step>Transfer all stitches to front bed.</Step>
       <Step>
         Knit for{' '}
         <HighlightedValue>
@@ -71,7 +71,8 @@ export const BackDirections: FunctionComponent = () => {
           {useRecoilValue(getNumberOfStitchesAtBottomOfArmhole)}
         </HighlightedValue>{' '}
         &times; 2 stitches.
-        <br />
+      </Step>
+      <Step>
         Knit for{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfRowsOfBottomArmhole)}
@@ -117,7 +118,8 @@ export const BackDirections: FunctionComponent = () => {
         &times; 2 stitches.
         {slopeForNeckDecreases?.excess &&
           ` Excess: ${slopeForNeckDecreases?.excess}`}
-        <br />
+      </Step>
+      <Step>
         Cast off{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfStitchesAtNeck)}

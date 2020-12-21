@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { useRecoilState } from 'recoil';
 import { swatchState } from '../../state/swatch/swatch.state';
 import { LabeledInput } from '../labeledInput/LabeledInput';
 
-export const SwatchInput: React.FunctionComponent = () => {
+export const SwatchInput: FunctionComponent = () => {
   const [swatch, setSwatch] = useRecoilState(swatchState);
 
   const onChange = (key: string, value: number | undefined) => {
@@ -13,8 +13,8 @@ export const SwatchInput: React.FunctionComponent = () => {
   return (
     <>
       <LabeledInput
-        type="number"
         name="numberOfStitches"
+        placeholder={100}
         onChange={onChange}
         value={swatch.numberOfStitches ?? ''}
       >
@@ -22,8 +22,8 @@ export const SwatchInput: React.FunctionComponent = () => {
       </LabeledInput>
       <br />
       <LabeledInput
-        type="number"
         name="numberOfRows"
+        placeholder={100}
         onChange={onChange}
         value={swatch.numberOfRows ?? ''}
       >
@@ -31,8 +31,8 @@ export const SwatchInput: React.FunctionComponent = () => {
       </LabeledInput>
       <br />
       <LabeledInput
-        type="number"
         name="width"
+        placeholder={33.65}
         onChange={onChange}
         value={swatch.width ?? ''}
       >
@@ -40,8 +40,8 @@ export const SwatchInput: React.FunctionComponent = () => {
       </LabeledInput>
       <br />
       <LabeledInput
-        type="number"
         name="height"
+        placeholder={24.76}
         onChange={onChange}
         value={swatch.height ?? ''}
       >

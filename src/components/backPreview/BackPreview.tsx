@@ -2,17 +2,19 @@ import { FunctionComponent, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import { getHeight, getWidth } from '../../helpers/preview';
 import {
+  getNumberOfRowsBelowNeck,
+  getNumberOfStitchesAtNeck,
+  getNumberOfStitchesBetweenArmholes,
+} from '../../state/back/back.selectors';
+import {
   getNumberOfArmholeStitchesToCastOff,
   getNumberOfBodiceRows,
   getNumberOfHemRows,
   getNumberOfHemStitches,
-  getNumberOfRowsBelowNeck,
   getNumberOfRowsOfBottomArmhole,
-  getNumberOfStitchesAtNeck,
   getNumberOfStitchesBelowArmhole,
-  getNumberOfStitchesBetweenArmholes,
   getNumberOfStraightRowsBetweenArmholes,
-} from '../../state/back/back.selectors';
+} from '../../state/sharedMeasurements/sharedMeasurements.selectors';
 import {
   getHeightOfOneRow,
   getWidthOfOneStitch,
@@ -65,6 +67,21 @@ export const BackPreview: FunctionComponent = () => {
     widthOfOneStitch,
   );
 
+  if (
+    !hemWidth ||
+    !hemHeight ||
+    !widthBelowArmhole ||
+    !heightBelowArmhole ||
+    !widthOfArmholeCastOff ||
+    !heightOfBottomArmhole ||
+    !widthBetweenArmholes ||
+    !heightBetweenArmholes ||
+    !heightBelowNeck ||
+    !widthOfNeck
+  ) {
+    return null;
+  }
+
   const canvasCenter = Math.max(hemWidth, widthBelowArmhole) + 2;
   const canvasHeight =
     hemHeight +
@@ -78,9 +95,19 @@ export const BackPreview: FunctionComponent = () => {
 
   if (context) {
     context.clearRect(0, 0, canvasCenter * 2, canvasHeight);
+
+    context.strokeStyle = 'lightgray';
+
+    context.strokeRect(canvasCenter, 0, 1, canvasHeight);
+
+    context.strokeStyle = 'black';
+
+    context.font = '16px sans-serif';
+
     let y = canvasHeight - hemHeight - 1;
 
     context.strokeRect(canvasCenter - hemWidth, y, hemWidth * 2, hemHeight);
+    context.fillText('A', canvasCenter + 3, y + hemHeight - 3);
 
     context.beginPath();
     context.moveTo(canvasCenter - hemWidth, y);
@@ -89,6 +116,7 @@ export const BackPreview: FunctionComponent = () => {
     context.lineTo(canvasCenter + hemWidth, y);
     context.closePath();
     context.stroke();
+    context.fillText('B', canvasCenter + 3, y - 3);
 
     y -= heightBelowArmhole;
 
@@ -105,6 +133,7 @@ export const BackPreview: FunctionComponent = () => {
     context.lineTo(canvasCenter + widthBelowArmhole - widthOfArmholeCastOff, y);
     context.closePath();
     context.stroke();
+    context.fillText('C', canvasCenter + 3, y - 3);
 
     y -= heightOfBottomArmhole;
 
@@ -114,6 +143,7 @@ export const BackPreview: FunctionComponent = () => {
       widthBetweenArmholes * 2,
       heightBetweenArmholes,
     );
+    context.fillText('D', canvasCenter + 3, y - 3);
 
     y -= heightBetweenArmholes;
 
@@ -124,8 +154,7 @@ export const BackPreview: FunctionComponent = () => {
     context.lineTo(canvasCenter + widthBetweenArmholes, y);
     context.closePath();
     context.stroke();
-
-    context.strokeRect(canvasCenter, 0, 1, canvasHeight);
+    context.fillText('E', canvasCenter + 3, y - 3);
   }
 
   return (

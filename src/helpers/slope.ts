@@ -1,15 +1,23 @@
 export const calculateSlope = (
-  wideNumberOfStitches: number | undefined,
-  narrowNumberOfStitches: number | undefined,
+  firstNumberOfStitches: number | undefined,
+  secondNumberOfStitches: number | undefined,
   numberOfRows: number | undefined,
 ) => {
-  if (!wideNumberOfStitches || !narrowNumberOfStitches || !numberOfRows) {
+  if (!firstNumberOfStitches || !secondNumberOfStitches || !numberOfRows) {
     return undefined;
   }
+  const wideNumberOfStitches = Math.max(
+    firstNumberOfStitches,
+    secondNumberOfStitches,
+  );
+  const narrowNumberOfStitches = Math.min(
+    firstNumberOfStitches,
+    secondNumberOfStitches,
+  );
 
   const numberOfStitchesToAdd = wideNumberOfStitches - narrowNumberOfStitches;
 
-  if (numberOfStitchesToAdd >= numberOfRows) {
+  if (numberOfStitchesToAdd >= numberOfRows / 2) {
     // steep slope
 
     const numberOfStitchesToAddEveryTime = Math.ceil(
@@ -43,8 +51,14 @@ export const calculateSlope = (
     (numberOfRows - 1) / numberOfIncreaseRows,
   );
 
-  while (numberOfRowsBetweenIncreases * numberOfIncreaseRows > numberOfRows) {
+  let iterations = 0;
+
+  while (
+    numberOfRowsBetweenIncreases * numberOfIncreaseRows > numberOfRows ||
+    iterations >= 100
+  ) {
     numberOfRowsBetweenIncreases--;
+    iterations++;
   }
 
   return {

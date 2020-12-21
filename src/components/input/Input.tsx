@@ -1,46 +1,41 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, FunctionComponent } from 'react';
 
-interface BaseProps {
+interface Props {
   name: string;
-}
-
-interface NumberProps extends BaseProps {
-  type: 'number';
+  placeholder: number;
   onChange: (value: number | undefined) => void;
   value: number | string;
 }
 
-interface StringProps extends BaseProps {
-  type: 'text';
-  onChange: (value: string) => void;
-  value: string;
-}
-
-type Props = NumberProps | StringProps;
-
-export const Input: React.FunctionComponent<Props> = ({
-  type,
+export const Input: FunctionComponent<Props> = ({
   name,
+  placeholder,
   onChange: onChange_,
   value,
 }) => {
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (type === 'number') {
-      const numericValue = Number(event.target.value);
+    const numericValue = Number(event.target.value);
 
-      if (isNaN(numericValue)) {
-        return;
-      }
-
-      if (numericValue <= 0) {
-        (onChange_ as NumberProps['onChange'])(undefined);
-
-        return;
-      }
-
-      (onChange_ as NumberProps['onChange'])(numericValue);
+    if (isNaN(numericValue)) {
+      return;
     }
+
+    if (numericValue <= 0) {
+      onChange_(undefined);
+
+      return;
+    }
+
+    onChange_(numericValue);
   };
 
-  return <input type={type} name={name} onChange={onChange} value={value} />;
+  return (
+    <input
+      type="number"
+      placeholder={placeholder.toString(10)}
+      name={name}
+      onChange={onChange}
+      value={value}
+    />
+  );
 };

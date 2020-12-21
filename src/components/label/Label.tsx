@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
 const styles = require('./label.module.css');
 
@@ -7,10 +7,7 @@ interface Props {
   forInput: string;
 }
 
-export const Label: React.FunctionComponent<Props> = ({
-  children,
-  forInput,
-}) => (
+export const Label: FunctionComponent<Props> = ({ children, forInput }) => (
   <label htmlFor={forInput} className={styles.label}>
     {children}
   </label>

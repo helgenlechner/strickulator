@@ -1,14 +1,15 @@
 import { atom } from 'recoil';
 import { localStorageEffect } from '../effects/localStorage.effect';
 
-export interface BackState {
+export interface FrontState {
   widthBetweenArmholes?: number;
   heightAtShoulders?: number;
   neckWidth?: number;
+  necklineDepth?: number;
 }
 
-export const backState = atom<BackState>({
-  key: 'backState',
+export const frontState = atom<FrontState>({
+  key: 'frontState',
   default: {},
-  effects_UNSTABLE: [localStorageEffect<BackState>('back')],
+  effects_UNSTABLE: [localStorageEffect<FrontState>('front')],
 });

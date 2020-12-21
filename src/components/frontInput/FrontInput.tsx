@@ -1,42 +1,42 @@
 import React, { FunctionComponent } from 'react';
 import { useRecoilState } from 'recoil';
-import { backState } from '../../state/back/back.state';
+import { frontState } from '../../state/front/front.state';
 import { LabeledInput } from '../labeledInput/LabeledInput';
 
-export const BackInput: FunctionComponent = () => {
-  const [back, setBack] = useRecoilState(backState);
+export const FrontInput: FunctionComponent = () => {
+  const [front, setFront] = useRecoilState(frontState);
 
   const onChange = (key: string, value: number | undefined) => {
-    setBack({ ...back, [key]: value });
+    setFront({ ...front, [key]: value });
   };
 
   return (
     <>
       <LabeledInput
-        name="widthBetweenArmholes"
         placeholder={44}
+        name="widthBetweenArmholes"
         onChange={onChange}
-        value={back.widthBetweenArmholes ?? ''}
+        value={front.widthBetweenArmholes ?? ''}
       >
         Width between armholes
       </LabeledInput>
       <br />
       <LabeledInput
         name="heightAtShoulders"
-        placeholder={11}
+        placeholder={13}
         onChange={onChange}
-        value={back.heightAtShoulders ?? ''}
+        value={front.heightAtShoulders ?? ''}
       >
         Height at shoulders
       </LabeledInput>
       <br />
       <LabeledInput
-        name="neckWidth"
-        placeholder={15}
+        name="necklineDepth"
+        placeholder={25}
         onChange={onChange}
-        value={back.neckWidth ?? ''}
+        value={front.necklineDepth ?? ''}
       >
-        Neck width
+        Neckline depth
       </LabeledInput>
     </>
   );
