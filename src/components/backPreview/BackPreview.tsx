@@ -83,14 +83,15 @@ export const BackPreview: FunctionComponent = () => {
     return null;
   }
 
-  const canvasCenter = Math.max(hemWidth, widthBelowArmhole) + 2;
-  const canvasHeight =
+  const canvasCenter = Math.ceil(Math.max(hemWidth, widthBelowArmhole) + 2);
+  const canvasHeight = Math.ceil(
     hemHeight +
-    heightBelowArmhole +
-    heightOfBottomArmhole +
-    heightBetweenArmholes +
-    heightBelowNeck +
-    2;
+      heightBelowArmhole +
+      heightOfBottomArmhole +
+      heightBetweenArmholes +
+      heightBelowNeck +
+      2,
+  );
 
   const context = canvasRef?.current?.getContext('2d');
 
@@ -150,6 +151,8 @@ export const BackPreview: FunctionComponent = () => {
   }
 
   return (
-    <canvas ref={canvasRef} width={canvasCenter * 2} height={canvasHeight} />
+    <div>
+      <canvas ref={canvasRef} width={canvasCenter * 2} height={canvasHeight} />
+    </div>
   );
 };
