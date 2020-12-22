@@ -20,15 +20,24 @@ export const SlopeDescription: FunctionComponent<Props> = ({
     return (
       <>
         Knit for <HighlightedValue>{numberOfRows}</HighlightedValue> rows,{' '}
-        {slope?.type} <HighlightedValue>{slope?.delta}</HighlightedValue>{' '}
-        {pluralizeStitch(slope?.delta)} in total {manipulationLocation}{' '}
-        according to the following pattern:
+        {slope.type} <HighlightedValue>{slope.delta}</HighlightedValue>{' '}
+        {pluralizeStitch(slope.delta)} in total {manipulationLocation} according
+        to the following pattern:
         <ul className={styles.pattern}>
-          {Object.entries(slope.pattern).map((entry) => (
-            <li key={entry[0]}>
-              RC {entry[0]}: {entry[1]}
-            </li>
-          ))}
+          {Object.entries(slope.pattern).map((entry) => {
+            const formattedCount = `${slope.type === 'increasing' ? '+' : '-'}${
+              entry[1]
+            }`;
+
+            return (
+              <li key={entry[0]}>
+                RC {entry[0]}:{' '}
+                <span className={styles.count} data-count={formattedCount}>
+                  {formattedCount}
+                </span>
+              </li>
+            );
+          })}
         </ul>
       </>
     );

@@ -121,16 +121,19 @@ export const FrontDirections: FunctionComponent = () => (
     <Section>
       <Step>
         <SlopeDescription
-          numberOfRows={useRecoilValue(getNumberOfNecklineRows)}
-          slope={useRecoilValue(getFrontNecklineSlope)}
-          manipulationLocation="at the neckline"
-        />
-      </Step>
-      <Step>
-        <SlopeDescription
           numberOfRows={useRecoilValue(getNumberOfRowsAtShoulder)}
           slope={useRecoilValue(getFrontArmscyeSlope)}
           manipulationLocation="at the armscye"
+        />
+      </Step>
+      <Step>
+        AT THE SAME TIME, divide the work into two halves for the neckline.
+      </Step>
+      <Step>
+        <SlopeDescription
+          numberOfRows={useRecoilValue(getNumberOfNecklineRows)}
+          slope={useRecoilValue(getFrontNecklineSlope)}
+          manipulationLocation="at the neckline"
         />
       </Step>
       <Step>
