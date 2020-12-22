@@ -2,3 +2,8 @@
   display: block;
   margin-top: 0.5em;
 }
+
+.step[data-is-active='true'] {
+  display: inline-block;
+  background-color: lightyellow;
+}

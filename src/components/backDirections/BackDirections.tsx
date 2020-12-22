@@ -25,32 +25,32 @@ import { SlopeDescription } from '../slopeDescription/SlopeDescription';
 import { Step } from '../step/Step';
 
 export const BackDirections: FunctionComponent = () => (
-  <Directions>
-    <Section>
-      <Step>
+  <Directions id="back">
+    <Section id="A">
+      <Step id="1">
         Cast on{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfHemStitches)}
         </HighlightedValue>{' '}
         &times; 2 stitches in 2:2 industrial rib.
       </Step>
-      <Step>
+      <Step id="2">
         Knit ribbing for{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfHemRows)}
         </HighlightedValue>{' '}
         rows.
       </Step>
-      <Step>Transfer all stitches to front bed.</Step>
+      <Step id="3">Transfer all stitches to front bed.</Step>
     </Section>
-    <Section>
-      <Step>
+    <Section id="B">
+      <Step id="1">
         <SlopeDescription
           numberOfRows={useRecoilValue(getNumberOfBodiceRows)}
           slope={useRecoilValue(getSlopeForBodiceIncreases)}
         />
       </Step>
-      <Step>
+      <Step id="2">
         There should be{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfStitchesBelowArmhole)}
@@ -58,8 +58,8 @@ export const BackDirections: FunctionComponent = () => (
         &times; 2 stitches on the needles.
       </Step>
     </Section>
-    <Section>
-      <Step>
+    <Section id="C">
+      <Step id="1">
         Cast off{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfArmholeStitchesToCastOff)}
@@ -70,13 +70,13 @@ export const BackDirections: FunctionComponent = () => (
         </HighlightedValue>{' '}
         &times; 2 stitches.
       </Step>
-      <Step>
+      <Step id="2">
         <SlopeDescription
           numberOfRows={useRecoilValue(getNumberOfRowsOfBottomArmhole)}
           slope={useRecoilValue(getSlopeForBottomArmholeDecreases)}
         />
       </Step>
-      <Step>
+      <Step id="3">
         There should be{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfStitchesBetweenArmholes)}
@@ -84,8 +84,8 @@ export const BackDirections: FunctionComponent = () => (
         &times; 2 stitches.
       </Step>
     </Section>
-    <Section>
-      <Step>
+    <Section id="D">
+      <Step id="1">
         Knit straight for{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfStraightRowsBetweenArmholes)}
@@ -93,21 +93,21 @@ export const BackDirections: FunctionComponent = () => (
         rows.
       </Step>
     </Section>
-    <Section>
-      <Step>
+    <Section id="E">
+      <Step id="1">
         <SlopeDescription
           numberOfRows={useRecoilValue(getNumberOfRowsBelowNeck)}
           slope={useRecoilValue(getSlopeForNeckDecreases)}
         />
       </Step>
-      <Step>
+      <Step id="2">
         There should be{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfStitchesAtNeck)}
         </HighlightedValue>{' '}
         &times; 2 stitches.
       </Step>
-      <Step>
+      <Step id="3">
         Cast off{' '}
         <HighlightedValue>
           {useRecoilValue(getNumberOfStitchesAtNeck)}
