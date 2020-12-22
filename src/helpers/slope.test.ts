@@ -7,8 +7,15 @@ describe('calculateSlope', () => {
     const numberOfRows = 12;
 
     const expected = {
-      numberOfRows: 2,
-      numberOfStitches: 1,
+      type: 'decreasing',
+      delta: 5,
+      pattern: {
+        2: 1,
+        4: 1,
+        6: 1,
+        9: 1,
+        11: 1,
+      },
     };
     const actual = calculateSlope(
       wideMeasurement,
@@ -25,12 +32,26 @@ describe('calculateSlope', () => {
     const numberOfRows = 12;
 
     const expected = {
-      numberOfRows: 2,
-      numberOfStitches: 5,
+      delta: 30,
+      type: 'increasing',
+      pattern: {
+        1: 3,
+        2: 2,
+        3: 3,
+        4: 2,
+        5: 3,
+        6: 2,
+        7: 3,
+        8: 2,
+        9: 3,
+        10: 2,
+        11: 3,
+        12: 2,
+      },
     };
     const actual = calculateSlope(
-      wideMeasurement,
       narrowMeasurement,
+      wideMeasurement,
       numberOfRows,
     );
 

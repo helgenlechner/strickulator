@@ -2,6 +2,10 @@ import { selector } from 'recoil';
 import { roundToEvenNumber } from '../../helpers/rounding';
 import { calculateSlope } from '../../helpers/slope';
 import {
+  getNumberOfStitchesAtNeck,
+  getSlopeForNeckDecreases,
+} from '../back/back.selectors';
+import {
   getNumberOfRowsOfBottomArmhole,
   getNumberOfStitchesAtBottomOfArmhole,
 } from '../sharedMeasurements/sharedMeasurements.selectors';
@@ -139,5 +143,89 @@ export const getSlopeForUpperBottomArmholeDecreases = selector({
       numberOfStitchesBetweenArmholes,
       numberOfRowsOfUpperBottomArmhole,
     );
+  },
+});
+
+export const getNumberOfRowsAtShoulder = selector({
+  key: 'getNumberOfRowsAtShoulder',
+  get: ({ get }) => {
+    const front = get(frontState);
+    const heightOfOneRow = get(getHeightOfOneRow);
+
+    if (!front.heightAtShoulders || !heightOfOneRow) {
+      return undefined;
+    }
+
+    return roundToEvenNumber(front.heightAtShoulders / heightOfOneRow);
+  },
+});
+
+export const getNumberOfStitchesForFrontShoulderCastOff = selector({
+  key: 'getNumberOfStitchesForFrontShoulderCastOff',
+  get: ({ get }) => {
+    const backShoulderSlope = get(getSlopeForNeckDecreases);
+
+    if (!backShoulderSlope) {
+      return undefined;
+    }
+
+    return backShoulderSlope.delta;
+  },
+});
+
+export const getFrontArmscyeSlope = selector({
+  key: 'getFrontArmscyeSlope',
+  get: ({ get }) => {
+    const numberOfStitchesAtNeck = get(getNumberOfStitchesAtNeck);
+    const numberOfStitchesBetweenArmholes = get(
+      getNumberOfStitchesBetweenArmholes,
+    );
+    const numberOfRowsAtShoulder = get(getNumberOfRowsAtShoulder);
+    const numberOfStitchesForFrontShoulderCastOff = get(
+      getNumberOfStitchesForFrontShoulderCastOff,
+    );
+
+    if (
+      !numberOfStitchesBetweenArmholes ||
+      !numberOfRowsAtShoulder ||
+      !numberOfStitchesForFrontShoulderCastOff ||
+      !numberOfStitchesAtNeck
+    ) {
+      return undefined;
+    }
+
+    return calculateSlope(
+      numberOfStitchesBetweenArmholes,
+      numberOfStitchesAtNeck + numberOfStitchesForFrontShoulderCastOff,
+      numberOfRowsAtShoulder,
+    );
+  },
+});
+
+export const getNumberOfNecklineRows = selector({
+  key: 'getNumberOfNecklineRows',
+  get: ({ get }) => {
+    const front = get(frontState);
+    const heightOfOneRow = get(getHeightOfOneRow);
+
+    if (!front.necklineDepth || !heightOfOneRow) {
+      return undefined;
+    }
+
+    return roundToEvenNumber(front.necklineDepth / heightOfOneRow);
+  },
+});
+
+export const getFrontNecklineSlope = selector({
+  key: 'getFrontNecklineSlope',
+  get: ({ get }) => {
+    const numberOfStitchesAtNeck = get(getNumberOfStitchesAtNeck);
+    const numberOfNecklineRows = get(getNumberOfNecklineRows);
+
+    if (!numberOfStitchesAtNeck || !numberOfNecklineRows) {
+      return undefined;
+    }
+
+    return calculateSlope(numberOfStitchesAtNeck, 0, numberOfNecklineRows);
   },
 });

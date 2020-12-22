@@ -1,9 +1,29 @@
+type BaseSlope = {
+  delta: number;
+  type: 'increasing' | 'decreasing';
+};
+
+type EvenSlope = BaseSlope & {
+  numberOfRows: number;
+  numberOfStitches: number;
+};
+
+type UnevenSlope = BaseSlope & {
+  pattern: { [row: number]: number };
+};
+
+export type Slope = EvenSlope | UnevenSlope;
+
 export const calculateSlope = (
   firstNumberOfStitches: number | undefined,
   secondNumberOfStitches: number | undefined,
   numberOfRows: number | undefined,
-) => {
-  if (!firstNumberOfStitches || !secondNumberOfStitches || !numberOfRows) {
+): Slope | undefined => {
+  if (
+    firstNumberOfStitches === undefined ||
+    secondNumberOfStitches === undefined ||
+    !numberOfRows
+  ) {
     return undefined;
   }
   const wideNumberOfStitches = Math.max(
@@ -15,54 +35,51 @@ export const calculateSlope = (
     secondNumberOfStitches,
   );
 
-  const numberOfStitchesToAdd = wideNumberOfStitches - narrowNumberOfStitches;
+  const type =
+    firstNumberOfStitches === wideNumberOfStitches
+      ? 'decreasing'
+      : 'increasing';
 
-  if (numberOfStitchesToAdd >= numberOfRows / 2) {
-    // steep slope
+  const stitchDelta = wideNumberOfStitches - narrowNumberOfStitches;
 
-    const numberOfStitchesToAddEveryTime = Math.ceil(
-      numberOfStitchesToAdd / (numberOfRows / 2),
-    );
+  const singleRowSlope = stitchDelta / numberOfRows;
+  const doubleRowSlope = stitchDelta / (numberOfRows / 2);
 
-    const totalStitchesThatWouldBeIncreased =
-      numberOfStitchesToAddEveryTime * (numberOfRows / 2);
-
-    const excessStitchesThatWouldBeIncreased =
-      totalStitchesThatWouldBeIncreased - numberOfStitchesToAdd;
-
+  if (doubleRowSlope === 1) {
     return {
       numberOfRows: 2,
-      numberOfStitches: numberOfStitchesToAddEveryTime,
-      ...(excessStitchesThatWouldBeIncreased !== 0 && {
-        excess: excessStitchesThatWouldBeIncreased,
-      }),
+      numberOfStitches: 1,
+      delta: numberOfRows / 2,
+      type,
     };
   }
 
-  // shallow slope
-
-  const numberOfIncreaseRows = numberOfStitchesToAdd;
-
-  if (numberOfIncreaseRows === 0) {
-    return { numberOfRows, numberOfStitches: 0 };
+  if (singleRowSlope === 1) {
+    return {
+      numberOfRows: 1,
+      numberOfStitches: 1,
+      delta: numberOfRows,
+      type,
+    };
   }
 
-  let numberOfRowsBetweenIncreases = Math.floor(
-    (numberOfRows - 1) / numberOfIncreaseRows,
-  );
+  const pattern: UnevenSlope['pattern'] = {};
 
-  let iterations = 0;
+  for (let i = 0; i <= numberOfRows; i++) {
+    const current = Math.round(i * singleRowSlope);
+    const previous = i === 0 ? 0 : Math.round((i - 1) * singleRowSlope);
 
-  while (
-    numberOfRowsBetweenIncreases * numberOfIncreaseRows > numberOfRows ||
-    iterations >= 100
-  ) {
-    numberOfRowsBetweenIncreases--;
-    iterations++;
+    if (current - previous !== 0) {
+      pattern[i] = current - previous;
+    }
   }
 
   return {
-    numberOfRows: numberOfRowsBetweenIncreases,
-    numberOfStitches: 1,
+    pattern,
+    delta: Object.values(pattern).reduce(
+      (previousValue, currentValue) => previousValue + currentValue,
+      0,
+    ),
+    type,
   };
 };

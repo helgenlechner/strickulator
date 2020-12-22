@@ -2,11 +2,15 @@ import { FunctionComponent, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import { drawPolygon } from '../../helpers/drawPolygon';
 import { getHeight, getWidth } from '../../helpers/preview';
+import { getNumberOfStitchesAtNeck } from '../../state/back/back.selectors';
 import {
-  getNumberOfRowsBelowNeck,
-  getNumberOfStitchesAtNeck,
+  getNumberOfLowerBottomArmholeRows,
+  getNumberOfNecklineRows,
+  getNumberOfRowsAtShoulder,
+  getNumberOfStitchesAfterLowerBottomArmholeDecreases,
   getNumberOfStitchesBetweenArmholes,
-} from '../../state/back/back.selectors';
+  getNumberOfStitchesForFrontShoulderCastOff,
+} from '../../state/front/front.selectors';
 import {
   getNumberOfArmholeStitchesToCastOff,
   getNumberOfBodiceRows,
@@ -21,7 +25,7 @@ import {
   getWidthOfOneStitch,
 } from '../../state/swatch/swatch.selectors';
 
-export const BackPreview: FunctionComponent = () => {
+export const FrontPreview: FunctionComponent = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const widthOfOneStitch = useRecoilValue(getWidthOfOneStitch);
@@ -47,6 +51,14 @@ export const BackPreview: FunctionComponent = () => {
     useRecoilValue(getNumberOfArmholeStitchesToCastOff),
     widthOfOneStitch,
   );
+  const heightOfLowerBottomArmhole = getHeight(
+    useRecoilValue(getNumberOfLowerBottomArmholeRows),
+    heightOfOneRow,
+  );
+  const widthAfterLowerBottomArmholeDecreases = getWidth(
+    useRecoilValue(getNumberOfStitchesAfterLowerBottomArmholeDecreases),
+    widthOfOneStitch,
+  );
   const heightOfBottomArmhole = getHeight(
     useRecoilValue(getNumberOfRowsOfBottomArmhole),
     heightOfOneRow,
@@ -59,13 +71,21 @@ export const BackPreview: FunctionComponent = () => {
     useRecoilValue(getNumberOfStraightRowsBetweenArmholes),
     heightOfOneRow,
   );
-  const heightBelowNeck = getHeight(
-    useRecoilValue(getNumberOfRowsBelowNeck),
+  const heightBelowShoulder = getHeight(
+    useRecoilValue(getNumberOfRowsAtShoulder),
     heightOfOneRow,
   );
-  const widthOfNeck = getWidth(
+  const widthAtShoulderCastOff = getWidth(
+    useRecoilValue(getNumberOfStitchesForFrontShoulderCastOff),
+    widthOfOneStitch,
+  );
+  const backNecklineWidth = getWidth(
     useRecoilValue(getNumberOfStitchesAtNeck),
     widthOfOneStitch,
+  );
+  const frontNecklineDepth = getHeight(
+    useRecoilValue(getNumberOfNecklineRows),
+    heightOfOneRow,
   );
 
   if (
@@ -77,8 +97,11 @@ export const BackPreview: FunctionComponent = () => {
     !heightOfBottomArmhole ||
     !widthBetweenArmholes ||
     !heightBetweenArmholes ||
-    !heightBelowNeck ||
-    !widthOfNeck
+    !heightOfLowerBottomArmhole ||
+    !widthAfterLowerBottomArmholeDecreases ||
+    !heightBelowShoulder ||
+    !widthAtShoulderCastOff ||
+    !backNecklineWidth
   ) {
     return null;
   }
@@ -89,7 +112,7 @@ export const BackPreview: FunctionComponent = () => {
     heightBelowArmhole +
     heightOfBottomArmhole +
     heightBetweenArmholes +
-    heightBelowNeck +
+    heightBelowShoulder +
     2;
 
   const context = canvasRef?.current?.getContext('2d');
@@ -99,7 +122,7 @@ export const BackPreview: FunctionComponent = () => {
 
     context.strokeStyle = 'lightgray';
 
-    context.strokeRect(canvasCenter, 0, 1, canvasHeight);
+    context.strokeRect(canvasCenter - 1, 0, 2, canvasHeight);
 
     context.strokeStyle = 'black';
 
@@ -122,13 +145,41 @@ export const BackPreview: FunctionComponent = () => {
 
     drawPolygon(context, [
       { x: canvasCenter - widthBelowArmhole + widthOfArmholeCastOff, y },
-      { x: canvasCenter - widthBetweenArmholes, y: y - heightOfBottomArmhole },
-      { x: canvasCenter + widthBetweenArmholes, y: y - heightOfBottomArmhole },
+      {
+        x: canvasCenter - widthAfterLowerBottomArmholeDecreases,
+        y: y - heightOfLowerBottomArmhole,
+      },
+      {
+        x: canvasCenter + widthAfterLowerBottomArmholeDecreases,
+        y: y - heightOfLowerBottomArmhole,
+      },
       { x: canvasCenter + widthBelowArmhole - widthOfArmholeCastOff, y },
     ]);
     context.fillText('C', canvasCenter + 3, y - 3);
 
-    y -= heightOfBottomArmhole;
+    y -= heightOfLowerBottomArmhole;
+
+    drawPolygon(context, [
+      {
+        x: canvasCenter - widthAfterLowerBottomArmholeDecreases,
+        y,
+      },
+      {
+        x: canvasCenter - widthBetweenArmholes,
+        y: y - (heightOfBottomArmhole - heightOfLowerBottomArmhole),
+      },
+      {
+        x: canvasCenter + widthBetweenArmholes,
+        y: y - (heightOfBottomArmhole - heightOfLowerBottomArmhole),
+      },
+      {
+        x: canvasCenter + widthAfterLowerBottomArmholeDecreases,
+        y,
+      },
+    ]);
+    context.fillText('D', canvasCenter + 3, y - 3);
+
+    y -= heightOfBottomArmhole - heightOfLowerBottomArmhole;
 
     context.strokeRect(
       canvasCenter - widthBetweenArmholes,
@@ -136,17 +187,32 @@ export const BackPreview: FunctionComponent = () => {
       widthBetweenArmholes * 2,
       heightBetweenArmholes,
     );
-    context.fillText('D', canvasCenter + 3, y - 3);
+    context.fillText('E', canvasCenter + 3, y - 3);
 
     y -= heightBetweenArmholes;
 
     drawPolygon(context, [
       { x: canvasCenter - widthBetweenArmholes, y },
-      { x: canvasCenter - widthOfNeck, y: y - heightBelowNeck },
-      { x: canvasCenter + widthOfNeck, y: y - heightBelowNeck },
+      {
+        x: canvasCenter - widthAtShoulderCastOff - backNecklineWidth,
+        y: y - heightBelowShoulder,
+      },
+      {
+        x: canvasCenter - backNecklineWidth,
+        y: y - heightBelowShoulder,
+      },
+      { x: canvasCenter, y: y - heightBelowShoulder + frontNecklineDepth },
+      {
+        x: canvasCenter + backNecklineWidth,
+        y: y - heightBelowShoulder,
+      },
+      {
+        x: canvasCenter + widthAtShoulderCastOff + backNecklineWidth,
+        y: y - heightBelowShoulder,
+      },
       { x: canvasCenter + widthBetweenArmholes, y },
     ]);
-    context.fillText('E', canvasCenter + 3, y - 3);
+    context.fillText('F', canvasCenter + 3, y - 3);
   }
 
   return (

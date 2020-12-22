@@ -8,6 +8,11 @@ import {
   getNumberOfUpperBottomArmholeRows,
   getNumberOfLowerBottomArmholeRows,
   getNumberOfStitchesAfterLowerBottomArmholeDecreases,
+  getNumberOfRowsAtShoulder,
+  getFrontArmscyeSlope,
+  getNumberOfStitchesForFrontShoulderCastOff,
+  getNumberOfNecklineRows,
+  getFrontNecklineSlope,
 } from '../../state/front/front.selectors';
 import {
   getNumberOfArmholeStitchesToCastOff,
@@ -49,7 +54,6 @@ export const FrontDirections: FunctionComponent = () => (
         <SlopeDescription
           numberOfRows={useRecoilValue(getNumberOfBodiceRows)}
           slope={useRecoilValue(getSlopeForBodiceIncreases)}
-          isDecrease={false}
         />
       </Step>
       <Step>
@@ -112,6 +116,29 @@ export const FrontDirections: FunctionComponent = () => (
           {useRecoilValue(getNumberOfStraightRowsBetweenArmholes)}
         </HighlightedValue>{' '}
         rows.
+      </Step>
+    </Section>
+    <Section>
+      <Step>
+        <SlopeDescription
+          numberOfRows={useRecoilValue(getNumberOfNecklineRows)}
+          slope={useRecoilValue(getFrontNecklineSlope)}
+          manipulationLocation="at the neckline"
+        />
+      </Step>
+      <Step>
+        <SlopeDescription
+          numberOfRows={useRecoilValue(getNumberOfRowsAtShoulder)}
+          slope={useRecoilValue(getFrontArmscyeSlope)}
+          manipulationLocation="at the armscye"
+        />
+      </Step>
+      <Step>
+        Cast off{' '}
+        <HighlightedValue>
+          {useRecoilValue(getNumberOfStitchesForFrontShoulderCastOff)}
+        </HighlightedValue>{' '}
+        stitches.
       </Step>
     </Section>
   </Directions>

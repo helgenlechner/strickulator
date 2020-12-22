@@ -79,8 +79,8 @@ export const getSlopeForBodiceIncreases = selector({
     const numberOfBodiceRows = get(getNumberOfBodiceRows);
 
     return calculateSlope(
-      numberOfStitchesBeforeArmhole,
       numberOfHemStitches,
+      numberOfStitchesBeforeArmhole,
       numberOfBodiceRows,
     );
   },

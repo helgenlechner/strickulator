@@ -48,7 +48,6 @@ export const BackDirections: FunctionComponent = () => (
         <SlopeDescription
           numberOfRows={useRecoilValue(getNumberOfBodiceRows)}
           slope={useRecoilValue(getSlopeForBodiceIncreases)}
-          isDecrease={false}
         />
       </Step>
       <Step>

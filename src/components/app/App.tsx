@@ -5,6 +5,7 @@ import { BackInput } from '../backInput/BackInput';
 import { BackPreview } from '../backPreview/BackPreview';
 import { FrontDirections } from '../frontDirections/FrontDirections';
 import { FrontInput } from '../frontInput/FrontInput';
+import { FrontPreview } from '../frontPreview/FrontPreview';
 import { SharedMeasurementInput } from '../sharedMeasurementInput/SharedMeasurementInput';
 import { SwatchInput } from '../swatchInput/SwatchInput';
 
@@ -37,7 +38,7 @@ function App() {
         <h2>Front</h2>
         <section className={styles.directions}>
           <FrontDirections />
-          <BackPreview />
+          <FrontPreview />
         </section>
       </RecoilRoot>
     </div>
