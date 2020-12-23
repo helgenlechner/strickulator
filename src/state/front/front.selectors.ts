@@ -1,4 +1,5 @@
 import { selector } from 'recoil';
+import { calculateHypotenuse } from '../../helpers/hypotenuse';
 import { roundToEvenNumber } from '../../helpers/rounding';
 import { calculateSlope } from '../../helpers/slope';
 import {
@@ -8,6 +9,7 @@ import {
 import {
   getNumberOfRowsOfBottomArmhole,
   getNumberOfStitchesAtBottomOfArmhole,
+  getNumberOfStraightRowsBetweenArmholes,
 } from '../sharedMeasurements/sharedMeasurements.selectors';
 import {
   getHeightOfOneRow,
@@ -180,10 +182,10 @@ export const getFrontArmscyeSlope = selector({
     const numberOfStitchesBetweenArmholes = get(
       getNumberOfStitchesBetweenArmholes,
     );
-    const numberOfRowsAtShoulder = get(getNumberOfRowsAtShoulder);
     const numberOfStitchesForFrontShoulderCastOff = get(
       getNumberOfStitchesForFrontShoulderCastOff,
     );
+    const numberOfRowsAtShoulder = get(getNumberOfRowsAtShoulder);
 
     if (
       !numberOfStitchesBetweenArmholes ||
@@ -227,5 +229,52 @@ export const getFrontNecklineSlope = selector({
     }
 
     return calculateSlope(numberOfStitchesAtNeck, 0, numberOfNecklineRows);
+  },
+});
+
+export const getFrontArmscyeStitchSum = selector({
+  key: 'getFrontArmscyeStitchSum',
+  get: ({ get }) => {
+    const numberOfStitchesAtBottomOfArmhole = get(
+      getNumberOfStitchesAtBottomOfArmhole,
+    );
+    const numberOfStitchesBetweenArmholes = get(
+      getNumberOfStitchesBetweenArmholes,
+    );
+    const numberOfRowsOfBottomArmhole = get(getNumberOfRowsOfBottomArmhole);
+    const numberOfStraightRowsBetweenArmholes = get(
+      getNumberOfStraightRowsBetweenArmholes,
+    );
+    const numberOfNecklineRows = get(getNumberOfNecklineRows);
+    const numberOfStitchesAtNeck = get(getNumberOfStitchesAtNeck);
+    const numberOfStitchesForFrontShoulderCastOff = get(
+      getNumberOfStitchesForFrontShoulderCastOff,
+    );
+
+    if (
+      !numberOfStitchesAtBottomOfArmhole ||
+      !numberOfStitchesBetweenArmholes ||
+      !numberOfRowsOfBottomArmhole ||
+      !numberOfStraightRowsBetweenArmholes ||
+      !numberOfNecklineRows ||
+      !numberOfStitchesAtNeck ||
+      !numberOfStitchesForFrontShoulderCastOff
+    ) {
+      return undefined;
+    }
+
+    return Math.round(
+      calculateHypotenuse(
+        numberOfStitchesBetweenArmholes - numberOfStitchesAtBottomOfArmhole,
+        numberOfRowsOfBottomArmhole,
+      ) +
+        numberOfStraightRowsBetweenArmholes +
+        calculateHypotenuse(
+          numberOfNecklineRows,
+          numberOfStitchesAtNeck +
+            numberOfStitchesForFrontShoulderCastOff -
+            numberOfStitchesBetweenArmholes,
+        ),
+    );
   },
 });

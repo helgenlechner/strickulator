@@ -1,9 +1,11 @@
 import { selector } from 'recoil';
+import { calculateHypotenuse } from '../../helpers/hypotenuse';
 import { roundToEvenNumber } from '../../helpers/rounding';
 import { calculateSlope } from '../../helpers/slope';
 import {
   getNumberOfRowsOfBottomArmhole,
   getNumberOfStitchesAtBottomOfArmhole,
+  getNumberOfStraightRowsBetweenArmholes,
 } from '../sharedMeasurements/sharedMeasurements.selectors';
 import {
   getHeightOfOneRow,
@@ -85,6 +87,38 @@ export const getSlopeForNeckDecreases = selector({
       numberOfStitchesBetweenArmholes,
       numberOfStitchesAtNeck,
       numberOfRowsBelowNeck,
+    );
+  },
+});
+
+export const getBackArmscyeStitchSum = selector({
+  key: 'getBackArmscyeStitchSum',
+  get: ({ get }) => {
+    const numberOfStitchesAtBottomOfArmhole = get(
+      getNumberOfStitchesAtBottomOfArmhole,
+    );
+    const numberOfStitchesBetweenArmholes = get(
+      getNumberOfStitchesBetweenArmholes,
+    );
+    const numberOfRowsOfBottomArmhole = get(getNumberOfRowsOfBottomArmhole);
+    const numberOfStraightRowsBetweenArmholes = get(
+      getNumberOfStraightRowsBetweenArmholes,
+    );
+
+    if (
+      !numberOfRowsOfBottomArmhole ||
+      !numberOfStitchesAtBottomOfArmhole ||
+      !numberOfStitchesBetweenArmholes ||
+      !numberOfStraightRowsBetweenArmholes
+    ) {
+      return undefined;
+    }
+
+    return Math.round(
+      calculateHypotenuse(
+        numberOfRowsOfBottomArmhole,
+        numberOfStitchesAtBottomOfArmhole - numberOfStitchesBetweenArmholes,
+      ) + numberOfStraightRowsBetweenArmholes,
     );
   },
 });

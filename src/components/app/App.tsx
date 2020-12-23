@@ -8,6 +8,9 @@ import { FrontDirections } from '../frontDirections/FrontDirections';
 import { FrontInput } from '../frontInput/FrontInput';
 import { FrontPreview } from '../frontPreview/FrontPreview';
 import { SharedMeasurementInput } from '../sharedMeasurementInput/SharedMeasurementInput';
+import { SleeveDirections } from '../sleeveDirections/SleeveDirections';
+import { SleeveInput } from '../sleeveInput/SleeveInput';
+import { SleevePreview } from '../sleevePreview/sleevePreview';
 import { SwatchInput } from '../swatchInput/SwatchInput';
 
 const styles = require('./App.module.css');
@@ -19,7 +22,8 @@ function App() {
       <div className={styles.app}>
         <h1>Swatch</h1>
         <SwatchInput />
-        <h1>Shared Measurements</h1>
+        <h1>Measurements</h1>
+        <h2>Shared</h2>
         <SharedMeasurementInput />
         <section className={styles.inputs}>
           <div>
@@ -29,6 +33,10 @@ function App() {
           <div>
             <h1>Front</h1>
             <FrontInput />
+          </div>
+          <div>
+            <h1>Sleeve</h1>
+            <SleeveInput />
           </div>
         </section>
         <h1>Directions</h1>
@@ -41,6 +49,11 @@ function App() {
         <section className={styles.directions}>
           <FrontDirections />
           <FrontPreview />
+        </section>
+        <h2>Sleeve</h2>
+        <section className={styles.directions}>
+          <SleeveDirections />
+          <SleevePreview />
         </section>
       </div>
     </RecoilRoot>
