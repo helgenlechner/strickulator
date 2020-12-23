@@ -5,18 +5,13 @@ import {
   getNumberOfStitchesBetweenArmholes,
   getSlopeForUpperBottomArmholeDecreases,
   getSlopeForLowerBottomArmholeDecreases,
-  getNumberOfUpperBottomArmholeRows,
-  getNumberOfLowerBottomArmholeRows,
   getNumberOfStitchesAfterLowerBottomArmholeDecreases,
-  getNumberOfRowsAtShoulder,
   getFrontArmscyeSlope,
   getNumberOfStitchesForFrontShoulderCastOff,
-  getNumberOfNecklineRows,
   getFrontNecklineSlope,
 } from '../../state/front/front.selectors';
 import {
   getNumberOfArmholeStitchesToCastOff,
-  getNumberOfBodiceRows,
   getNumberOfHemRows,
   getNumberOfHemStitches,
   getNumberOfStraightRowsBetweenArmholes,
@@ -51,10 +46,7 @@ export const FrontDirections: FunctionComponent = () => (
     </Section>
     <Section id="B">
       <Step id="1">
-        <SlopeDescription
-          numberOfRows={useRecoilValue(getNumberOfBodiceRows)}
-          slope={useRecoilValue(getSlopeForBodiceIncreases)}
-        />
+        <SlopeDescription slope={useRecoilValue(getSlopeForBodiceIncreases)} />
       </Step>
       <Step id="2">
         There should be{' '}
@@ -82,7 +74,6 @@ export const FrontDirections: FunctionComponent = () => (
       </Step>
       <Step id="3">
         <SlopeDescription
-          numberOfRows={useRecoilValue(getNumberOfLowerBottomArmholeRows)}
           slope={useRecoilValue(getSlopeForLowerBottomArmholeDecreases)}
         />
       </Step>
@@ -97,7 +88,6 @@ export const FrontDirections: FunctionComponent = () => (
     <Section id="D">
       <Step id="1">
         <SlopeDescription
-          numberOfRows={useRecoilValue(getNumberOfUpperBottomArmholeRows)}
           slope={useRecoilValue(getSlopeForUpperBottomArmholeDecreases)}
         />
       </Step>
@@ -121,7 +111,6 @@ export const FrontDirections: FunctionComponent = () => (
     <Section id="F">
       <Step id="1">
         <SlopeDescription
-          numberOfRows={useRecoilValue(getNumberOfRowsAtShoulder)}
           slope={useRecoilValue(getFrontArmscyeSlope)}
           manipulationLocation="at the armscye"
         />
@@ -132,7 +121,6 @@ export const FrontDirections: FunctionComponent = () => (
       </Step>
       <Step id="3">
         <SlopeDescription
-          numberOfRows={useRecoilValue(getNumberOfNecklineRows)}
           slope={useRecoilValue(getFrontNecklineSlope)}
           manipulationLocation="at the neckline"
         />

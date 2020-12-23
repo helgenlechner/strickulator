@@ -15,49 +15,45 @@ import { SwatchInput } from '../swatchInput/SwatchInput';
 
 const styles = require('./App.module.css');
 
-function App() {
-  return (
-    <RecoilRoot>
-      <ActiveStep />
-      <div className={styles.app}>
-        <h1>Swatch</h1>
-        <SwatchInput />
-        <h1>Measurements</h1>
-        <h2>Shared</h2>
-        <SharedMeasurementInput />
-        <section className={styles.inputs}>
-          <div>
-            <h1>Back</h1>
-            <BackInput />
-          </div>
-          <div>
-            <h1>Front</h1>
-            <FrontInput />
-          </div>
-          <div>
-            <h1>Sleeve</h1>
-            <SleeveInput />
-          </div>
-        </section>
-        <h1>Directions</h1>
-        <h2>Back</h2>
-        <section className={styles.directions}>
-          <BackDirections />
-          <BackPreview />
-        </section>
-        <h2>Front</h2>
-        <section className={styles.directions}>
-          <FrontDirections />
-          <FrontPreview />
-        </section>
-        <h2>Sleeve</h2>
-        <section className={styles.directions}>
-          <SleeveDirections />
-          <SleevePreview />
-        </section>
-      </div>
-    </RecoilRoot>
-  );
-}
-
-export default App;
+export const App = () => (
+  <RecoilRoot>
+    <ActiveStep />
+    <div className={styles.app}>
+      <h1>Swatch</h1>
+      <SwatchInput />
+      <h1>Measurements</h1>
+      <h2>Shared</h2>
+      <SharedMeasurementInput />
+      <section className={styles.inputs}>
+        <div>
+          <h1>Back</h1>
+          <BackInput />
+        </div>
+        <div>
+          <h1>Front</h1>
+          <FrontInput />
+        </div>
+        <div>
+          <h1>Sleeve</h1>
+          <SleeveInput />
+        </div>
+      </section>
+      <h1>Directions</h1>
+      <h2>Back</h2>
+      <section className={styles.directions}>
+        <BackDirections />
+        <BackPreview />
+      </section>
+      <h2>Front</h2>
+      <section className={styles.directions}>
+        <FrontDirections />
+        <FrontPreview />
+      </section>
+      <h2>Sleeve</h2>
+      <section className={styles.directions}>
+        <SleeveDirections />
+        <SleevePreview />
+      </section>
+    </div>
+  </RecoilRoot>
+);

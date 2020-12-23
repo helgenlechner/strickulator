@@ -1,11 +1,12 @@
 type BaseSlope = {
   delta: number;
   type: 'increasing' | 'decreasing';
+  numberOfRows: number;
 };
 
 type EvenSlope = BaseSlope & {
-  numberOfRows: number;
-  numberOfStitches: number;
+  rowInterval: number;
+  stitchDelta: number;
 };
 
 type UnevenSlope = BaseSlope & {
@@ -47,19 +48,21 @@ export const calculateSlope = (
 
   if (doubleRowSlope === 1) {
     return {
-      numberOfRows: 2,
-      numberOfStitches: 1,
+      rowInterval: 2,
+      stitchDelta: 1,
       delta: numberOfRows / 2,
       type,
+      numberOfRows,
     };
   }
 
   if (singleRowSlope === 1) {
     return {
-      numberOfRows: 1,
-      numberOfStitches: 1,
+      rowInterval: 1,
+      stitchDelta: 1,
       delta: numberOfRows,
       type,
+      numberOfRows,
     };
   }
 
@@ -81,5 +84,6 @@ export const calculateSlope = (
       0,
     ),
     type,
+    numberOfRows,
   };
 };

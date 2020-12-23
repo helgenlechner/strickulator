@@ -5,16 +5,13 @@ import {
   getNumberOfStitchesBetweenArmholes,
   getSlopeForNeckDecreases,
   getNumberOfStitchesAtNeck,
-  getNumberOfRowsBelowNeck,
 } from '../../state/back/back.selectors';
 import {
   getNumberOfArmholeStitchesToCastOff,
-  getNumberOfBodiceRows,
   getNumberOfHemRows,
   getNumberOfHemStitches,
   getNumberOfStraightRowsBetweenArmholes,
   getSlopeForBodiceIncreases,
-  getNumberOfRowsOfBottomArmhole,
   getNumberOfStitchesAtBottomOfArmhole,
   getNumberOfStitchesBelowArmhole,
 } from '../../state/sharedMeasurements/sharedMeasurements.selectors';
@@ -45,10 +42,7 @@ export const BackDirections: FunctionComponent = () => (
     </Section>
     <Section id="B">
       <Step id="1">
-        <SlopeDescription
-          numberOfRows={useRecoilValue(getNumberOfBodiceRows)}
-          slope={useRecoilValue(getSlopeForBodiceIncreases)}
-        />
+        <SlopeDescription slope={useRecoilValue(getSlopeForBodiceIncreases)} />
       </Step>
       <Step id="2">
         There should be{' '}
@@ -72,7 +66,6 @@ export const BackDirections: FunctionComponent = () => (
       </Step>
       <Step id="2">
         <SlopeDescription
-          numberOfRows={useRecoilValue(getNumberOfRowsOfBottomArmhole)}
           slope={useRecoilValue(getSlopeForBottomArmholeDecreases)}
         />
       </Step>
@@ -95,10 +88,7 @@ export const BackDirections: FunctionComponent = () => (
     </Section>
     <Section id="E">
       <Step id="1">
-        <SlopeDescription
-          numberOfRows={useRecoilValue(getNumberOfRowsBelowNeck)}
-          slope={useRecoilValue(getSlopeForNeckDecreases)}
-        />
+        <SlopeDescription slope={useRecoilValue(getSlopeForNeckDecreases)} />
       </Step>
       <Step id="2">
         There should be{' '}

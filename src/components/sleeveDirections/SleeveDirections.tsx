@@ -1,12 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { useRecoilValue } from 'recoil';
-import {
-  getNumberOfArmholeStitchesToCastOff,
-  getNumberOfRowsOfBottomArmhole,
-} from '../../state/sharedMeasurements/sharedMeasurements.selectors';
+import { getNumberOfArmholeStitchesToCastOff } from '../../state/sharedMeasurements/sharedMeasurements.selectors';
 import {
   getNumberOfRowsForSleeveHem,
-  getNumberOfRowsFromSleeveHemToUnderarm,
   getNumberOfSleeveHeadStitches,
   getNumberOfStitchesAfterArmholeCastOff,
   getNumberOfStitchesAtUnderarm,
@@ -41,10 +37,7 @@ export const SleeveDirections: FunctionComponent = () => (
     </Section>
     <Section id="B">
       <Step id="1">
-        <SlopeDescription
-          numberOfRows={useRecoilValue(getNumberOfRowsFromSleeveHemToUnderarm)}
-          slope={useRecoilValue(getSlopeForSleeveIncreases)}
-        />
+        <SlopeDescription slope={useRecoilValue(getSlopeForSleeveIncreases)} />
       </Step>
       <Step id="2">
         There should be{' '}
@@ -67,10 +60,7 @@ export const SleeveDirections: FunctionComponent = () => (
         &times; 2 stitches.
       </Step>
       <Step id="2">
-        <SlopeDescription
-          numberOfRows={useRecoilValue(getNumberOfRowsOfBottomArmhole)}
-          slope={useRecoilValue(getSleeveArmScyeSlope)}
-        />
+        <SlopeDescription slope={useRecoilValue(getSleeveArmScyeSlope)} />
       </Step>
       <Step id="3">
         There should be{' '}
