@@ -144,6 +144,7 @@ export const FrontDirections: FunctionComponent = () => (
         </HighlightedValue>{' '}
         stitches.
       </Step>
+      <Step id="5">Repeat for the other half of the shoulder area.</Step>
     </Section>
   </Directions>
 );

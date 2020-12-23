@@ -1,5 +1,6 @@
 import React from 'react';
 import { RecoilRoot } from 'recoil';
+import { ActiveStep } from '../activeStep/ActiveStep';
 import { BackDirections } from '../backDirections/BackDirections';
 import { BackInput } from '../backInput/BackInput';
 import { BackPreview } from '../backPreview/BackPreview';
@@ -13,8 +14,9 @@ const styles = require('./App.module.css');
 
 function App() {
   return (
-    <div className={styles.app}>
-      <RecoilRoot>
+    <RecoilRoot>
+      <ActiveStep />
+      <div className={styles.app}>
         <h1>Swatch</h1>
         <SwatchInput />
         <h1>Shared Measurements</h1>
@@ -40,8 +42,8 @@ function App() {
           <FrontDirections />
           <FrontPreview />
         </section>
-      </RecoilRoot>
-    </div>
+      </div>
+    </RecoilRoot>
   );
 }
 

@@ -18,16 +18,15 @@ export const Step: FunctionComponent<Props> = ({ children, id }) => {
   const stepId = `${area}_${section}_${id}`;
 
   const onClick = () => {
-    setLocation({ activeStep: stepId });
+    if (location.activeStep === stepId) {
+      setLocation({ activeStep: undefined });
+    } else {
+      setLocation({ activeStep: stepId });
+    }
   };
 
   return (
-    <span
-      className={styles.step}
-      id={stepId}
-      onClick={onClick}
-      data-is-active={location.activeStep === stepId}
-    >
+    <span className={styles.step} id={stepId} onClick={onClick}>
       {children}
     </span>
   );
