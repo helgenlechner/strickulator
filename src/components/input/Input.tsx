@@ -1,4 +1,6 @@
-import React, { ChangeEvent, FunctionComponent } from 'react';
+import { ChangeEvent, FunctionComponent } from 'react';
+
+const styles = require('./Input.module.css');
 
 interface Props {
   name: string;
@@ -31,6 +33,7 @@ export const Input: FunctionComponent<Props> = ({
 
   return (
     <input
+      className={styles.input}
       type="number"
       placeholder={placeholder.toString(10)}
       name={name}

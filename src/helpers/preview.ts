@@ -1,9 +1,15 @@
+import { RecoilValue, useRecoilValue } from 'recoil';
+import {
+  getHeightOfOneRow,
+  getWidthOfOneStitch,
+} from '../state/swatch/swatch.selectors';
+
 const resizeFactor = 6;
 
-export const getWidth = (
-  numberOfStitches: number | undefined,
-  widthOfOneStitch: number | undefined,
-) => {
+export const useWidth = (selector: RecoilValue<number | undefined>) => {
+  const widthOfOneStitch = useRecoilValue(getWidthOfOneStitch);
+  const numberOfStitches = useRecoilValue(selector);
+
   if (!numberOfStitches || !widthOfOneStitch) {
     return 0;
   }
@@ -11,10 +17,10 @@ export const getWidth = (
   return numberOfStitches * widthOfOneStitch * resizeFactor;
 };
 
-export const getHeight = (
-  numberOfRows: number | undefined,
-  heightOfOneRow: number | undefined,
-) => {
+export const useHeight = (selector: RecoilValue<number | undefined>) => {
+  const heightOfOneRow = useRecoilValue(getHeightOfOneRow);
+  const numberOfRows = useRecoilValue(selector);
+
   if (!numberOfRows || !heightOfOneRow) {
     return 0;
   }

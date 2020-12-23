@@ -1,7 +1,6 @@
 import { FunctionComponent, useRef } from 'react';
-import { useRecoilValue } from 'recoil';
 import { drawPolygon } from '../../helpers/drawPolygon';
-import { getHeight, getWidth } from '../../helpers/preview';
+import { useHeight, useWidth } from '../../helpers/preview';
 import { getNumberOfArmholeStitchesToCastOff } from '../../state/sharedMeasurements/sharedMeasurements.selectors';
 import {
   getNumberOfRowsForSleeveHem,
@@ -11,45 +10,21 @@ import {
   getNumberOfStitchesAtUnderarm,
   getNumberOfStitchesAtWrist,
 } from '../../state/sleeve/sleeve.selectors';
-import {
-  getHeightOfOneRow,
-  getWidthOfOneStitch,
-} from '../../state/swatch/swatch.selectors';
 
 export const SleevePreview: FunctionComponent = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const widthOfOneStitch = useRecoilValue(getWidthOfOneStitch);
-  const heightOfOneRow = useRecoilValue(getHeightOfOneRow);
-
-  const wristWidth = getWidth(
-    useRecoilValue(getNumberOfStitchesAtWrist),
-    widthOfOneStitch,
+  const wristWidth = useWidth(getNumberOfStitchesAtWrist);
+  const wristHeight = useHeight(getNumberOfRowsForSleeveHem);
+  const underarmWidth = useWidth(getNumberOfStitchesAtUnderarm);
+  const wristToUnderarmHeight = useHeight(
+    getNumberOfRowsFromSleeveHemToUnderarm,
   );
-  const wristHeight = getHeight(
-    useRecoilValue(getNumberOfRowsForSleeveHem),
-    heightOfOneRow,
+  const underarmToSleeveHeadHeight = useHeight(
+    getNumberOfRowsFromUnderarmToSleeveHead,
   );
-  const underarmWidth = getWidth(
-    useRecoilValue(getNumberOfStitchesAtUnderarm),
-    widthOfOneStitch,
-  );
-  const wristToUnderarmHeight = getHeight(
-    useRecoilValue(getNumberOfRowsFromSleeveHemToUnderarm),
-    heightOfOneRow,
-  );
-  const underarmToSleeveHeadHeight = getHeight(
-    useRecoilValue(getNumberOfRowsFromUnderarmToSleeveHead),
-    heightOfOneRow,
-  );
-  const widthOfArmholeCastOff = getWidth(
-    useRecoilValue(getNumberOfArmholeStitchesToCastOff),
-    widthOfOneStitch,
-  );
-  const widthOfSleeveHead = getWidth(
-    useRecoilValue(getNumberOfSleeveHeadStitches),
-    widthOfOneStitch,
-  );
+  const widthOfArmholeCastOff = useWidth(getNumberOfArmholeStitchesToCastOff);
+  const widthOfSleeveHead = useWidth(getNumberOfSleeveHeadStitches);
 
   if (
     !wristWidth ||

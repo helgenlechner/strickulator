@@ -1,7 +1,6 @@
 import { FunctionComponent, useRef } from 'react';
-import { useRecoilValue } from 'recoil';
 import { drawPolygon } from '../../helpers/drawPolygon';
-import { getHeight, getWidth } from '../../helpers/preview';
+import { useHeight, useWidth } from '../../helpers/preview';
 import {
   getNumberOfRowsBelowNeck,
   getNumberOfStitchesAtNeck,
@@ -16,57 +15,22 @@ import {
   getNumberOfStitchesBelowArmhole,
   getNumberOfStraightRowsBetweenArmholes,
 } from '../../state/sharedMeasurements/sharedMeasurements.selectors';
-import {
-  getHeightOfOneRow,
-  getWidthOfOneStitch,
-} from '../../state/swatch/swatch.selectors';
 
 export const BackPreview: FunctionComponent = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const widthOfOneStitch = useRecoilValue(getWidthOfOneStitch);
-  const heightOfOneRow = useRecoilValue(getHeightOfOneRow);
-
-  const hemWidth = getWidth(
-    useRecoilValue(getNumberOfHemStitches),
-    widthOfOneStitch,
+  const hemWidth = useWidth(getNumberOfHemStitches);
+  const hemHeight = useHeight(getNumberOfHemRows);
+  const widthBelowArmhole = useWidth(getNumberOfStitchesBelowArmhole);
+  const heightBelowArmhole = useHeight(getNumberOfBodiceRows);
+  const widthOfArmholeCastOff = useWidth(getNumberOfArmholeStitchesToCastOff);
+  const heightOfBottomArmhole = useHeight(getNumberOfRowsOfBottomArmhole);
+  const widthBetweenArmholes = useWidth(getNumberOfStitchesBetweenArmholes);
+  const heightBetweenArmholes = useHeight(
+    getNumberOfStraightRowsBetweenArmholes,
   );
-  const hemHeight = getHeight(
-    useRecoilValue(getNumberOfHemRows),
-    heightOfOneRow,
-  );
-  const widthBelowArmhole = getWidth(
-    useRecoilValue(getNumberOfStitchesBelowArmhole),
-    widthOfOneStitch,
-  );
-  const heightBelowArmhole = getHeight(
-    useRecoilValue(getNumberOfBodiceRows),
-    heightOfOneRow,
-  );
-  const widthOfArmholeCastOff = getWidth(
-    useRecoilValue(getNumberOfArmholeStitchesToCastOff),
-    widthOfOneStitch,
-  );
-  const heightOfBottomArmhole = getHeight(
-    useRecoilValue(getNumberOfRowsOfBottomArmhole),
-    heightOfOneRow,
-  );
-  const widthBetweenArmholes = getWidth(
-    useRecoilValue(getNumberOfStitchesBetweenArmholes),
-    widthOfOneStitch,
-  );
-  const heightBetweenArmholes = getHeight(
-    useRecoilValue(getNumberOfStraightRowsBetweenArmholes),
-    heightOfOneRow,
-  );
-  const heightBelowNeck = getHeight(
-    useRecoilValue(getNumberOfRowsBelowNeck),
-    heightOfOneRow,
-  );
-  const widthOfNeck = getWidth(
-    useRecoilValue(getNumberOfStitchesAtNeck),
-    widthOfOneStitch,
-  );
+  const heightBelowNeck = useHeight(getNumberOfRowsBelowNeck);
+  const widthOfNeck = useWidth(getNumberOfStitchesAtNeck);
 
   if (
     !hemWidth ||
