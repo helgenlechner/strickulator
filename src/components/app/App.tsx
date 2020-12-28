@@ -8,7 +8,6 @@ import { FrontDirections } from '../frontDirections/FrontDirections';
 import { FrontInput } from '../frontInput/FrontInput';
 import { FrontPreview } from '../frontPreview/FrontPreview';
 import { KnittingStyle } from '../knittingStyle/KnittingStyle';
-import { Label } from '../label/Label';
 import { SharedMeasurementInput } from '../sharedMeasurementInput/SharedMeasurementInput';
 import { SleeveDirections } from '../sleeveDirections/SleeveDirections';
 import { SleeveInput } from '../sleeveInput/SleeveInput';
@@ -21,39 +20,50 @@ export const App = () => (
   <RecoilRoot>
     <ActiveStep />
     <div className={styles.app}>
-      <h1>Swatch</h1>
+      <h1>
+        1295 Men's Classical Sweater{' '}
+        <a href="https://ravel.me/1295-mens-classical">
+          <img
+            src="http://badges.ravelry.com/square_32.png"
+            alt="View on Ravelry"
+            title="View on Ravelry"
+            width="16"
+          />
+        </a>
+      </h1>
+      <h2>Swatch</h2>
       <SwatchInput />
-      <h1>Measurements</h1>
-      <h2>Shared</h2>
+      <h2>Measurements</h2>
+      <h3>Shared</h3>
       <SharedMeasurementInput />
       <section className={styles.inputs}>
         <div>
-          <h2>Back</h2>
+          <h3>Back</h3>
           <BackInput />
         </div>
         <div>
-          <h2>Front</h2>
+          <h3>Front</h3>
           <FrontInput />
         </div>
         <div>
-          <h2>Sleeve</h2>
+          <h3>Sleeve</h3>
           <SleeveInput />
         </div>
       </section>
-      <h1>Knitting Style</h1>
+      <h2>Knitting Style</h2>
       <KnittingStyle />
-      <h1>Directions</h1>
-      <h2>Back</h2>
+      <h2>Directions</h2>
+      <h3>Back</h3>
       <section className={styles.directions}>
         <BackDirections />
         <BackPreview />
       </section>
-      <h2>Front</h2>
+      <h3>Front</h3>
       <section className={styles.directions}>
         <FrontDirections />
         <FrontPreview />
       </section>
-      <h2>Sleeve</h2>
+      <h3>Sleeve</h3>
       <section className={styles.directions}>
         <SleeveDirections />
         <SleevePreview />
