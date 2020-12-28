@@ -6,6 +6,7 @@ import {
   getSlopeForNeckDecreases,
   getNumberOfStitchesAtNeck,
 } from '../../state/back/back.selectors';
+import { getIsKnittedInTheRound } from '../../state/knittingStyle/knittingStyle.selectors';
 import {
   getNumberOfArmholeStitchesToCastOff,
   getNumberOfHemRows,
@@ -42,7 +43,10 @@ export const BackDirections: FunctionComponent = () => (
     </Section>
     <Section id="B">
       <Step id="1">
-        <SlopeDescription slope={useRecoilValue(getSlopeForBodiceIncreases)} />
+        <SlopeDescription
+          slope={useRecoilValue(getSlopeForBodiceIncreases)}
+          duplicateRowCounts={useRecoilValue(getIsKnittedInTheRound)}
+        />
       </Step>
       <Step id="2">
         There should be{' '}

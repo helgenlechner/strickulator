@@ -7,6 +7,8 @@ import { BackPreview } from '../backPreview/BackPreview';
 import { FrontDirections } from '../frontDirections/FrontDirections';
 import { FrontInput } from '../frontInput/FrontInput';
 import { FrontPreview } from '../frontPreview/FrontPreview';
+import { KnittingStyle } from '../knittingStyle/KnittingStyle';
+import { Label } from '../label/Label';
 import { SharedMeasurementInput } from '../sharedMeasurementInput/SharedMeasurementInput';
 import { SleeveDirections } from '../sleeveDirections/SleeveDirections';
 import { SleeveInput } from '../sleeveInput/SleeveInput';
@@ -26,18 +28,20 @@ export const App = () => (
       <SharedMeasurementInput />
       <section className={styles.inputs}>
         <div>
-          <h1>Back</h1>
+          <h3>Back</h3>
           <BackInput />
         </div>
         <div>
-          <h1>Front</h1>
+          <h3>Front</h3>
           <FrontInput />
         </div>
         <div>
-          <h1>Sleeve</h1>
+          <h3>Sleeve</h3>
           <SleeveInput />
         </div>
       </section>
+      <h1>Knitting Style</h1>
+      <KnittingStyle />
       <h1>Directions</h1>
       <h2>Back</h2>
       <section className={styles.directions}>

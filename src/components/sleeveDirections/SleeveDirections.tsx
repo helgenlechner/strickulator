@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { useRecoilValue } from 'recoil';
+import { getIsKnittedInTheRound } from '../../state/knittingStyle/knittingStyle.selectors';
 import { getNumberOfArmholeStitchesToCastOff } from '../../state/sharedMeasurements/sharedMeasurements.selectors';
 import {
   getNumberOfRowsForSleeveHem,
@@ -37,7 +38,10 @@ export const SleeveDirections: FunctionComponent = () => (
     </Section>
     <Section id="B">
       <Step id="1">
-        <SlopeDescription slope={useRecoilValue(getSlopeForSleeveIncreases)} />
+        <SlopeDescription
+          slope={useRecoilValue(getSlopeForSleeveIncreases)}
+          duplicateRowCounts={useRecoilValue(getIsKnittedInTheRound)}
+        />
       </Step>
       <Step id="2">
         There should be{' '}
@@ -60,7 +64,10 @@ export const SleeveDirections: FunctionComponent = () => (
         &times; 2 stitches.
       </Step>
       <Step id="2">
-        <SlopeDescription slope={useRecoilValue(getSleeveArmScyeSlope)} />
+        <SlopeDescription
+          slope={useRecoilValue(getSleeveArmScyeSlope)}
+          duplicateRowCounts={useRecoilValue(getIsKnittedInTheRound)}
+        />
       </Step>
       <Step id="3">
         There should be{' '}

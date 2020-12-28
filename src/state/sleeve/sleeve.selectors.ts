@@ -110,8 +110,6 @@ export const getNumberOfSleeveHeadStitches = selector({
       return undefined;
     }
 
-    console.log(frontArmscyeStitchSum, backArmscyeStitchSum);
-
     const sum = frontArmscyeStitchSum + backArmscyeStitchSum;
 
     return roundToEvenNumber(sum * 0.2) / 2;

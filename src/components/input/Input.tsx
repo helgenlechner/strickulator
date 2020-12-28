@@ -39,6 +39,7 @@ export const Input: FunctionComponent<Props> = ({
       name={name}
       onChange={onChange}
       value={value}
+      id={name}
     />
   );
 };

@@ -1,9 +1,9 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, ReactText } from 'react';
 
 const styles = require('./highlightedValue.module.css');
 
 interface Props {
-  children: string | number | undefined;
+  children: ReactText[] | string | number | undefined;
 }
 
 export const HighlightedValue: FunctionComponent<Props> = ({ children }) => (
