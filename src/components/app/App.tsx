@@ -28,15 +28,15 @@ export const App = () => (
       <SharedMeasurementInput />
       <section className={styles.inputs}>
         <div>
-          <h3>Back</h3>
+          <h2>Back</h2>
           <BackInput />
         </div>
         <div>
-          <h3>Front</h3>
+          <h2>Front</h2>
           <FrontInput />
         </div>
         <div>
-          <h3>Sleeve</h3>
+          <h2>Sleeve</h2>
           <SleeveInput />
         </div>
       </section>
