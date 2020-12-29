@@ -22,7 +22,6 @@ export const App = () => {
   const { trackPageView } = useMatomo();
 
   useEffect(() => {
-    console.log('tracking');
     trackPageView({});
   }, [trackPageView]);
 
