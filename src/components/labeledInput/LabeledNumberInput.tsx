@@ -10,7 +10,7 @@ type Props = {
   value: number | string;
 };
 
-export const LabeledInput: FunctionComponent<Props> = ({
+export const LabeledNumberInput: FunctionComponent<Props> = ({
   name,
   children,
   value,
@@ -19,11 +19,6 @@ export const LabeledInput: FunctionComponent<Props> = ({
 }) => {
   const onChange_ = (value: number | undefined) => {
     onChange(name, value);
-
-    window.localStorage.setItem(
-      name,
-      value === undefined ? '' : value.toString(10),
-    );
   };
 
   return (

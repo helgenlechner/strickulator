@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useRecoilState } from 'recoil';
 import { sharedMeasurementsState } from '../../state/sharedMeasurements/sharedMeasurements.state';
-import { LabeledInput } from '../labeledInput/LabeledInput';
+import { LabeledNumberInput } from '../labeledInput/LabeledNumberInput';
 
 export const SharedMeasurementInput: FunctionComponent = () => {
   const [sharedMeasurements, setSharedMeasurements] = useRecoilState(
@@ -14,68 +14,68 @@ export const SharedMeasurementInput: FunctionComponent = () => {
 
   return (
     <>
-      <LabeledInput
+      <LabeledNumberInput
         name="hemWidth"
         placeholder={53}
         onChange={onChange}
         value={sharedMeasurements.hemWidth ?? ''}
       >
         Width at hem
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="hemHeight"
         placeholder={4}
         onChange={onChange}
         value={sharedMeasurements.hemHeight ?? ''}
       >
         Hem height
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="widthBelowArmhole"
         placeholder={57}
         onChange={onChange}
         value={sharedMeasurements.widthBelowArmhole ?? ''}
       >
         Width below armhole
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="bodiceHeightUntilArmhole"
         placeholder={40}
         onChange={onChange}
         value={sharedMeasurements.bodiceHeightUntilArmhole ?? ''}
       >
         Bodice height until armhole
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="widthOfDecForArmhole"
         placeholder={1.5}
         onChange={onChange}
         value={sharedMeasurements.widthOfDecForArmhole ?? ''}
       >
         Width of cast off for armhole
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="bottomArmholeHeight"
         placeholder={8}
         onChange={onChange}
         value={sharedMeasurements.bottomArmholeHeight ?? ''}
       >
         Height of bottom armhole
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="heightBetweenArmholes"
         placeholder={9}
         onChange={onChange}
         value={sharedMeasurements.heightBetweenArmholes ?? ''}
       >
         Height between armholes
-      </LabeledInput>
+      </LabeledNumberInput>
     </>
   );
 };

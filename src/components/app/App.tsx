@@ -21,7 +21,7 @@ export const App = () => (
     <ActiveStep />
     <div className={styles.app}>
       <h1>
-        1295 Men's Classical Sweater{' '}
+        1295 Men's Classical Sweater Calculator{' '}
         <a href="https://ravel.me/1295-mens-classical">
           <img
             src="http://badges.ravelry.com/square_32.png"
@@ -31,6 +31,18 @@ export const App = () => (
           />
         </a>
       </h1>
+      <p>
+        This calculator generates a machine knitting pattern for a classic
+        V-neck sweater according to your gauge and desired measurements, based
+        on <i>1295 Men's Classical Sweater</i> from{' '}
+        <a href="http://machineknittingetc.com/passap-03-pattern-book.html">
+          Passap Model Book 3
+        </a>
+        . Please refer to the original pattern for further instructions. All
+        measurements are in centimeters. The preview images show you what will
+        be knitted to scale. You can click on any step in the instructions to
+        highlight it to keep track of the active step more easily.
+      </p>
       <h2>Swatch</h2>
       <SwatchInput />
       <h2>Measurements</h2>

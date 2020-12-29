@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useRecoilState } from 'recoil';
 import { sleeveState } from '../../state/sleeve/sleeve.state';
-import { LabeledInput } from '../labeledInput/LabeledInput';
+import { LabeledNumberInput } from '../labeledInput/LabeledNumberInput';
 
 export const SleeveInput: FunctionComponent = () => {
   const [sleeve, setSleeve] = useRecoilState(sleeveState);
@@ -12,50 +12,50 @@ export const SleeveInput: FunctionComponent = () => {
 
   return (
     <>
-      <LabeledInput
+      <LabeledNumberInput
         name="wristWidth"
         placeholder={28}
         onChange={onChange}
         value={sleeve.wristWidth ?? ''}
       >
         Width at wrist
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="hemHeight"
         placeholder={6.5}
         onChange={onChange}
         value={sleeve.hemHeight ?? ''}
       >
         Hem height
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="underarmWidth"
         placeholder={41}
         onChange={onChange}
         value={sleeve.underarmWidth ?? ''}
       >
         Underarm width
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="underarmToWrist"
         placeholder={46}
         onChange={onChange}
         value={sleeve.underarmToWrist ?? ''}
       >
         Length from wrist to underarm
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="underarmToSleeveHead"
         placeholder={17}
         onChange={onChange}
         value={sleeve.underarmToSleeveHead ?? ''}
       >
         Length from underarm to sleevehead
-      </LabeledInput>
+      </LabeledNumberInput>
     </>
   );
 };

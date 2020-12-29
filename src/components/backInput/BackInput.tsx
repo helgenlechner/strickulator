@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useRecoilState } from 'recoil';
 import { backState } from '../../state/back/back.state';
-import { LabeledInput } from '../labeledInput/LabeledInput';
+import { LabeledNumberInput } from '../labeledInput/LabeledNumberInput';
 
 export const BackInput: FunctionComponent = () => {
   const [back, setBack] = useRecoilState(backState);
@@ -12,32 +12,32 @@ export const BackInput: FunctionComponent = () => {
 
   return (
     <>
-      <LabeledInput
+      <LabeledNumberInput
         name="widthBetweenArmholes"
         placeholder={44}
         onChange={onChange}
         value={back.widthBetweenArmholes ?? ''}
       >
         Width between armholes
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="heightAtShoulders"
         placeholder={11}
         onChange={onChange}
         value={back.heightAtShoulders ?? ''}
       >
         Height at shoulders
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="neckWidth"
         placeholder={15}
         onChange={onChange}
         value={back.neckWidth ?? ''}
       >
         Neck width
-      </LabeledInput>
+      </LabeledNumberInput>
     </>
   );
 };

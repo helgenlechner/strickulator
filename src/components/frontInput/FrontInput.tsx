@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { useRecoilState } from 'recoil';
 import { frontState } from '../../state/front/front.state';
-import { LabeledInput } from '../labeledInput/LabeledInput';
+import { Label } from '../label/Label';
+import { LabeledNumberInput } from '../labeledInput/LabeledNumberInput';
 
 export const FrontInput: FunctionComponent = () => {
   const [front, setFront] = useRecoilState(frontState);
@@ -12,32 +13,34 @@ export const FrontInput: FunctionComponent = () => {
 
   return (
     <>
-      <LabeledInput
+      <LabeledNumberInput
         placeholder={44}
         name="widthBetweenArmholes"
         onChange={onChange}
         value={front.widthBetweenArmholes ?? ''}
       >
         Width between armholes
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="heightAtShoulders"
         placeholder={13}
         onChange={onChange}
         value={front.heightAtShoulders ?? ''}
       >
         Height at shoulders
-      </LabeledInput>
+      </LabeledNumberInput>
       <br />
-      <LabeledInput
+      <LabeledNumberInput
         name="necklineDepth"
         placeholder={25}
         onChange={onChange}
         value={front.necklineDepth ?? ''}
       >
         Neckline depth
-      </LabeledInput>
+      </LabeledNumberInput>
+      <br />
+      <Label forInput="includeBustDart">IncludeBustDart</Label>
     </>
   );
 };
