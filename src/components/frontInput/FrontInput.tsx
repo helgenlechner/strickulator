@@ -39,8 +39,6 @@ export const FrontInput: FunctionComponent = () => {
       >
         Neckline depth
       </LabeledNumberInput>
-      <br />
-      <Label forInput="includeBustDart">IncludeBustDart</Label>
     </>
   );
 };
