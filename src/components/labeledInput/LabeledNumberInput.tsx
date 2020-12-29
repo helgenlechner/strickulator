@@ -1,3 +1,4 @@
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 import React, { FunctionComponent } from 'react';
 import { Input } from '../input/Input';
 import { Label } from '../label/Label';
@@ -17,7 +18,11 @@ export const LabeledNumberInput: FunctionComponent<Props> = ({
   placeholder,
   onChange,
 }) => {
+  const { trackEvent } = useMatomo();
+
   const onChange_ = (value: number | undefined) => {
+    trackEvent({ category: 'input.changed', action: `${name}: ${value}` });
+
     onChange(name, value);
   };
 

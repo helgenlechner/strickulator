@@ -1,3 +1,4 @@
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 import React, { Fragment, FunctionComponent } from 'react';
 import { Label } from '../label/Label';
 
@@ -19,7 +20,11 @@ export const LabeledRadioInput: FunctionComponent<Props> = ({
   name,
   value,
 }) => {
+  const { trackEvent } = useMatomo();
+
   const onChange_ = (value_: string) => {
+    trackEvent({ category: 'input.changed', action: `${name}: ${value_}` });
+
     onChange(value_);
   };
 
