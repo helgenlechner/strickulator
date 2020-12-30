@@ -2,8 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { pluralizeStitch } from '../../helpers/pluralize';
 import { Slope } from '../../helpers/slope';
 import { HighlightedValue } from '../highlightedValue/HighlightedValue';
-
-const styles = require('./SlopeDescription.module.css');
+import styles from './SlopeDescription.module.css';
 
 interface Props {
   slope: Slope | undefined;

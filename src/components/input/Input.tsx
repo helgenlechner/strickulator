@@ -1,6 +1,5 @@
 import { ChangeEvent, FunctionComponent } from 'react';
-
-const styles = require('./Input.module.css');
+import styles from './Input.module.css';
 
 interface Props {
   name: string;

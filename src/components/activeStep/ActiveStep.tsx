@@ -1,8 +1,7 @@
 import { FunctionComponent } from 'react';
 import { useRecoilValue } from 'recoil';
 import { getActiveStepId } from '../../state/location/location.selectors';
-
-const styles = require('./ActiveStep.module.css');
+import styles from './ActiveStep.module.css';
 
 export const ActiveStep: FunctionComponent = () => {
   const activeStepId = useRecoilValue(getActiveStepId);

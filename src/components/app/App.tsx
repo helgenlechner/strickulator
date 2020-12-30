@@ -15,8 +15,8 @@ import { SleeveDirections } from '../sleeveDirections/SleeveDirections';
 import { SleeveInput } from '../sleeveInput/SleeveInput';
 import { SleevePreview } from '../sleevePreview/sleevePreview';
 import { SwatchInput } from '../swatchInput/SwatchInput';
-
-const styles = require('./App.module.css');
+import ravelryLogo from './RavelryPrimaryLogo2020-Color.png';
+import styles from './App.module.css';
 
 export const App = () => {
   const { trackPageView } = useMatomo();
@@ -30,17 +30,17 @@ export const App = () => {
       <RecoilRoot>
         <ActiveStep />
         <div className={styles.app}>
-          <h1>
-            1295 Men's Classical Sweater Calculator{' '}
+          <h1>1295 Men's Classical Sweater Calculator</h1>
+          <p>
             <a href="https://ravel.me/1295-mens-classical">
               <img
-                src="http://badges.ravelry.com/square_32.png"
+                src={ravelryLogo}
                 alt="View on Ravelry"
                 title="View on Ravelry"
-                width="16"
+                height="20"
               />
             </a>
-          </h1>
+          </p>
           <p>
             This calculator generates a machine knitting pattern for a classic
             V-neck sweater according to your gauge and desired measurements,
@@ -51,8 +51,8 @@ export const App = () => {
             . Please refer to the original pattern for further instructions. All
             measurements are in centimeters. The preview images show you what
             will be knitted to scale. You can click on any step in the
-            instructions to highlight it to keep track of the active step more
-            easily.
+            instructions to highlight it to keep track of your knitting progress
+            more easily.
           </p>
           <h2>Swatch</h2>
           <SwatchInput />

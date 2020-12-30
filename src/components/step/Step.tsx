@@ -3,8 +3,7 @@ import { useRecoilState } from 'recoil';
 import { AreaContext } from '../../context/area.context';
 import { SectionContext } from '../../context/section.context';
 import { locationState } from '../../state/location/location.state';
-
-const styles = require('./Step.module.css');
+import styles from './Step.module.css';
 
 interface Props {
   id: string;

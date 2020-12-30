@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
-
-const styles = require('./label.module.css');
+import styles from './label.module.css';
 
 interface Props {
   children: string;

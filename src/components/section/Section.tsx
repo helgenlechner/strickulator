@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import { SectionContext } from '../../context/section.context';
 
-const styles = require('./Section.module.css');
+import styles from './Section.module.css';
 
 interface Props {
   id: string;
