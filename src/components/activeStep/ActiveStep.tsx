@@ -1,10 +1,10 @@
 import { FunctionComponent } from 'react';
-import { useRecoilValue } from 'recoil';
-import { getActiveStepId } from '../../state/location/location.selectors';
+import { useSelector } from 'react-redux';
+import { getActiveStepId } from '../../store/location/location.selectors';
 import styles from './ActiveStep.module.css';
 
 export const ActiveStep: FunctionComponent = () => {
-  const activeStepId = useRecoilValue(getActiveStepId);
+  const activeStepId = useSelector(getActiveStepId);
 
   if (!activeStepId) {
     return null;

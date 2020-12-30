@@ -3,14 +3,14 @@ import React, { Fragment, FunctionComponent } from 'react';
 import { Label } from '../label/Label';
 
 interface Option {
-  id: string;
+  id: string | number;
   label: string;
 }
 
 interface Props {
   name: string;
   options: Option[];
-  onChange: (value: string) => void;
+  onChange: (value: string | number) => void;
   value: number | string;
 }
 
@@ -22,7 +22,7 @@ export const LabeledRadioInput: FunctionComponent<Props> = ({
 }) => {
   const { trackEvent } = useMatomo();
 
-  const onChange_ = (value_: string) => {
+  const onChange_ = (value_: string | number) => {
     trackEvent({ category: 'input.changed', action: `${name}: ${value_}` });
 
     onChange(value_);
@@ -33,10 +33,10 @@ export const LabeledRadioInput: FunctionComponent<Props> = ({
       {options.map((option, index) => (
         <Fragment key={option.id}>
           {index > 0 && <br />}
-          <Label forInput={option.id}>{option.label}</Label>
+          <Label forInput={option.id.toString()}>{option.label}</Label>
           <input
             type="radio"
-            id={option.id}
+            id={option.id.toString()}
             name={name}
             value={option.id}
             checked={value === option.id}

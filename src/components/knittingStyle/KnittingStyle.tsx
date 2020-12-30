@@ -1,25 +1,61 @@
 import React, { FunctionComponent } from 'react';
-import { useRecoilState } from 'recoil';
-import { knittingStyleState } from '../../state/knittingStyle/knittingStyle.state';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { getKnittingStyle } from '../../patterns/p1295/selectors/p1295.knittingStyle.selectors';
+import { projectUpdateKnittingStyle } from '../../store/project/project.actions';
+import {
+  KnittingStyle as KnittingStyleEnum,
+  ProjectId,
+} from '../../store/project/project.model';
+import { AppState } from '../../store/store.model';
 import { LabeledRadioInput } from '../labeledInput/LabeledRadioInput';
 
 const options = [
-  { id: 'flat', label: 'Flat' },
-  { id: 'round', label: 'In the round' },
+  { id: KnittingStyleEnum.flat, label: 'Flat' },
+  { id: KnittingStyleEnum.inTheRound, label: 'In the round' },
 ];
 
-export const KnittingStyle: FunctionComponent = () => {
-  const [knittingStyle, setKnittingStyle] = useRecoilState(knittingStyleState);
+interface ConnectedState {
+  knittingStyle: KnittingStyleEnum;
+}
 
-  const onChange = (value: string) =>
-    setKnittingStyle({ flatOrRound: value as 'flat' | 'round' });
+const mapStateToProps = (state: AppState): ConnectedState => ({
+  knittingStyle: getKnittingStyle(state),
+});
+
+interface ConnectedDispatch {
+  updateKnittingStyle: (
+    projectId: ProjectId,
+    knittingStyle: KnittingStyleEnum,
+  ) => void;
+}
+
+const mapDispatchToProps = (dispatch: Dispatch): ConnectedDispatch => ({
+  updateKnittingStyle: (projectId, measurements) =>
+    dispatch(projectUpdateKnittingStyle(projectId, measurements)),
+});
+
+const KnittingStyle_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
+  knittingStyle,
+  updateKnittingStyle,
+}) => {
+  const onChange = (value: string | number) => {
+    if (typeof value === 'number') {
+      updateKnittingStyle('0', value);
+    }
+  };
 
   return (
     <LabeledRadioInput
       name="flatOrRound"
       options={options}
       onChange={onChange}
-      value={knittingStyle.flatOrRound}
+      value={knittingStyle}
     />
   );
 };
+
+export const KnittingStyle = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(KnittingStyle_);

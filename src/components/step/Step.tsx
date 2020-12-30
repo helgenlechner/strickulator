@@ -1,8 +1,9 @@
 import { FunctionComponent, useContext } from 'react';
-import { useRecoilState } from 'recoil';
+import { useDispatch, useSelector } from 'react-redux';
 import { AreaContext } from '../../context/area.context';
 import { SectionContext } from '../../context/section.context';
-import { locationState } from '../../state/location/location.state';
+import { locationSetActiveStepId } from '../../store/location/location.actions';
+import { getActiveStepId } from '../../store/location/location.selectors';
 import styles from './Step.module.css';
 
 interface Props {
@@ -12,15 +13,16 @@ interface Props {
 export const Step: FunctionComponent<Props> = ({ children, id }) => {
   const area = useContext(AreaContext);
   const section = useContext(SectionContext);
-  const [location, setLocation] = useRecoilState(locationState);
+  const activeStepId = useSelector(getActiveStepId);
+  const dispatch = useDispatch();
 
   const stepId = `${area}_${section}_${id}`;
 
   const onClick = () => {
-    if (location.activeStep === stepId) {
-      setLocation({ activeStep: undefined });
+    if (activeStepId === stepId) {
+      dispatch(locationSetActiveStepId(undefined));
     } else {
-      setLocation({ activeStep: stepId });
+      dispatch(locationSetActiveStepId(stepId));
     }
   };
 

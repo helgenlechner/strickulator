@@ -1,13 +1,23 @@
 import React, { FunctionComponent } from 'react';
-import { useRecoilState } from 'recoil';
-import { swatchState } from '../../state/swatch/swatch.state';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getNumberOfSwatchRows,
+  getNumberOfSwatchStitches,
+  getSwatchHeight,
+  getSwatchWidth,
+} from '../../patterns/p1295/selectors/p1295.swatch.selectors';
+import { projectUpdateSwatch } from '../../store/project/project.actions';
 import { LabeledNumberInput } from '../labeledInput/LabeledNumberInput';
 
 export const SwatchInput: FunctionComponent = () => {
-  const [swatch, setSwatch] = useRecoilState(swatchState);
+  const numberOfStitches = useSelector(getNumberOfSwatchStitches);
+  const numberOfRows = useSelector(getNumberOfSwatchRows);
+  const width = useSelector(getSwatchWidth);
+  const height = useSelector(getSwatchHeight);
+  const dispatch = useDispatch();
 
   const onChange = (key: string, value: number | undefined) => {
-    setSwatch({ ...swatch, [key]: value });
+    dispatch(projectUpdateSwatch('0', { [key]: value }));
   };
 
   return (
@@ -16,7 +26,7 @@ export const SwatchInput: FunctionComponent = () => {
         name="numberOfStitches"
         placeholder={100}
         onChange={onChange}
-        value={swatch.numberOfStitches ?? ''}
+        value={numberOfStitches ?? ''}
       >
         Number of Stitches
       </LabeledNumberInput>
@@ -25,7 +35,7 @@ export const SwatchInput: FunctionComponent = () => {
         name="numberOfRows"
         placeholder={100}
         onChange={onChange}
-        value={swatch.numberOfRows ?? ''}
+        value={numberOfRows ?? ''}
       >
         Number of Rows
       </LabeledNumberInput>
@@ -34,7 +44,7 @@ export const SwatchInput: FunctionComponent = () => {
         name="width"
         placeholder={33.65}
         onChange={onChange}
-        value={swatch.width ?? ''}
+        value={width ?? ''}
       >
         Width
       </LabeledNumberInput>
@@ -43,7 +53,7 @@ export const SwatchInput: FunctionComponent = () => {
         name="height"
         placeholder={24.76}
         onChange={onChange}
-        value={swatch.height ?? ''}
+        value={height ?? ''}
       >
         Height
       </LabeledNumberInput>
