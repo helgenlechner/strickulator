@@ -25,19 +25,110 @@ import {
   getSlopeForLowerBottomArmholeDecreases,
   getSlopeForUpperBottomArmholeDecreases,
 } from '../selectors/p1295.directions.selectors';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { getIsKnittedInTheRound } from '../selectors/p1295.knittingStyle.selectors';
+import { AppState } from '../../../store/store.model';
+import { Slope } from '../../../helpers/slope';
+import { PatternProps } from '../../../store/pattern/pattern.model';
 
-export const FrontDirections: FunctionComponent = () => {
-  const numberOfNecklineRows = useSelector(getNumberOfFrontNecklineRows);
-  const numberOfRowsAtShoulder = useSelector(getFrontNumberOfRowsAtShoulder);
-  const numberOfStraightRowsBetweenArmholes = useSelector(
-    getNumberOfStraightRowsBetweenArmholes,
-  );
+interface ConnectedState {
+  numberOfNecklineRows: number | undefined;
+  numberOfRowsAtShoulder: number | undefined;
+  numberOfStraightRowsBetweenArmholes: number | undefined;
+  necklineSlope: Slope | undefined;
+  numberOfHemStitches: number | undefined;
+  numberOfHemRows: number | undefined;
+  slopeForBodiceIncreases: Slope | undefined;
+  isKnittedInTheRound: boolean;
+  numberOfStitchesBelowArmhole: number | undefined;
+  numberOfArmholeStitchesToCastOff: number | undefined;
+  numberOfStitchesAtBottomOfArmhole: number | undefined;
+  slopeForLowerBottomArmholeDecreases: Slope | undefined;
+  numberOfStitchesAfterLowerBottomArmholeDecreases: number | undefined;
+  slopeForUpperBottomArmholeDecreases: Slope | undefined;
+  numberOfStitchesBetweenArmholes: number | undefined;
+  doesNecklineStartInSectionE: boolean;
+  armscyeSlope: Slope | undefined;
+  doesNecklineStartInSectionF: boolean;
+  numberOfStitchesForFrontShoulderCastOff: number | undefined;
+}
 
+const mapStateToProps = (
+  state: AppState,
+  ownProps: PatternProps,
+): ConnectedState => ({
+  numberOfNecklineRows: getNumberOfFrontNecklineRows(state, ownProps),
+  numberOfRowsAtShoulder: getFrontNumberOfRowsAtShoulder(state, ownProps),
+  numberOfStraightRowsBetweenArmholes: getNumberOfStraightRowsBetweenArmholes(
+    state,
+    ownProps,
+  ),
+  necklineSlope: getFrontNecklineSlope(state, ownProps),
+  numberOfHemStitches: getNumberOfHemStitches(state, ownProps),
+  numberOfHemRows: getNumberOfHemRows(state, ownProps),
+  slopeForBodiceIncreases: getSlopeForBodiceIncreases(state, ownProps),
+  isKnittedInTheRound: getIsKnittedInTheRound(state, ownProps),
+  numberOfStitchesBelowArmhole: getNumberOfStitchesBelowArmhole(
+    state,
+    ownProps,
+  ),
+  numberOfArmholeStitchesToCastOff: getNumberOfArmholeStitchesToCastOff(
+    state,
+    ownProps,
+  ),
+  numberOfStitchesAtBottomOfArmhole: getNumberOfStitchesAtBottomOfArmhole(
+    state,
+    ownProps,
+  ),
+  slopeForLowerBottomArmholeDecreases: getSlopeForLowerBottomArmholeDecreases(
+    state,
+    ownProps,
+  ),
+  numberOfStitchesAfterLowerBottomArmholeDecreases: getNumberOfStitchesAfterLowerBottomArmholeDecreases(
+    state,
+    ownProps,
+  ),
+  slopeForUpperBottomArmholeDecreases: getSlopeForUpperBottomArmholeDecreases(
+    state,
+    ownProps,
+  ),
+  numberOfStitchesBetweenArmholes: getFrontNumberOfStitchesBetweenArmholes(
+    state,
+    ownProps,
+  ),
+  doesNecklineStartInSectionE: getDoesNecklineStartInSectionE(state, ownProps),
+  armscyeSlope: getFrontArmscyeSlope(state, ownProps),
+  doesNecklineStartInSectionF: getDoesNecklineStartInSectionF(state, ownProps),
+  numberOfStitchesForFrontShoulderCastOff: getNumberOfStitchesForFrontShoulderCastOff(
+    state,
+    ownProps,
+  ),
+});
+
+const FrontDirections_: FunctionComponent<PatternProps & ConnectedState> = ({
+  numberOfNecklineRows,
+  numberOfRowsAtShoulder,
+  numberOfStraightRowsBetweenArmholes,
+  necklineSlope,
+  numberOfHemStitches,
+  numberOfHemRows,
+  slopeForBodiceIncreases,
+  isKnittedInTheRound,
+  numberOfStitchesBelowArmhole,
+  numberOfArmholeStitchesToCastOff,
+  numberOfStitchesAtBottomOfArmhole,
+  slopeForLowerBottomArmholeDecreases,
+  numberOfStitchesAfterLowerBottomArmholeDecreases,
+  slopeForUpperBottomArmholeDecreases,
+  numberOfStitchesBetweenArmholes,
+  doesNecklineStartInSectionE,
+  armscyeSlope,
+  doesNecklineStartInSectionF,
+  numberOfStitchesForFrontShoulderCastOff,
+}) => {
   const necklineSlopeDescription = (
     <SlopeDescription
-      slope={useSelector(getFrontNecklineSlope)}
+      slope={necklineSlope}
       manipulationLocation="at the neckline"
     />
   );
@@ -46,31 +137,25 @@ export const FrontDirections: FunctionComponent = () => {
     <Directions id="front">
       <Section id="A">
         <Step id="1">
-          Cast on{' '}
-          <HighlightedValue>
-            {useSelector(getNumberOfHemStitches)}
-          </HighlightedValue>{' '}
+          Cast on <HighlightedValue>{numberOfHemStitches}</HighlightedValue>{' '}
           &times; 2 stitches in 2:2 industrial rib.
         </Step>
         <Step id="2">
           Knit ribbing for{' '}
-          <HighlightedValue>{useSelector(getNumberOfHemRows)}</HighlightedValue>{' '}
-          rows.
+          <HighlightedValue>{numberOfHemRows}</HighlightedValue> rows.
         </Step>
         <Step id="3">Transfer all stitches to front bed.</Step>
       </Section>
       <Section id="B">
         <Step id="1">
           <SlopeDescription
-            slope={useSelector(getSlopeForBodiceIncreases)}
-            duplicateRowCounts={useSelector(getIsKnittedInTheRound)}
+            slope={slopeForBodiceIncreases}
+            duplicateRowCounts={isKnittedInTheRound}
           />
         </Step>
         <Step id="2">
           There should be{' '}
-          <HighlightedValue>
-            {useSelector(getNumberOfStitchesBelowArmhole)}
-          </HighlightedValue>{' '}
+          <HighlightedValue>{numberOfStitchesBelowArmhole}</HighlightedValue>{' '}
           &times; 2 stitches on the needles.
         </Step>
       </Section>
@@ -78,42 +163,35 @@ export const FrontDirections: FunctionComponent = () => {
         <Step id="1">
           Cast off{' '}
           <HighlightedValue>
-            {useSelector(getNumberOfArmholeStitchesToCastOff)}
+            {numberOfArmholeStitchesToCastOff}
           </HighlightedValue>{' '}
-          {pluralizeStitch(useSelector(getNumberOfArmholeStitchesToCastOff))} on
-          either side.
+          {pluralizeStitch(numberOfArmholeStitchesToCastOff)} on either side.
         </Step>
         <Step id="2">
           There should be{' '}
           <HighlightedValue>
-            {useSelector(getNumberOfStitchesAtBottomOfArmhole)}
+            {numberOfStitchesAtBottomOfArmhole}
           </HighlightedValue>{' '}
           &times; 2 stitches.
         </Step>
         <Step id="3">
-          <SlopeDescription
-            slope={useSelector(getSlopeForLowerBottomArmholeDecreases)}
-          />
+          <SlopeDescription slope={slopeForLowerBottomArmholeDecreases} />
         </Step>
         <Step id="4">
           There should be{' '}
           <HighlightedValue>
-            {useSelector(getNumberOfStitchesAfterLowerBottomArmholeDecreases)}
+            {numberOfStitchesAfterLowerBottomArmholeDecreases}
           </HighlightedValue>{' '}
           &times; 2 stitches.
         </Step>
       </Section>
       <Section id="D">
         <Step id="1">
-          <SlopeDescription
-            slope={useSelector(getSlopeForUpperBottomArmholeDecreases)}
-          />
+          <SlopeDescription slope={slopeForUpperBottomArmholeDecreases} />
         </Step>
         <Step id="2">
           There should be{' '}
-          <HighlightedValue>
-            {useSelector(getFrontNumberOfStitchesBetweenArmholes)}
-          </HighlightedValue>{' '}
+          <HighlightedValue>{numberOfStitchesBetweenArmholes}</HighlightedValue>{' '}
           &times; 2 stitches.
         </Step>
       </Section>
@@ -125,7 +203,7 @@ export const FrontDirections: FunctionComponent = () => {
           </HighlightedValue>{' '}
           rows.
         </Step>
-        {useSelector(getDoesNecklineStartInSectionE) && (
+        {doesNecklineStartInSectionE && (
           <>
             <Step id="2">
               Once{' '}
@@ -146,11 +224,11 @@ export const FrontDirections: FunctionComponent = () => {
       <Section id="F">
         <Step id="1">
           <SlopeDescription
-            slope={useSelector(getFrontArmscyeSlope)}
+            slope={armscyeSlope}
             manipulationLocation="at the armscye"
           />
         </Step>
-        {useSelector(getDoesNecklineStartInSectionF) && (
+        {doesNecklineStartInSectionF && (
           <>
             <Step id="2">
               Once{' '}
@@ -166,7 +244,7 @@ export const FrontDirections: FunctionComponent = () => {
         <Step id="4">
           Cast off{' '}
           <HighlightedValue>
-            {useSelector(getNumberOfStitchesForFrontShoulderCastOff)}
+            {numberOfStitchesForFrontShoulderCastOff}
           </HighlightedValue>{' '}
           stitches.
         </Step>
@@ -175,3 +253,5 @@ export const FrontDirections: FunctionComponent = () => {
     </Directions>
   );
 };
+
+export const FrontDirections = connect(mapStateToProps)(FrontDirections_);

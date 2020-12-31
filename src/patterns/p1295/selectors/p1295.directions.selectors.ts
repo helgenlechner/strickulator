@@ -4,8 +4,6 @@ import { divideRoundToEvenNumberAndHalve } from '../../../helpers/divideRoundToE
 import { calculateHypotenuse } from '../../../helpers/hypotenuse';
 import { roundToEvenNumber } from '../../../helpers/rounding';
 import { calculateSlope } from '../../../helpers/slope';
-import { KnittingStyle, Project } from '../../../store/project/project.model';
-import { AppState } from '../../../store/store.model';
 import {
   getBackHeightAtShoulders,
   getBackWidthBetweenArmholes,

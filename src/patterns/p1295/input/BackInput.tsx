@@ -9,8 +9,8 @@ import {
 } from '../selectors/p1295.measurements.selectors';
 import { projectUpdateMeasurements } from '../../../store/project/project.actions';
 import { Dispatch } from 'redux';
-import { ProjectId } from '../../../store/project/project.model';
 import { P1295Measurements } from '../p1295.model';
+import { PatternProps } from '../../../store/pattern/pattern.model';
 
 interface ConnectedState {
   widthBetweenArmholes: number | undefined;
@@ -18,32 +18,37 @@ interface ConnectedState {
   neckWidth: number | undefined;
 }
 
-const mapStateToProps = (state: AppState): ConnectedState => ({
-  widthBetweenArmholes: getBackWidthBetweenArmholes(state),
-  heightAtShoulders: getBackHeightAtShoulders(state),
-  neckWidth: getNeckWidth(state),
+const mapStateToProps = (
+  state: AppState,
+  ownProps: PatternProps,
+): ConnectedState => ({
+  widthBetweenArmholes: getBackWidthBetweenArmholes(state, ownProps),
+  heightAtShoulders: getBackHeightAtShoulders(state, ownProps),
+  neckWidth: getNeckWidth(state, ownProps),
 });
 
 interface ConnectedDispatch {
-  updateMeasurements: (
-    projectId: ProjectId,
-    measurements: Partial<P1295Measurements>,
-  ) => void;
+  updateMeasurements: (measurements: Partial<P1295Measurements>) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): ConnectedDispatch => ({
-  updateMeasurements: (projectId, measurements) =>
-    dispatch(projectUpdateMeasurements(projectId, measurements)),
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  ownProps: PatternProps,
+): ConnectedDispatch => ({
+  updateMeasurements: (measurements) =>
+    dispatch(projectUpdateMeasurements(ownProps.projectId, measurements)),
 });
 
-const BackInput_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
+const BackInput_: FunctionComponent<
+  PatternProps & ConnectedState & ConnectedDispatch
+> = ({
   widthBetweenArmholes,
   heightAtShoulders,
   neckWidth,
   updateMeasurements,
 }) => {
   const onChange = (key: string, value: number | undefined) => {
-    updateMeasurements('0', { [key]: value });
+    updateMeasurements({ [key]: value });
   };
 
   return (

@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { LabeledNumberInput } from '../../../components/labeledInput/LabeledNumberInput';
 import { connect } from 'react-redux';
 import { AppState } from '../../../store/store.model';
-import { ProjectId } from '../../../store/project/project.model';
 import { P1295Measurements } from '../p1295.model';
 import { Dispatch } from 'redux';
 import { projectUpdateMeasurements } from '../../../store/project/project.actions';
@@ -13,6 +12,7 @@ import {
   getWristToUnderarm,
   getWristWidth,
 } from '../selectors/p1295.measurements.selectors';
+import { PatternProps } from '../../../store/pattern/pattern.model';
 
 interface ConnectedState {
   wristWidth: number | undefined;
@@ -22,24 +22,27 @@ interface ConnectedState {
   underarmToSleeveHead: number | undefined;
 }
 
-const mapStateToProps = (state: AppState): ConnectedState => ({
-  wristWidth: getWristWidth(state),
-  hemHeight: getSleeveHemHeight(state),
-  underarmWidth: getUnderarmWidth(state),
-  wristToUnderarm: getWristToUnderarm(state),
-  underarmToSleeveHead: getUnderarmToSleeveHead(state),
+const mapStateToProps = (
+  state: AppState,
+  ownProps: PatternProps,
+): ConnectedState => ({
+  wristWidth: getWristWidth(state, ownProps),
+  hemHeight: getSleeveHemHeight(state, ownProps),
+  underarmWidth: getUnderarmWidth(state, ownProps),
+  wristToUnderarm: getWristToUnderarm(state, ownProps),
+  underarmToSleeveHead: getUnderarmToSleeveHead(state, ownProps),
 });
 
 interface ConnectedDispatch {
-  updateMeasurements: (
-    projectId: ProjectId,
-    measurements: Partial<P1295Measurements>,
-  ) => void;
+  updateMeasurements: (measurements: Partial<P1295Measurements>) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): ConnectedDispatch => ({
-  updateMeasurements: (projectId, measurements) =>
-    dispatch(projectUpdateMeasurements(projectId, measurements)),
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  ownProps: PatternProps,
+): ConnectedDispatch => ({
+  updateMeasurements: (measurements) =>
+    dispatch(projectUpdateMeasurements(ownProps.projectId, measurements)),
 });
 
 const SleeveInput_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
@@ -51,7 +54,7 @@ const SleeveInput_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
   updateMeasurements,
 }) => {
   const onChange = (key: string, value: number | undefined) => {
-    updateMeasurements('0', { [key]: value });
+    updateMeasurements({ [key]: value });
   };
 
   return (

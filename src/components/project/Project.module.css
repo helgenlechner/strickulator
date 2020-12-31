@@ -1,0 +1,19 @@
+.project {
+  margin: 20px;
+}
+
+.project section {
+  display: flex;
+}
+
+.project section > div {
+  flex-basis: 50%;
+}
+
+.project section > div:first-child {
+  margin-right: 10px;
+}
+
+.project section > div + div {
+  margin-left: 10px;
+}

@@ -4,7 +4,7 @@ import { HighlightedValue } from '../../../components/highlightedValue/Highlight
 import { Section } from '../../../components/section/Section';
 import { SlopeDescription } from '../../../components/slopeDescription/SlopeDescription';
 import { Step } from '../../../components/step/Step';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import {
   getNumberOfArmholeStitchesToCastOff,
   getNumberOfRowsForSleeveHem,
@@ -16,66 +16,102 @@ import {
   getSlopeForSleeveIncreases,
 } from '../selectors/p1295.directions.selectors';
 import { getIsKnittedInTheRound } from '../selectors/p1295.knittingStyle.selectors';
+import { Slope } from '../../../helpers/slope';
+import { AppState } from '../../../store/store.model';
+import { PatternProps } from '../../../store/pattern/pattern.model';
 
-export const SleeveDirections: FunctionComponent = () => (
+interface ConnectedState {
+  numberOfStitchesAtWrist: number | undefined;
+  numberOfRowsForSleeveHem: number | undefined;
+  slopeForSleeveIncreases: Slope | undefined;
+  numberOfStitchesAtUnderarm: number | undefined;
+  numberOfArmholeStitchesToCastOff: number | undefined;
+  numberOfStitchesAfterArmholeCastOff: number | undefined;
+  sleeveArmScyeSlope: Slope | undefined;
+  isKnittedInTheRound: boolean;
+  numberOfSleeveHeadStitches: number | undefined;
+}
+
+const mapStateToProps = (
+  state: AppState,
+  ownProps: PatternProps,
+): ConnectedState => ({
+  numberOfStitchesAtWrist: getNumberOfStitchesAtWrist(state, ownProps),
+  numberOfRowsForSleeveHem: getNumberOfRowsForSleeveHem(state, ownProps),
+  slopeForSleeveIncreases: getSlopeForSleeveIncreases(state, ownProps),
+  numberOfStitchesAtUnderarm: getNumberOfStitchesAtUnderarm(state, ownProps),
+  numberOfArmholeStitchesToCastOff: getNumberOfArmholeStitchesToCastOff(
+    state,
+    ownProps,
+  ),
+  numberOfStitchesAfterArmholeCastOff: getNumberOfStitchesAfterArmholeCastOff(
+    state,
+    ownProps,
+  ),
+  sleeveArmScyeSlope: getSleeveArmScyeSlope(state, ownProps),
+  isKnittedInTheRound: getIsKnittedInTheRound(state, ownProps),
+  numberOfSleeveHeadStitches: getNumberOfSleeveHeadStitches(state, ownProps),
+});
+
+const SleeveDirections_: FunctionComponent<PatternProps & ConnectedState> = ({
+  numberOfStitchesAtWrist,
+  numberOfRowsForSleeveHem,
+  slopeForSleeveIncreases,
+  numberOfStitchesAtUnderarm,
+  numberOfArmholeStitchesToCastOff,
+  numberOfStitchesAfterArmholeCastOff,
+  sleeveArmScyeSlope,
+  isKnittedInTheRound,
+  numberOfSleeveHeadStitches,
+}) => (
   <Directions id="sleeve">
     <Section id="A">
       <Step id="1">
-        Cast on{' '}
-        <HighlightedValue>
-          {useSelector(getNumberOfStitchesAtWrist)}
-        </HighlightedValue>{' '}
+        Cast on <HighlightedValue>{numberOfStitchesAtWrist}</HighlightedValue>{' '}
         &times; 2 stitches in 2:2 industrial rib.
       </Step>
       <Step id="2">
         Knit ribbing for{' '}
-        <HighlightedValue>
-          {useSelector(getNumberOfRowsForSleeveHem)}
-        </HighlightedValue>{' '}
-        rows.
+        <HighlightedValue>{numberOfRowsForSleeveHem}</HighlightedValue> rows.
       </Step>
       <Step id="3">Transfer all stitches to front bed.</Step>
     </Section>
     <Section id="B">
       <Step id="1">
         <SlopeDescription
-          slope={useSelector(getSlopeForSleeveIncreases)}
-          duplicateRowCounts={useSelector(getIsKnittedInTheRound)}
+          slope={slopeForSleeveIncreases}
+          duplicateRowCounts={isKnittedInTheRound}
         />
       </Step>
       <Step id="2">
         There should be{' '}
-        <HighlightedValue>
-          {useSelector(getNumberOfStitchesAtUnderarm)}
-        </HighlightedValue>{' '}
+        <HighlightedValue>{numberOfStitchesAtUnderarm}</HighlightedValue>{' '}
         &times; 2 stitches on the needles.
       </Step>
     </Section>
     <Section id="C">
       <Step id="1">
         Cast off{' '}
-        <HighlightedValue>
-          {useSelector(getNumberOfArmholeStitchesToCastOff)}
-        </HighlightedValue>{' '}
+        <HighlightedValue>{numberOfArmholeStitchesToCastOff}</HighlightedValue>{' '}
         stitches on either side. There should be{' '}
         <HighlightedValue>
-          {useSelector(getNumberOfStitchesAfterArmholeCastOff)}
+          {numberOfStitchesAfterArmholeCastOff}
         </HighlightedValue>{' '}
         &times; 2 stitches.
       </Step>
       <Step id="2">
         <SlopeDescription
-          slope={useSelector(getSleeveArmScyeSlope)}
-          duplicateRowCounts={useSelector(getIsKnittedInTheRound)}
+          slope={sleeveArmScyeSlope}
+          duplicateRowCounts={isKnittedInTheRound}
         />
       </Step>
       <Step id="3">
         There should be{' '}
-        <HighlightedValue>
-          {useSelector(getNumberOfSleeveHeadStitches)}
-        </HighlightedValue>{' '}
+        <HighlightedValue>{numberOfSleeveHeadStitches}</HighlightedValue>{' '}
         &times; 2 stitches to cast off.
       </Step>
     </Section>
   </Directions>
 );
+
+export const SleeveDirections = connect(mapStateToProps)(SleeveDirections_);

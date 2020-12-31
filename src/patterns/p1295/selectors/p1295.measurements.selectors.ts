@@ -1,9 +1,5 @@
 import { createSelector } from 'redux-views';
-import { Project } from '../../../store/project/project.model';
-import { AppState } from '../../../store/store.model';
-
-const getProject = (state: AppState): Project | undefined =>
-  state.projects['0'];
+import { getProject } from '../../../store/project/project.selectors';
 
 const getMeasurements = createSelector(
   [getProject],

@@ -1,16 +1,30 @@
 import { useSelector } from 'react-redux';
-import { Selector } from 'redux-views';
+import { ParametricSelector } from 'redux-views';
 import {
   getHeightOfOneRow,
   getWidthOfOneStitch,
 } from '../patterns/p1295/selectors/p1295.swatch.selectors';
+import { ProjectId } from '../store/project/project.model';
 import { AppState } from '../store/store.model';
+import { useParams } from 'react-router-dom';
 
 const resizeFactor = 6;
 
-export const useWidth = (selector: Selector<AppState, number | undefined>) => {
-  const widthOfOneStitch = useSelector(getWidthOfOneStitch);
-  const numberOfStitches = useSelector(selector);
+type Selector = ParametricSelector<
+  AppState,
+  { projectId: ProjectId },
+  number | undefined
+>;
+
+export const useWidth = (selector: Selector) => {
+  const { projectId } = useParams<{ projectId: ProjectId }>();
+
+  const widthOfOneStitch = useSelector((state: AppState) =>
+    getWidthOfOneStitch(state, { projectId }),
+  );
+  const numberOfStitches = useSelector((state: AppState) =>
+    selector(state, { projectId }),
+  );
 
   if (!numberOfStitches || !widthOfOneStitch) {
     return 0;
@@ -19,9 +33,15 @@ export const useWidth = (selector: Selector<AppState, number | undefined>) => {
   return numberOfStitches * widthOfOneStitch * resizeFactor;
 };
 
-export const useHeight = (selector: Selector<AppState, number | undefined>) => {
-  const heightOfOneRow = useSelector(getHeightOfOneRow);
-  const numberOfRows = useSelector(selector);
+export const useHeight = (selector: Selector) => {
+  const { projectId } = useParams<{ projectId: ProjectId }>();
+
+  const heightOfOneRow = useSelector((state: AppState) =>
+    getHeightOfOneRow(state, { projectId }),
+  );
+  const numberOfRows = useSelector((state: AppState) =>
+    selector(state, { projectId }),
+  );
 
   if (!numberOfRows || !heightOfOneRow) {
     return 0;

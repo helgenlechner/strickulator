@@ -1,23 +1,56 @@
 import React, { FunctionComponent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import {
   getNumberOfSwatchRows,
   getNumberOfSwatchStitches,
   getSwatchHeight,
   getSwatchWidth,
 } from '../../patterns/p1295/selectors/p1295.swatch.selectors';
+import { PatternProps } from '../../store/pattern/pattern.model';
 import { projectUpdateSwatch } from '../../store/project/project.actions';
+import { ProjectId, Swatch } from '../../store/project/project.model';
+import { AppState } from '../../store/store.model';
 import { LabeledNumberInput } from '../labeledInput/LabeledNumberInput';
 
-export const SwatchInput: FunctionComponent = () => {
-  const numberOfStitches = useSelector(getNumberOfSwatchStitches);
-  const numberOfRows = useSelector(getNumberOfSwatchRows);
-  const width = useSelector(getSwatchWidth);
-  const height = useSelector(getSwatchHeight);
-  const dispatch = useDispatch();
+interface ConnectedState {
+  numberOfStitches: number | undefined;
+  numberOfRows: number | undefined;
+  width: number | undefined;
+  height: number | undefined;
+}
 
+const mapStateToProps = (
+  state: AppState,
+  ownProps: PatternProps,
+): ConnectedState => ({
+  numberOfStitches: getNumberOfSwatchStitches(state, ownProps),
+  numberOfRows: getNumberOfSwatchRows(state, ownProps),
+  width: getSwatchWidth(state, ownProps),
+  height: getSwatchHeight(state, ownProps),
+});
+
+interface ConnectedDispatch {
+  updateSwatch: (projectId: ProjectId, swatch: Partial<Swatch>) => void;
+}
+
+const mapDispatchToProps = (dispatch: Dispatch): ConnectedDispatch => ({
+  updateSwatch: (projectId, swatch) =>
+    dispatch(projectUpdateSwatch(projectId, swatch)),
+});
+
+const SwatchInput_: FunctionComponent<
+  PatternProps & ConnectedState & ConnectedDispatch
+> = ({
+  numberOfStitches,
+  numberOfRows,
+  width,
+  height,
+  updateSwatch,
+  projectId,
+}) => {
   const onChange = (key: string, value: number | undefined) => {
-    dispatch(projectUpdateSwatch('0', { [key]: value }));
+    updateSwatch(projectId, { [key]: value });
   };
 
   return (
@@ -60,3 +93,8 @@ export const SwatchInput: FunctionComponent = () => {
     </>
   );
 };
+
+export const SwatchInput = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SwatchInput_);

@@ -10,7 +10,7 @@ import {
   getFrontWidthBetweenArmholes,
   getNecklineDepth,
 } from '../selectors/p1295.measurements.selectors';
-import { ProjectId } from '../../../store/project/project.model';
+import { PatternProps } from '../../../store/pattern/pattern.model';
 
 interface ConnectedState {
   widthBetweenArmholes: number | undefined;
@@ -18,22 +18,25 @@ interface ConnectedState {
   necklineDepth: number | undefined;
 }
 
-const mapStateToProps = (state: AppState): ConnectedState => ({
-  widthBetweenArmholes: getFrontWidthBetweenArmholes(state),
-  heightAtShoulders: getFrontHeightAtShoulders(state),
-  necklineDepth: getNecklineDepth(state),
+const mapStateToProps = (
+  state: AppState,
+  ownProps: PatternProps,
+): ConnectedState => ({
+  widthBetweenArmholes: getFrontWidthBetweenArmholes(state, ownProps),
+  heightAtShoulders: getFrontHeightAtShoulders(state, ownProps),
+  necklineDepth: getNecklineDepth(state, ownProps),
 });
 
 interface ConnectedDispatch {
-  updateMeasurements: (
-    projectId: ProjectId,
-    measurements: Partial<P1295Measurements>,
-  ) => void;
+  updateMeasurements: (measurements: Partial<P1295Measurements>) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): ConnectedDispatch => ({
-  updateMeasurements: (projectId, measurements) =>
-    dispatch(projectUpdateMeasurements(projectId, measurements)),
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  ownProps: PatternProps,
+): ConnectedDispatch => ({
+  updateMeasurements: (measurements) =>
+    dispatch(projectUpdateMeasurements(ownProps.projectId, measurements)),
 });
 
 const FrontInput_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
@@ -43,7 +46,7 @@ const FrontInput_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
   updateMeasurements,
 }) => {
   const onChange = (key: string, value: number | undefined) => {
-    updateMeasurements('0', { [key]: value });
+    updateMeasurements({ [key]: value });
   };
 
   return (

@@ -2,11 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { getKnittingStyle } from '../../patterns/p1295/selectors/p1295.knittingStyle.selectors';
+import { PatternProps } from '../../store/pattern/pattern.model';
 import { projectUpdateKnittingStyle } from '../../store/project/project.actions';
-import {
-  KnittingStyle as KnittingStyleEnum,
-  ProjectId,
-} from '../../store/project/project.model';
+import { KnittingStyle as KnittingStyleEnum } from '../../store/project/project.model';
 import { AppState } from '../../store/store.model';
 import { LabeledRadioInput } from '../labeledInput/LabeledRadioInput';
 
@@ -19,20 +17,23 @@ interface ConnectedState {
   knittingStyle: KnittingStyleEnum;
 }
 
-const mapStateToProps = (state: AppState): ConnectedState => ({
-  knittingStyle: getKnittingStyle(state),
+const mapStateToProps = (
+  state: AppState,
+  ownProps: PatternProps,
+): ConnectedState => ({
+  knittingStyle: getKnittingStyle(state, ownProps),
 });
 
 interface ConnectedDispatch {
-  updateKnittingStyle: (
-    projectId: ProjectId,
-    knittingStyle: KnittingStyleEnum,
-  ) => void;
+  updateKnittingStyle: (knittingStyle: KnittingStyleEnum) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): ConnectedDispatch => ({
-  updateKnittingStyle: (projectId, measurements) =>
-    dispatch(projectUpdateKnittingStyle(projectId, measurements)),
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  ownProps: PatternProps,
+): ConnectedDispatch => ({
+  updateKnittingStyle: (measurements) =>
+    dispatch(projectUpdateKnittingStyle(ownProps.projectId, measurements)),
 });
 
 const KnittingStyle_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
@@ -41,7 +42,7 @@ const KnittingStyle_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
 }) => {
   const onChange = (value: string | number) => {
     if (typeof value === 'number') {
-      updateKnittingStyle('0', value);
+      updateKnittingStyle(value);
     }
   };
 

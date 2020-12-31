@@ -1,9 +1,6 @@
 import { createSelector } from 'redux-views';
-import { KnittingStyle, Project } from '../../../store/project/project.model';
-import { AppState } from '../../../store/store.model';
-
-const getProject = (state: AppState): Project | undefined =>
-  state.projects['0'];
+import { KnittingStyle } from '../../../store/project/project.model';
+import { getProject } from '../../../store/project/project.selectors';
 
 export const getKnittingStyle = createSelector(
   [getProject],

@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { LabeledNumberInput } from '../../../components/labeledInput/LabeledNumberInput';
 import { connect } from 'react-redux';
 import { AppState } from '../../../store/store.model';
-import { ProjectId } from '../../../store/project/project.model';
 import { P1295Measurements } from '../p1295.model';
 import { Dispatch } from 'redux';
 import { projectUpdateMeasurements } from '../../../store/project/project.actions';
@@ -15,6 +14,7 @@ import {
   getWidthBelowArmhole,
   getWidthOfDecForArmhole,
 } from '../selectors/p1295.measurements.selectors';
+import { PatternProps } from '../../../store/pattern/pattern.model';
 
 interface ConnectedState {
   hemWidth: number | undefined;
@@ -26,26 +26,29 @@ interface ConnectedState {
   heightBetweenArmholes: number | undefined;
 }
 
-const mapStateToProps = (state: AppState): ConnectedState => ({
-  hemWidth: getHemWidth(state),
-  hemHeight: getHemHeight(state),
-  widthBelowArmhole: getWidthBelowArmhole(state),
-  bodiceHeightUntilArmhole: getBodiceHeightUntilArmhole(state),
-  widthOfDecForArmhole: getWidthOfDecForArmhole(state),
-  bottomArmholeHeight: getBottomArmholeHeight(state),
-  heightBetweenArmholes: getHeightBetweenArmholes(state),
+const mapStateToProps = (
+  state: AppState,
+  ownProps: PatternProps,
+): ConnectedState => ({
+  hemWidth: getHemWidth(state, ownProps),
+  hemHeight: getHemHeight(state, ownProps),
+  widthBelowArmhole: getWidthBelowArmhole(state, ownProps),
+  bodiceHeightUntilArmhole: getBodiceHeightUntilArmhole(state, ownProps),
+  widthOfDecForArmhole: getWidthOfDecForArmhole(state, ownProps),
+  bottomArmholeHeight: getBottomArmholeHeight(state, ownProps),
+  heightBetweenArmholes: getHeightBetweenArmholes(state, ownProps),
 });
 
 interface ConnectedDispatch {
-  updateMeasurements: (
-    projectId: ProjectId,
-    measurements: Partial<P1295Measurements>,
-  ) => void;
+  updateMeasurements: (measurements: Partial<P1295Measurements>) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): ConnectedDispatch => ({
-  updateMeasurements: (projectId, measurements) =>
-    dispatch(projectUpdateMeasurements(projectId, measurements)),
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  ownProps: PatternProps,
+): ConnectedDispatch => ({
+  updateMeasurements: (measurements) =>
+    dispatch(projectUpdateMeasurements(ownProps.projectId, measurements)),
 });
 
 const SharedMeasurementInput_: FunctionComponent<
@@ -61,7 +64,7 @@ const SharedMeasurementInput_: FunctionComponent<
   updateMeasurements,
 }) => {
   const onChange = (key: string, value: number | undefined) => {
-    updateMeasurements('0', { [key]: value });
+    updateMeasurements({ [key]: value });
   };
 
   return (
