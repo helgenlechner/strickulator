@@ -5,6 +5,7 @@ import {
   ProjectId,
   Swatch,
 } from './project.model';
+import { History } from 'history';
 
 export enum ProjectActions {
   create = '@@project/CREATE',
@@ -16,11 +17,13 @@ export enum ProjectActions {
 }
 
 export const projectCreate = (
+  history: History,
   patternId: PatternId,
   copySource?: ProjectId,
 ) => ({
   type: ProjectActions.create,
   payload: {
+    history,
     patternId,
     copySource,
   },

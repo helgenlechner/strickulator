@@ -1,47 +1,74 @@
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import React, { FunctionComponent, useEffect } from 'react';
-import { P1295Directions } from '../../patterns/p1295/directions/Directions';
-import { P1295Input } from '../../patterns/p1295/input/InputForm';
 import { ActiveStep } from '../activeStep/ActiveStep';
 import { KnittingStyle } from '../knittingStyle/KnittingStyle';
 import { SwatchInput } from '../swatchInput/SwatchInput';
-import ravelryLogo from './RavelryPrimaryLogo2020-Color.png';
 import styles from './Project.module.css';
-import { useParams } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { ProjectId } from '../../store/project/project.model';
+import { Title } from './Title';
+import { RavelryLink } from './RavelryLink';
+import { Description } from './Description';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppState } from '../../store/store.model';
+import {
+  getPatternDirections,
+  getPatternIdForProject,
+  getPatternInputForm,
+} from '../../store/pattern/pattern.selectors';
+import { projectCreate } from '../../store/project/project.actions';
 
 export const Project: FunctionComponent = () => {
   const { trackPageView } = useMatomo();
+  const history = useHistory();
   const { projectId } = useParams<{ projectId: ProjectId }>();
+  const patternId = useSelector((state: AppState) =>
+    getPatternIdForProject(state, { projectId }),
+  );
+  const PatternInputForm = useSelector((state: AppState) =>
+    getPatternInputForm(state, { projectId }),
+  );
+  const PatternDirections = useSelector((state: AppState) =>
+    getPatternDirections(state, { projectId }),
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     trackPageView({});
   }, [trackPageView]);
 
+  if (!PatternInputForm || !PatternDirections) {
+    return <Redirect to="/projects/0" />;
+  }
+
   return (
     <>
       <ActiveStep />
       <div className={styles.project}>
-        <h1>1295 Men's Classical Sweater Calculator</h1>
+        <Title projectId={projectId} />
         <p>
-          <a href="https://ravel.me/1295-mens-classical">
-            <img
-              src={ravelryLogo}
-              alt="View on Ravelry"
-              title="View on Ravelry"
-              height="20"
-            />
-          </a>
+          <RavelryLink projectId={projectId} />
         </p>
         <p>
-          This calculator generates a machine knitting pattern for a classic
-          V-neck sweater according to your gauge and desired measurements, based
-          on <i>1295 Men's Classical</i> from{' '}
-          <a href="http://machineknittingetc.com/passap-03-pattern-book.html">
-            Passap Model Book 3
-          </a>
-          .
+          Create new project:
+          <button
+            onClick={() =>
+              patternId !== undefined &&
+              dispatch(projectCreate(history, patternId, projectId))
+            }
+          >
+            Copy from current project
+          </button>
+          <button
+            onClick={() =>
+              patternId !== undefined &&
+              dispatch(projectCreate(history, patternId))
+            }
+          >
+            Start from scratch
+          </button>
         </p>
+        <Description projectId={projectId} />
         <p>
           Please refer to the original pattern for further instructions. All
           measurements are in centimeters. The preview images show you what will
@@ -52,12 +79,12 @@ export const Project: FunctionComponent = () => {
         <SwatchInput projectId={projectId} />
         <h2>Measurements</h2>
         <div className={styles.inputForm}>
-          <P1295Input projectId={projectId} />
+          <PatternInputForm projectId={projectId} />
         </div>
         <h2>Knitting Style</h2>
         <KnittingStyle projectId={projectId} />
         <h2>Directions</h2>
-        <P1295Directions projectId={projectId} />
+        <PatternDirections projectId={projectId} />
       </div>
     </>
   );
