@@ -21,6 +21,15 @@ export const SlopeDescription: FunctionComponent<Props> = ({
       : slope.numberOfRows
     : undefined;
 
+  if (!slope || slope.delta === 0) {
+    return (
+      <>
+        Knit straight for <HighlightedValue>{numberOfRows}</HighlightedValue>{' '}
+        rows.
+      </>
+    );
+  }
+
   if (slope && 'pattern' in slope) {
     return (
       <>
