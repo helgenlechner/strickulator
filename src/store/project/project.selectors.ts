@@ -12,3 +12,8 @@ export const getProject = createSelector(
   [getProjects, getProjectId],
   (projects, projectId): Project | undefined => projects[projectId],
 );
+
+export const getProjectLabel = createSelector(
+  [getProject],
+  (project) => project?.label,
+);

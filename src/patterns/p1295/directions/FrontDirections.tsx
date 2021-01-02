@@ -28,7 +28,7 @@ import {
 import { connect } from 'react-redux';
 import { getIsKnittedInTheRound } from '../selectors/p1295.knittingStyle.selectors';
 import { AppState } from '../../../store/store.model';
-import { Slope } from '../../../helpers/slope';
+import { Slope, UnevenSlope } from '../../../helpers/slope';
 import { PatternProps } from '../../../store/pattern/pattern.model';
 
 interface ConnectedState {
@@ -126,12 +126,57 @@ const FrontDirections_: FunctionComponent<PatternProps & ConnectedState> = ({
   doesNecklineStartInSectionF,
   numberOfStitchesForFrontShoulderCastOff,
 }) => {
-  const necklineSlopeDescription = (
-    <SlopeDescription
-      slope={necklineSlope}
-      manipulationLocation="at the neckline"
-    />
-  );
+  let sectionENecklineSlope: UnevenSlope | undefined;
+  let sectionFNecklineSlope: UnevenSlope | undefined;
+
+  if (
+    necklineSlope &&
+    'pattern' in necklineSlope &&
+    doesNecklineStartInSectionE
+  ) {
+    sectionENecklineSlope = JSON.parse(
+      JSON.stringify(necklineSlope),
+    ) as UnevenSlope;
+
+    sectionFNecklineSlope = JSON.parse(
+      JSON.stringify(necklineSlope),
+    ) as UnevenSlope;
+
+    const startRCOfNeckline =
+      (numberOfStraightRowsBetweenArmholes ?? 0) +
+      (numberOfRowsAtShoulder ?? 0) -
+      (numberOfNecklineRows ?? 0);
+    const numberOfRowsInSectionE = numberOfStraightRowsBetweenArmholes;
+    const numberOfNecklineRowsKnittedInE =
+      (numberOfRowsInSectionE ?? 0) - startRCOfNeckline;
+
+    sectionENecklineSlope.pattern = {};
+    sectionENecklineSlope.numberOfRows = numberOfNecklineRowsKnittedInE;
+    sectionENecklineSlope.delta = 0;
+
+    sectionFNecklineSlope.pattern = {};
+    sectionFNecklineSlope.numberOfRows =
+      necklineSlope.numberOfRows - numberOfNecklineRowsKnittedInE;
+    sectionFNecklineSlope.delta = 0;
+
+    Object.keys(necklineSlope.pattern).forEach((key: string) => {
+      const numberKey = Number(key);
+
+      if (numberKey + startRCOfNeckline <= (numberOfRowsInSectionE ?? 0)) {
+        (sectionENecklineSlope as UnevenSlope).pattern[
+          numberKey + startRCOfNeckline
+        ] = necklineSlope.pattern[numberKey];
+        (sectionENecklineSlope as UnevenSlope).delta +=
+          necklineSlope.pattern[numberKey];
+      } else {
+        (sectionFNecklineSlope as UnevenSlope).pattern[
+          numberKey - numberOfNecklineRowsKnittedInE
+        ] = necklineSlope.pattern[numberKey];
+        (sectionFNecklineSlope as UnevenSlope).delta +=
+          necklineSlope.pattern[numberKey];
+      }
+    });
+  }
 
   return (
     <Directions id="front">
@@ -217,7 +262,12 @@ const FrontDirections_: FunctionComponent<PatternProps & ConnectedState> = ({
               next section's instructions for armscye shaping once the straight
               rows are finished):
             </Step>
-            <Step id="3">{necklineSlopeDescription}</Step>
+            <Step id="3">
+              <SlopeDescription
+                slope={sectionENecklineSlope ?? necklineSlope}
+                manipulationLocation="at the neckline"
+              />
+            </Step>
           </>
         )}
       </Section>
@@ -228,19 +278,24 @@ const FrontDirections_: FunctionComponent<PatternProps & ConnectedState> = ({
             manipulationLocation="at the armscye"
           />
         </Step>
-        {doesNecklineStartInSectionF && (
-          <>
-            <Step id="2">
-              Once{' '}
-              <HighlightedValue>
-                {(numberOfRowsAtShoulder ?? 0) - (numberOfNecklineRows ?? 0)}
-              </HighlightedValue>{' '}
-              rows of this section have been worked, divide the work into two
-              halves for the neckline and shape it:
-            </Step>
-            <Step id="3">{necklineSlopeDescription}</Step>
-          </>
+        {doesNecklineStartInSectionF ? (
+          <Step id="2">
+            Once{' '}
+            <HighlightedValue>
+              {(numberOfRowsAtShoulder ?? 0) - (numberOfNecklineRows ?? 0)}
+            </HighlightedValue>{' '}
+            rows of this section have been worked, divide the work into two
+            halves for the neckline and shape it:
+          </Step>
+        ) : (
+          <Step id="2">AT THE SAME TIME, continue shaping the neckline:</Step>
         )}
+        <Step id="3">
+          <SlopeDescription
+            slope={sectionFNecklineSlope ?? necklineSlope}
+            manipulationLocation="at the neckline"
+          />
+        </Step>
         <Step id="4">
           Cast off{' '}
           <HighlightedValue>

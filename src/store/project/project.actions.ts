@@ -66,3 +66,10 @@ export const projectUpdateKnittingStyle = (
     knittingStyle,
   },
 });
+
+export const projectDelete = (id: ProjectId) => ({
+  type: ProjectActions.delete,
+  payload: {
+    id,
+  },
+});

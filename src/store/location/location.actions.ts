@@ -1,5 +1,6 @@
 export enum LocationActions {
   SetActiveStepId = '@@location/SET_ACTIVE_STEP_ID',
+  ToggleMenuVisibility = '@@location/TOGGLE_MENU_VISIBILITY',
 }
 
 export const locationSetActiveStepId = (activeStepId: string | undefined) => ({
@@ -7,4 +8,8 @@ export const locationSetActiveStepId = (activeStepId: string | undefined) => ({
   payload: {
     activeStepId,
   },
+});
+
+export const locationToggleMenuVisibility = () => ({
+  type: LocationActions.ToggleMenuVisibility,
 });

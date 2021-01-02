@@ -1,0 +1,39 @@
+.header {
+  position: sticky;
+  top: 0;
+  padding: 10px;
+  background-color: var(--piggy-pink);
+}
+
+.header p {
+  margin: 0;
+  display: inline-block;
+  vertical-align: top;
+  font-family: 'Overlock', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  font-size: 20px;
+  vertical-align: 3px;
+}
+
+.dots {
+  display: inline-block;
+  width: 20px;
+  height: 19px;
+  cursor: pointer;
+  margin-top: 2px;
+  margin-right: 4px;
+}
+
+.dots span {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--pictorial-carmine);
+  margin-left: 8px;
+}
+
+.dots span + span {
+  margin-top: 2px;
+}

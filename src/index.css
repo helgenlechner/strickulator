@@ -7,7 +7,41 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+  --tyrian-purple: #490b3d;
+  --shocking-pink: #df2abb;
+  --piggy-pink: #f9dce5;
+  --lavender-blush: #fceef2;
+  --pictorial-carmine: #bd1e51;
+  --orange-yellow: #f1b814;
+}
+
+#root {
+  display: flex;
+}
+
+a {
+  color: var(--pictorial-carmine);
+}
+
+a:visited {
+  color: var(--tyrian-purple);
+}
+
+a:visited:hover {
+  color: var(--pictorial-carmine);
+}
+
+button {
+  background-color: var(--pictorial-carmine);
+  color: white;
+  border: none;
+  padding: 5px 8px;
+  margin: 0 2px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+button:hover {
+  cursor: pointer;
 }

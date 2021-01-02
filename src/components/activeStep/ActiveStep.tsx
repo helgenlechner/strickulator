@@ -24,7 +24,7 @@ export const ActiveStep: FunctionComponent = () => {
         style={{
           width: targetRect.width,
           height: targetRect.height,
-          top: targetRect.top + window.scrollY - 25,
+          top: targetRect.top + window.scrollY - 4,
           left: targetRect.left - 4,
         }}
         className={styles.activeStep}

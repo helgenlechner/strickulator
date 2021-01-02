@@ -1,22 +1,40 @@
-import { FunctionComponent } from 'react';
-import { connect } from 'react-redux';
+import { FunctionComponent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { PatternProps } from '../../store/pattern/pattern.model';
-import { getPatternTitle } from '../../store/pattern/pattern.selectors';
+import { projectUpdateLabel } from '../../store/project/project.actions';
+import { getProjectLabel } from '../../store/project/project.selectors';
 import { AppState } from '../../store/store.model';
+import styles from './Title.module.css';
 
-interface ConnectedState {
-  patternTitle: string | undefined;
-}
+export const Title: FunctionComponent<PatternProps> = ({ projectId }) => {
+  const label = useSelector((state: AppState) =>
+    getProjectLabel(state, { projectId }),
+  );
 
-const mapStateToProps = (
-  state: AppState,
-  props: PatternProps,
-): ConnectedState => ({
-  patternTitle: getPatternTitle(state, props),
-});
+  const [isBeingEdited, setIsBeingEdited] = useState(false);
 
-const Title_: FunctionComponent<ConnectedState> = ({ patternTitle }) => (
-  <h1>{patternTitle} Calculator</h1>
-);
+  const dispatch = useDispatch();
 
-export const Title = connect(mapStateToProps)(Title_);
+  if (isBeingEdited) {
+    return (
+      <input
+        className={styles.editing}
+        value={label}
+        onChange={(event) =>
+          dispatch(projectUpdateLabel(projectId, event.currentTarget.value))
+        }
+        onBlur={() => setIsBeingEdited(false)}
+      />
+    );
+  }
+
+  return (
+    <h1
+      className={styles.normal}
+      onClick={() => setIsBeingEdited(true)}
+      title="Click to edit"
+    >
+      {label}
+    </h1>
+  );
+};

@@ -7,3 +7,8 @@ export const getActiveStepId = createSelector(
   [getLocation],
   (location) => location.activeStep,
 );
+
+export const getIsMenuVisible = createSelector(
+  [getLocation],
+  (location) => location.menuIsVisible,
+);

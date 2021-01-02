@@ -3,6 +3,7 @@ import { Reducer } from 'redux';
 import {
   ProjectActions,
   projectCreate,
+  projectDelete,
   projectUpdateKnittingStyle,
   projectUpdateLabel,
   projectUpdateMeasurements,
@@ -109,6 +110,13 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
 
         draft[payload.id].knittingStyle = payload.knittingStyle;
         draft[payload.id].updatedAt = Date.now();
+
+        return;
+      }
+      case ProjectActions.delete: {
+        const { payload } = action as ReturnType<typeof projectDelete>;
+
+        delete draft[payload.id];
 
         return;
       }

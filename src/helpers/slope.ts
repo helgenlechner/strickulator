@@ -4,12 +4,12 @@ type BaseSlope = {
   numberOfRows: number;
 };
 
-type EvenSlope = BaseSlope & {
+export type EvenSlope = BaseSlope & {
   rowInterval: number;
   stitchDelta: number;
 };
 
-type UnevenSlope = BaseSlope & {
+export type UnevenSlope = BaseSlope & {
   pattern: { [row: number]: number };
 };
 

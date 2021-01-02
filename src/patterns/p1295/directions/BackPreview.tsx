@@ -1,4 +1,4 @@
-import { FunctionComponent, useRef } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { drawPolygon } from '../../../helpers/drawPolygon';
 import { useHeight, useWidth } from '../../../helpers/preview';
 import {
@@ -15,7 +15,7 @@ import {
 } from '../selectors/p1295.directions.selectors';
 
 export const BackPreview: FunctionComponent = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [canvasRef, setCanvasRef] = useState<HTMLCanvasElement | null>(null);
 
   const hemWidth = useWidth(getNumberOfHemStitches);
   const hemHeight = useHeight(getNumberOfHemRows);
@@ -55,7 +55,7 @@ export const BackPreview: FunctionComponent = () => {
       2,
   );
 
-  const context = canvasRef?.current?.getContext('2d');
+  const context = canvasRef?.getContext('2d');
 
   if (context) {
     context.clearRect(0, 0, canvasCenter * 2, canvasHeight);
@@ -114,7 +114,11 @@ export const BackPreview: FunctionComponent = () => {
 
   return (
     <div>
-      <canvas ref={canvasRef} width={canvasCenter * 2} height={canvasHeight} />
+      <canvas
+        ref={setCanvasRef}
+        width={canvasCenter * 2}
+        height={canvasHeight}
+      />
     </div>
   );
 };
