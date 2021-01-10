@@ -3,9 +3,10 @@ import styles from './Input.module.css';
 
 interface Props {
   name: string;
-  placeholder: number;
+  placeholder?: number;
   onChange: (value: number | undefined) => void;
   value: number | string;
+  unit?: string;
 }
 
 export const Input: FunctionComponent<Props> = ({
@@ -13,6 +14,7 @@ export const Input: FunctionComponent<Props> = ({
   placeholder,
   onChange: onChange_,
   value,
+  unit,
 }) => {
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const numericValue = Number(event.target.value);
@@ -31,14 +33,17 @@ export const Input: FunctionComponent<Props> = ({
   };
 
   return (
-    <input
-      className={styles.input}
-      type="number"
-      placeholder={placeholder.toString(10)}
-      name={name}
-      onChange={onChange}
-      value={value}
-      id={name}
-    />
+    <>
+      <input
+        className={styles.input}
+        type="number"
+        placeholder={placeholder?.toString(10)}
+        name={name}
+        onChange={onChange}
+        value={value}
+        id={name}
+      />
+      {unit && <span>{unit}</span>}
+    </>
   );
 };

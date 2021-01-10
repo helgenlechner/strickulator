@@ -11,7 +11,7 @@ export interface PatternDefinition {
   id: PatternId;
   label: string;
   description: string;
-  url: string;
+  url?: string;
   inputForm?: ComponentType<PatternProps>;
   directions?: ComponentType<PatternProps>;
 }

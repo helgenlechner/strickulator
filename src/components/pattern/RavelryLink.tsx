@@ -16,15 +16,21 @@ const mapStateToProps = (
   patternUrl: getPatternUrl(state, props),
 });
 
-const RavelryLink_: FunctionComponent<ConnectedState> = ({ patternUrl }) => (
-  <a href={patternUrl}>
-    <img
-      src={ravelryLogo}
-      alt="View on Ravelry"
-      title="View on Ravelry"
-      height="20"
-    />
-  </a>
-);
+const RavelryLink_: FunctionComponent<ConnectedState> = ({ patternUrl }) => {
+  if (!patternUrl) {
+    return null;
+  }
+
+  return (
+    <a href={patternUrl}>
+      <img
+        src={ravelryLogo}
+        alt="View on Ravelry"
+        title="View on Ravelry"
+        height="20"
+      />
+    </a>
+  );
+};
 
 export const RavelryLink = connect(mapStateToProps)(RavelryLink_);

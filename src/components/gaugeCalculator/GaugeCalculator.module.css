@@ -1,0 +1,22 @@
+.gaugeCalculator {
+  background-color: var(--lavender-blush);
+  padding: 10px;
+  margin: 10px -10px 0;
+}
+
+.gaugeCalculator h2 {
+  margin-top: 0;
+}
+
+.row {
+  display: flex;
+}
+
+.row + .row {
+  margin-top: 16px;
+}
+
+.cell:first-child {
+  width: 210px;
+  flex-shrink: 0;
+}

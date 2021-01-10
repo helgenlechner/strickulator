@@ -4,10 +4,15 @@ import styles from './label.module.css';
 interface Props {
   children: string;
   forInput: string;
+  width?: number;
 }
 
-export const Label: FunctionComponent<Props> = ({ children, forInput }) => (
-  <label htmlFor={forInput} className={styles.label}>
+export const Label: FunctionComponent<Props> = ({
+  children,
+  forInput,
+  width,
+}) => (
+  <label htmlFor={forInput} className={styles.label} style={{ width }}>
     {children}
   </label>
 );

@@ -3,7 +3,7 @@ import { ParametricSelector } from 'redux-views';
 import {
   getHeightOfOneRow,
   getWidthOfOneStitch,
-} from '../patterns/p1295/selectors/p1295.swatch.selectors';
+} from '../store/project/project.swatch.selectors';
 import { ProjectId } from '../store/project/project.model';
 import { AppState } from '../store/store.model';
 import { useParams } from 'react-router-dom';

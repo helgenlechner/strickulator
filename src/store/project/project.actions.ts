@@ -1,5 +1,6 @@
 import { PatternId } from '../pattern/pattern.model';
 import {
+  GaugeCalculator,
   KnittingStyle,
   Measurements,
   ProjectId,
@@ -13,6 +14,7 @@ export enum ProjectActions {
   updateSwatch = '@@project/UPDATE_SWATCH',
   updateMeasurements = '@@project/UPDATE_MEASUREMENTS',
   updateKnittingStyle = '@@project/UPDATE_KNITTING_STYLE',
+  updateGaugeCalculator = '@@project/UPDATE_GAUGE_CALCULATOR',
   delete = '@@project/DELETE',
 }
 
@@ -64,6 +66,17 @@ export const projectUpdateKnittingStyle = (
   payload: {
     id,
     knittingStyle,
+  },
+});
+
+export const projectUpdateGaugeCalculator = (
+  id: ProjectId,
+  gauge: Partial<GaugeCalculator>,
+) => ({
+  type: ProjectActions.updateGaugeCalculator,
+  payload: {
+    id,
+    gauge,
   },
 });
 

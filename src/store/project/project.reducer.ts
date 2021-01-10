@@ -4,12 +4,18 @@ import {
   ProjectActions,
   projectCreate,
   projectDelete,
+  projectUpdateGaugeCalculator,
   projectUpdateKnittingStyle,
   projectUpdateLabel,
   projectUpdateMeasurements,
   projectUpdateSwatch,
 } from './project.actions';
-import { KnittingStyle, ProjectStore, Swatch } from './project.model';
+import {
+  GaugeCalculator,
+  KnittingStyle,
+  ProjectStore,
+  Swatch,
+} from './project.model';
 
 const initialState: ProjectStore = {
   '0': {
@@ -110,6 +116,30 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
 
         draft[payload.id].knittingStyle = payload.knittingStyle;
         draft[payload.id].updatedAt = Date.now();
+
+        return;
+      }
+      case ProjectActions.updateGaugeCalculator: {
+        const { payload } = action as ReturnType<
+          typeof projectUpdateGaugeCalculator
+        >;
+
+        if (!draft[payload.id]) {
+          return;
+        }
+
+        if (!draft[payload.id].gauge) {
+          draft[payload.id].gauge = {};
+        }
+
+        Object.keys(payload.gauge).forEach((key) => {
+          const { gauge } = draft[payload.id];
+
+          if (gauge) {
+            const keyAsIndexType = key as keyof GaugeCalculator;
+            gauge[keyAsIndexType] = payload.gauge[keyAsIndexType];
+          }
+        });
 
         return;
       }

@@ -12,6 +12,7 @@ import {
   getPatternInputForm,
 } from '../../store/pattern/pattern.selectors';
 import { Title } from './Title';
+import { GaugeCalculator } from '../gaugeCalculator/GaugeCalculator';
 
 export const Project: FunctionComponent = () => {
   const { trackPageView } = useMatomo();
@@ -32,10 +33,17 @@ export const Project: FunctionComponent = () => {
   }
 
   return (
-    <div className={styles.project}>
+    <div className={styles.project} key={projectId}>
       <Title projectId={projectId} />
-      <h2>Swatch</h2>
-      <SwatchInput projectId={projectId} />
+      <section>
+        <div>
+          <h2>Swatch</h2>
+          <SwatchInput projectId={projectId} />
+        </div>
+        <div>
+          <GaugeCalculator projectId={projectId} />
+        </div>
+      </section>
       <h2>Measurements</h2>
       <div className={styles.inputForm}>
         <PatternInputForm projectId={projectId} />

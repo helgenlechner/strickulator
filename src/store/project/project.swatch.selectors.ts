@@ -1,5 +1,5 @@
 import { createSelector } from 'redux-views';
-import { getProject } from '../../../store/project/project.selectors';
+import { getProject } from './project.selectors';
 
 const getSwatch = createSelector([getProject], (project) => project?.swatch);
 

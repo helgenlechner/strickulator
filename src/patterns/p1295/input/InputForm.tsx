@@ -1,15 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import { ProjectId } from '../../../store/project/project.model';
+import { PatternProps } from '../../../store/pattern/pattern.model';
 import { BackInput } from './BackInput';
 import { FrontInput } from './FrontInput';
 import { SharedMeasurementInput } from './SharedMeasurementInput';
 import { SleeveInput } from './SleeveInput';
 
-interface Props {
-  projectId: ProjectId;
-}
-
-export const P1295Input: FunctionComponent<Props> = ({ projectId }) => (
+export const P1295Input: FunctionComponent<PatternProps> = ({ projectId }) => (
   <>
     <h3>Shared</h3>
     <SharedMeasurementInput projectId={projectId} />

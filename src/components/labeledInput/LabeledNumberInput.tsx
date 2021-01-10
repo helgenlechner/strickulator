@@ -5,10 +5,12 @@ import { Label } from '../label/Label';
 
 type Props = {
   name: string;
-  placeholder: number;
+  placeholder?: number;
   children: string;
   onChange: (name: string, value: number | undefined) => void;
   value: number | string;
+  labelWidth?: number;
+  unit?: string;
 };
 
 export const LabeledNumberInput: FunctionComponent<Props> = ({
@@ -17,6 +19,8 @@ export const LabeledNumberInput: FunctionComponent<Props> = ({
   value,
   placeholder,
   onChange,
+  labelWidth,
+  unit,
 }) => {
   const { trackEvent } = useMatomo();
 
@@ -28,12 +32,15 @@ export const LabeledNumberInput: FunctionComponent<Props> = ({
 
   return (
     <>
-      <Label forInput={name}>{children}</Label>
+      <Label forInput={name} width={labelWidth}>
+        {children}
+      </Label>
       <Input
         name={name}
         placeholder={placeholder}
         onChange={onChange_}
         value={value ?? ''}
+        unit={unit}
       />
     </>
   );

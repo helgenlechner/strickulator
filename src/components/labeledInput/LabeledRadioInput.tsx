@@ -33,7 +33,6 @@ export const LabeledRadioInput: FunctionComponent<Props> = ({
       {options.map((option, index) => (
         <Fragment key={option.id}>
           {index > 0 && <br />}
-          <Label forInput={option.id.toString()}>{option.label}</Label>
           <input
             type="radio"
             id={option.id.toString()}
@@ -42,6 +41,7 @@ export const LabeledRadioInput: FunctionComponent<Props> = ({
             checked={value === option.id}
             onChange={() => onChange_(option.id)}
           />
+          <Label forInput={option.id.toString()}>{option.label}</Label>
         </Fragment>
       ))}
     </>

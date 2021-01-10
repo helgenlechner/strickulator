@@ -13,6 +13,7 @@ export interface Project {
   swatch: Swatch;
   measurements: Measurements;
   knittingStyle: KnittingStyle;
+  gauge?: GaugeCalculator;
   createdAt: number;
   updatedAt: number;
 }
@@ -31,4 +32,11 @@ export interface Measurements {
 export enum KnittingStyle {
   flat,
   inTheRound,
+}
+
+export interface GaugeCalculator {
+  width?: number;
+  height?: number;
+  slopeWidth?: number;
+  slopeHeight?: number;
 }

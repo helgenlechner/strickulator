@@ -27,7 +27,7 @@ import {
 import {
   getHeightOfOneRow,
   getWidthOfOneStitch,
-} from './p1295.swatch.selectors';
+} from '../../../store/project/project.swatch.selectors';
 
 export const getNumberOfHemStitches = createSelector(
   [getHemWidth, getWidthOfOneStitch],

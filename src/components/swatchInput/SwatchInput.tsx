@@ -6,7 +6,7 @@ import {
   getNumberOfSwatchStitches,
   getSwatchHeight,
   getSwatchWidth,
-} from '../../patterns/p1295/selectors/p1295.swatch.selectors';
+} from '../../store/project/project.swatch.selectors';
 import { PatternProps } from '../../store/pattern/pattern.model';
 import { projectUpdateSwatch } from '../../store/project/project.actions';
 import { ProjectId, Swatch } from '../../store/project/project.model';
