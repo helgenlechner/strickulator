@@ -2,7 +2,6 @@ import { FunctionComponent, useState } from 'react';
 import { drawPolygon } from '../../helpers/drawPolygon';
 import { useHeight, useWidth } from '../../helpers/preview';
 import {
-  getNumberOfCuffRows,
   getNumberOfPalmRows,
   getNumberOfHandStitches,
   getNumberOfThumbRootRows,
@@ -12,11 +11,10 @@ import {
   getNumberOfThumbRows,
 } from './selectors/mittens.directions.selectors';
 
-export const InnerPreview: FunctionComponent = () => {
+export const OuterPreview: FunctionComponent = () => {
   const [canvasRef, setCanvasRef] = useState<HTMLCanvasElement | null>(null);
 
   const handWidth = useWidth(getNumberOfHandStitches);
-  const cuffHeight = useHeight(getNumberOfCuffRows);
   const thumbWidth = useWidth(getNumberOfThumbStitches);
   const thumbRootHeight = useHeight(getNumberOfThumbRootRows);
   const palmHeight = useHeight(getNumberOfPalmRows);
@@ -26,7 +24,6 @@ export const InnerPreview: FunctionComponent = () => {
 
   if (
     !handWidth ||
-    !cuffHeight ||
     !thumbWidth ||
     !thumbRootHeight ||
     !palmHeight ||
@@ -38,9 +35,7 @@ export const InnerPreview: FunctionComponent = () => {
   }
 
   const canvasCenter = Math.ceil(handWidth + thumbWidth + 2);
-  const canvasHeight = Math.ceil(
-    cuffHeight + thumbRootHeight + palmHeight + tipHeight + 2,
-  );
+  const canvasHeight = Math.ceil(thumbRootHeight + palmHeight + tipHeight + 2);
 
   const context = canvasRef?.getContext('2d');
 
@@ -55,10 +50,7 @@ export const InnerPreview: FunctionComponent = () => {
 
     context.font = '16px sans-serif';
 
-    let y = canvasHeight - cuffHeight - 1;
-
-    context.strokeRect(canvasCenter - handWidth, y, handWidth * 2, cuffHeight);
-    context.fillText('A', canvasCenter + 3, y + cuffHeight - 3);
+    let y = canvasHeight - 1;
 
     drawPolygon(context, [
       { x: canvasCenter - handWidth, y },
@@ -66,7 +58,7 @@ export const InnerPreview: FunctionComponent = () => {
       { x: canvasCenter + handWidth + thumbWidth, y: y - thumbRootHeight },
       { x: canvasCenter + handWidth, y },
     ]);
-    context.fillText('B', canvasCenter + 3, y - 3);
+    context.fillText('A', canvasCenter + 3, y - 3);
 
     y -= thumbRootHeight;
 
@@ -76,7 +68,7 @@ export const InnerPreview: FunctionComponent = () => {
       handWidth * 2,
       palmHeight,
     );
-    context.fillText('C', canvasCenter + 3, y - 3);
+    context.fillText('B', canvasCenter + 3, y - 3);
 
     y -= palmHeight;
 
@@ -94,9 +86,9 @@ export const InnerPreview: FunctionComponent = () => {
       { x: canvasCenter + tipInset, y: y - tipHeight },
       { x: canvasCenter, y },
     ]);
-    context.fillText('D', canvasCenter + 3, y - 3);
+    context.fillText('C', canvasCenter + 3, y - 3);
 
-    y = canvasHeight - cuffHeight - thumbRootHeight - 1;
+    y = canvasHeight - thumbRootHeight - 1;
 
     context.strokeRect(
       canvasCenter - handWidth - thumbWidth,
@@ -110,7 +102,7 @@ export const InnerPreview: FunctionComponent = () => {
       thumbWidth,
       thumbHeight,
     );
-    context.fillText('E', canvasCenter - handWidth - thumbWidth + 2, y - 3);
+    context.fillText('D', canvasCenter - handWidth - thumbWidth + 2, y - 3);
   }
 
   return (

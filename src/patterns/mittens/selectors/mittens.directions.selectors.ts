@@ -15,6 +15,7 @@ import { createSelector } from 'redux-views';
 import { divideRoundToEvenNumberAndHalve } from '../../../helpers/divideRoundToEvenNumberAndHalve';
 import { divideAndRoundToEvenNumber } from '../../../helpers/divideAndRoundToEvenNumber';
 import { roundToEvenNumber } from '../../../helpers/rounding';
+import { calculateSlope } from '../../../helpers/slope';
 
 export const getNumberOfHandStitches = createSelector(
   [getHandCircumference, getWidthOfOneStitch],
@@ -47,6 +48,21 @@ export const getNumberOfThumbRootRows = createSelector(
   divideAndRoundToEvenNumber,
 );
 
+export const getThumbRootSlope = createSelector(
+  [getNumberOfHandStitches, getNumberOfThumbStitches, getNumberOfThumbRootRows],
+  (handStitches, thumbStitches, thumbRootRows) => {
+    if (!handStitches || !thumbStitches) {
+      return undefined;
+    }
+
+    return calculateSlope(
+      handStitches,
+      handStitches + thumbStitches,
+      thumbRootRows,
+    );
+  },
+);
+
 export const getNumberOfHandRowsTotal = createSelector(
   [getHandLength, getHeightOfOneRow],
   divideAndRoundToEvenNumber,
@@ -77,4 +93,9 @@ export const getNumberOfStitchesAtTip = createSelector(
 export const getNumberOfThumbRows = createSelector(
   [getThumbLength, getHeightOfOneRow],
   divideAndRoundToEvenNumber,
+);
+
+export const getTipSlope = createSelector(
+  [getNumberOfHandStitches, getNumberOfStitchesAtTip, getNumberOfTipRows],
+  calculateSlope,
 );
