@@ -17,18 +17,7 @@ import {
   Swatch,
 } from './project.model';
 
-const initialState: ProjectStore = {
-  '0': {
-    id: '0',
-    label: 'New Project',
-    patternId: 'p1295',
-    swatch: {},
-    measurements: {},
-    knittingStyle: KnittingStyle.flat,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-  },
-};
+const initialState: ProjectStore = {};
 
 export const ProjectReducer: Reducer<ProjectStore> = produce(
   (draft: Draft<ProjectStore>, action) => {

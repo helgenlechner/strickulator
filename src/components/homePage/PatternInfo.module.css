@@ -1,0 +1,15 @@
+.patternInfo {
+  max-width: 33%;
+  min-width: 200px;
+  background-color: var(--piggy-pink);
+  padding: 20px;
+  background-origin: border-box;
+}
+
+.patternInfo + .patternInfo {
+  margin-left: 10px;
+}
+
+.patternInfo h2 {
+  margin-top: 0;
+}

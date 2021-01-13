@@ -87,6 +87,11 @@ const GaugeCalculator_: FunctionComponent<
   return (
     <div className={styles.gaugeCalculator}>
       <h2>Gauge Calculator</h2>
+      <p>
+        Use this calculator for any ad-hoc adjustments to the pattern that has
+        been generated for you (such as adding bust darts). It can calculate the
+        number of stitches/rows in a measurement and slopes.
+      </p>
       <div className={styles.row}>
         <div className={styles.cell}>
           <LabeledNumberInput
