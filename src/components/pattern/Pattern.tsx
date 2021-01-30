@@ -48,10 +48,9 @@ export const Pattern: FunctionComponent = () => {
         </p>
         <Description projectId={projectId} />
         <p>
-          Please refer to the original pattern for further instructions. All
-          measurements are in centimeters. The preview images show you what will
-          be knitted to scale. You can click on any step in the directions to
-          highlight it to keep track of your knitting progress more easily.
+          All measurements are in centimeters. The preview images show you what
+          will be knitted to scale. You can click on any step in the directions
+          to highlight it to keep track of your knitting progress more easily.
         </p>
         <p>
           <button

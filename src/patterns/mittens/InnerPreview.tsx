@@ -10,6 +10,10 @@ import {
   getNumberOfTipRows,
   getNumberOfStitchesAtTip,
   getNumberOfThumbRows,
+  getNumberOfIndexFingerSideTipRows,
+  getNumberOfStitchesToDecreaseAtIndexSide,
+  getNumberOfPinkieSideTipRows,
+  getNumberOfStitchesToDecreaseAtPinkieSide,
 } from './selectors/mittens.directions.selectors';
 
 export const InnerPreview: FunctionComponent = () => {
@@ -23,6 +27,14 @@ export const InnerPreview: FunctionComponent = () => {
   const tipHeight = useHeight(getNumberOfTipRows);
   const tipWidth = useWidth(getNumberOfStitchesAtTip);
   const thumbHeight = useHeight(getNumberOfThumbRows);
+  const indexFingerSideTipHeight = useHeight(getNumberOfIndexFingerSideTipRows);
+  const indexFingerSideTipWidth = useWidth(
+    getNumberOfStitchesToDecreaseAtIndexSide,
+  );
+  const pinkieSideTipHeight = useHeight(getNumberOfPinkieSideTipRows);
+  const pinkieSideTipWidth = useWidth(
+    getNumberOfStitchesToDecreaseAtPinkieSide,
+  );
 
   if (
     !handWidth ||
@@ -32,7 +44,11 @@ export const InnerPreview: FunctionComponent = () => {
     !palmHeight ||
     !tipHeight ||
     !tipWidth ||
-    !thumbHeight
+    !thumbHeight ||
+    !indexFingerSideTipHeight ||
+    !indexFingerSideTipWidth ||
+    !pinkieSideTipHeight ||
+    !pinkieSideTipWidth
   ) {
     return null;
   }
@@ -80,18 +96,31 @@ export const InnerPreview: FunctionComponent = () => {
 
     y -= palmHeight;
 
-    const tipInset = (handWidth - tipWidth) / 2;
-
     drawPolygon(context, [
       { x: canvasCenter - handWidth, y },
-      { x: canvasCenter - (handWidth - tipInset), y: y - tipHeight },
-      { x: canvasCenter - tipInset, y: y - tipHeight },
+      {
+        x: canvasCenter - handWidth,
+        y: y - (pinkieSideTipHeight - indexFingerSideTipHeight),
+      },
+      {
+        x: canvasCenter - (handWidth - indexFingerSideTipWidth),
+        y: y - indexFingerSideTipHeight,
+      },
+      { x: canvasCenter - pinkieSideTipWidth, y: y - indexFingerSideTipHeight },
       { x: canvasCenter, y },
     ]);
+
     drawPolygon(context, [
       { x: canvasCenter + handWidth, y },
-      { x: canvasCenter + (handWidth - tipInset), y: y - tipHeight },
-      { x: canvasCenter + tipInset, y: y - tipHeight },
+      {
+        x: canvasCenter + handWidth,
+        y: y - (pinkieSideTipHeight - indexFingerSideTipHeight),
+      },
+      {
+        x: canvasCenter + (handWidth - indexFingerSideTipWidth),
+        y: y - indexFingerSideTipHeight,
+      },
+      { x: canvasCenter + pinkieSideTipWidth, y: y - indexFingerSideTipHeight },
       { x: canvasCenter, y },
     ]);
     context.fillText('D', canvasCenter + 3, y - 3);

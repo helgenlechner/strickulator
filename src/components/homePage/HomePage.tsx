@@ -5,7 +5,6 @@ import styles from './HomePage.module.css';
 
 export const HomePage: FunctionComponent = () => (
   <div>
-    <h1>Strickulator</h1>
     <p>
       Strickulator is a knitting pattern calculator and knitting pattern
       generator intended for machine knitters.

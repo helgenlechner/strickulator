@@ -1,0 +1,41 @@
+.additionalContent {
+  display: flex;
+  max-width: 278px;
+}
+
+.hint {
+  color: gray;
+  font-style: italic;
+  margin: 0;
+  font-size: 0.8em;
+}
+
+.illustrationIcon {
+  flex-basis: 16px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  height: 16px;
+  color: gray;
+  border: 1px solid gray;
+  border-radius: 50%;
+  position: relative;
+  float: right;
+  margin: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.illustrationIcon::after {
+  content: '?';
+}
+
+.illustrationIcon img {
+  display: none;
+}
+
+.illustrationIcon:hover img {
+  display: block;
+  position: absolute;
+  left: 25px;
+}

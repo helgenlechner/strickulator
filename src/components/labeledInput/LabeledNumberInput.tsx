@@ -2,6 +2,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 import React, { FunctionComponent } from 'react';
 import { Input } from '../input/Input';
 import { Label } from '../label/Label';
+import styles from './LabeledInput.module.css';
 
 type Props = {
   name: string;
@@ -11,6 +12,8 @@ type Props = {
   value: number | string;
   labelWidth?: number;
   unit?: string;
+  hint?: string;
+  illustration?: string;
 };
 
 export const LabeledNumberInput: FunctionComponent<Props> = ({
@@ -21,6 +24,8 @@ export const LabeledNumberInput: FunctionComponent<Props> = ({
   onChange,
   labelWidth,
   unit,
+  hint,
+  illustration,
 }) => {
   const { trackEvent } = useMatomo();
 
@@ -42,6 +47,18 @@ export const LabeledNumberInput: FunctionComponent<Props> = ({
         value={value ?? ''}
         unit={unit}
       />
+      <div className={styles.additionalContent}>
+        {hint && (
+          <p className={styles.hint} data-has-illustratiorn={!!illustration}>
+            {hint}
+          </p>
+        )}
+        {illustration && (
+          <div className={styles.illustrationIcon}>
+            <img src={illustration} alt={children} />
+          </div>
+        )}
+      </div>
     </>
   );
 };

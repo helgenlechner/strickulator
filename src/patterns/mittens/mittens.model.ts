@@ -7,5 +7,7 @@ export interface MittensMeasuremets extends Measurements {
   handLength?: number;
   thumbLength?: number;
   thumbRootLength?: number;
-  tipHeight?: number;
+  tipWidth?: number;
+  indexFingerSideTipHeight?: number;
+  pinkieSideTipHeight?: number;
 }

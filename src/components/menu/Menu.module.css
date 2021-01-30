@@ -6,6 +6,10 @@ nav {
   box-sizing: border-box;
   margin-left: 0;
   transition: margin-left 250ms ease-in-out;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: scroll;
 }
 
 nav[data-is-visible='false'] {

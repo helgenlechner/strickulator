@@ -43,6 +43,16 @@ const Menu_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
 }) => {
   const history = useHistory();
 
+  const onDeleteClick = (projectId: string) => {
+    const confirmDeletion = window.confirm(
+      'Are you sure you want to delete this project?',
+    );
+
+    if (confirmDeletion) {
+      deleteProject(projectId);
+    }
+  };
+
   return (
     <nav data-is-visible={menuIsVisible}>
       <ul>
@@ -52,10 +62,10 @@ const Menu_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
             <ul>
               {pattern.children.map((project) => (
                 <li key={project.id}>
-                  <Link to={project.id}>{project.label}</Link>
+                  <Link to={`/projects/${project.id}`}>{project.label}</Link>
                   <span
                     className={styles.delete}
-                    onClick={() => deleteProject(project.id)}
+                    onClick={() => onDeleteClick(project.id)}
                   >
                     <i className="far fa-trash-alt"></i>
                   </span>

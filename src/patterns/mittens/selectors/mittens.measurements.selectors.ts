@@ -37,7 +37,17 @@ export const getThumbRootLength = createSelector(
   (measurements) => measurements?.thumbRootLength,
 );
 
-export const getTipHeight = createSelector(
+export const getTipWidth = createSelector(
   [getMeasurements],
-  (measurements) => measurements?.tipHeight,
+  (measurements) => measurements?.tipWidth,
+);
+
+export const getIndexFingerSideTipHeight = createSelector(
+  [getMeasurements],
+  (measurements) => measurements?.indexFingerSideTipHeight,
+);
+
+export const getPinkieSideTipHeight = createSelector(
+  [getMeasurements],
+  (measurements) => measurements?.pinkieSideTipHeight,
 );

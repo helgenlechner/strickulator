@@ -62,7 +62,12 @@ export const SlopeDescription: FunctionComponent<Props> = ({
       Knit for <HighlightedValue>{numberOfRows}</HighlightedValue> rows,{' '}
       {slope?.type} <HighlightedValue>{slope?.stitchDelta}</HighlightedValue>{' '}
       {pluralizeStitch(slope?.stitchDelta)} {manipulationLocation} every{' '}
-      <HighlightedValue>{slope?.rowInterval}</HighlightedValue> rows.{' '}
+      <HighlightedValue>
+        {duplicateRowCounts && slope
+          ? slope.rowInterval * 2
+          : slope?.rowInterval}
+      </HighlightedValue>{' '}
+      rows.{' '}
     </>
   );
 };

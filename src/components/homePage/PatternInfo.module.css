@@ -1,5 +1,5 @@
 .patternInfo {
-  max-width: 33%;
+  flex-basis: 33%;
   min-width: 200px;
   background-color: var(--piggy-pink);
   padding: 20px;

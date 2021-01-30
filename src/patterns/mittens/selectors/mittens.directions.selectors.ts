@@ -8,13 +8,14 @@ import {
   getThumbCircumference,
   getThumbRootLength,
   getHandLength,
-  getTipHeight,
   getThumbLength,
+  getTipWidth,
+  getPinkieSideTipHeight,
+  getIndexFingerSideTipHeight,
 } from './mittens.measurements.selectors';
 import { createSelector } from 'redux-views';
 import { divideRoundToEvenNumberAndHalve } from '../../../helpers/divideRoundToEvenNumberAndHalve';
 import { divideAndRoundToEvenNumber } from '../../../helpers/divideAndRoundToEvenNumber';
-import { roundToEvenNumber } from '../../../helpers/rounding';
 import { calculateSlope } from '../../../helpers/slope';
 
 export const getNumberOfHandStitches = createSelector(
@@ -68,9 +69,24 @@ export const getNumberOfHandRowsTotal = createSelector(
   divideAndRoundToEvenNumber,
 );
 
-export const getNumberOfTipRows = createSelector(
-  [getTipHeight, getHeightOfOneRow],
+export const getNumberOfIndexFingerSideTipRows = createSelector(
+  [getIndexFingerSideTipHeight, getHeightOfOneRow],
   divideAndRoundToEvenNumber,
+);
+
+export const getNumberOfPinkieSideTipRows = createSelector(
+  [getPinkieSideTipHeight, getHeightOfOneRow],
+  divideAndRoundToEvenNumber,
+);
+
+export const getNumberOfTipRows = createSelector(
+  [getNumberOfIndexFingerSideTipRows, getNumberOfPinkieSideTipRows],
+  (indexFingerSideTipRows, pinkieSideTipRows) => {
+    if (!indexFingerSideTipRows || !pinkieSideTipRows) {
+      return undefined;
+    }
+    return Math.max(indexFingerSideTipRows, pinkieSideTipRows);
+  },
 );
 
 export const getNumberOfPalmRows = createSelector(
@@ -85,9 +101,8 @@ export const getNumberOfPalmRows = createSelector(
 );
 
 export const getNumberOfStitchesAtTip = createSelector(
-  [getNumberOfHandStitches],
-  (numberOfHandStitches) =>
-    numberOfHandStitches && roundToEvenNumber(numberOfHandStitches * 0.6),
+  [getTipWidth, getWidthOfOneStitch],
+  divideAndRoundToEvenNumber,
 );
 
 export const getNumberOfThumbRows = createSelector(
@@ -95,7 +110,62 @@ export const getNumberOfThumbRows = createSelector(
   divideAndRoundToEvenNumber,
 );
 
-export const getTipSlope = createSelector(
-  [getNumberOfHandStitches, getNumberOfStitchesAtTip, getNumberOfTipRows],
-  calculateSlope,
+export const getNumberOfStitchesToDecreaseAtIndexSide = createSelector(
+  [getNumberOfHandStitches],
+  (numberOfHandStitches) => {
+    if (!numberOfHandStitches) {
+      return undefined;
+    }
+
+    return Math.round(numberOfHandStitches * 0.34);
+  },
+);
+
+export const getIndexFingerSlope = createSelector(
+  [getNumberOfStitchesToDecreaseAtIndexSide, getNumberOfIndexFingerSideTipRows],
+  (numberOfStitchesToDecreaseAtIndexSide, numberOfRows) => {
+    return calculateSlope(
+      numberOfStitchesToDecreaseAtIndexSide,
+      0,
+      numberOfRows,
+    );
+  },
+);
+
+export const getNumberOfStitchesToDecreaseAtPinkieSide = createSelector(
+  [
+    getNumberOfHandStitches,
+    getNumberOfStitchesAtTip,
+    getNumberOfStitchesToDecreaseAtIndexSide,
+  ],
+  (
+    numberOfHandStitches,
+    numberOfTipStitches,
+    numberOfStitchesToDecreaseAtIndexSide,
+  ) => {
+    if (
+      !numberOfHandStitches ||
+      !numberOfTipStitches ||
+      !numberOfStitchesToDecreaseAtIndexSide
+    ) {
+      return undefined;
+    }
+
+    return (
+      numberOfHandStitches -
+      numberOfTipStitches -
+      numberOfStitchesToDecreaseAtIndexSide
+    );
+  },
+);
+
+export const getPinkieFingerSlope = createSelector(
+  [getNumberOfStitchesToDecreaseAtPinkieSide, getNumberOfPinkieSideTipRows],
+  (numberOfStitchesToDecreaseAtPinkieSide, numberOfRows) => {
+    return calculateSlope(
+      numberOfStitchesToDecreaseAtPinkieSide,
+      0,
+      numberOfRows,
+    );
+  },
 );
