@@ -4,6 +4,8 @@
   padding: 10px;
   background-color: var(--piggy-pink);
   z-index: 1;
+  display: flex;
+  justify-content: space-between;
 }
 
 .header a {
@@ -11,12 +13,17 @@
   text-decoration: none;
 }
 
-.header p {
+.header h1 {
   margin: 0;
   display: inline-block;
-  vertical-align: top;
   font-size: 20px;
-  vertical-align: 3px;
+  vertical-align: 4px;
+  font-weight: normal;
+}
+
+.header p {
+  margin: 0;
+  vertical-align: top;
 }
 
 .dots {

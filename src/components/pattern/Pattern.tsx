@@ -12,9 +12,11 @@ import {
   getPatternDirections,
   getPatternIdForProject,
   getPatternInputForm,
+  getPatternRavelryTag,
 } from '../../store/pattern/pattern.selectors';
 import { projectCreate } from '../../store/project/project.actions';
 import { Project } from '../project/Project';
+import { UsersProjects } from '../usersProjects/UsersProjects';
 
 export const Pattern: FunctionComponent = () => {
   const { trackPageView } = useMatomo();
@@ -28,6 +30,9 @@ export const Pattern: FunctionComponent = () => {
   );
   const PatternDirections = useSelector((state: AppState) =>
     getPatternDirections(state, { projectId }),
+  );
+  const ravelryTag = useSelector((state: AppState) =>
+    getPatternRavelryTag(state, { projectId }),
   );
   const dispatch = useDispatch();
 
@@ -52,6 +57,7 @@ export const Pattern: FunctionComponent = () => {
           will be knitted to scale. You can click on any step in the directions
           to highlight it to keep track of your knitting progress more easily.
         </p>
+        <UsersProjects ravelryTag={ravelryTag} />
         <p>
           <button
             onClick={() =>

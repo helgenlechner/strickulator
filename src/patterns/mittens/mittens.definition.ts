@@ -8,4 +8,5 @@ export const mittensDefinition: PatternDefinition = {
   description: `This calculator generates a machine knitting pattern for lined mittens according to you gauge and desired measurements.`,
   inputForm: MittensInput,
   directions: MittensDirections,
+  ravelryTag: 'strickulator-lined-mittens',
 };

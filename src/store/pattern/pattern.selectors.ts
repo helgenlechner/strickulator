@@ -36,3 +36,8 @@ export const getPatternDirections = createSelector(
   [getPatternDefinitionForProject],
   (patternDefinition) => patternDefinition?.directions,
 );
+
+export const getPatternRavelryTag = createSelector(
+  [getPatternDefinitionForProject],
+  (patternDefinition) => patternDefinition?.ravelryTag,
+);

@@ -14,4 +14,5 @@ export interface PatternDefinition {
   url?: string;
   inputForm?: ComponentType<PatternProps>;
   directions?: ComponentType<PatternProps>;
+  ravelryTag?: string;
 }

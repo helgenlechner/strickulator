@@ -9,4 +9,5 @@ export const p1295Definition: PatternDefinition = {
   url: 'https://ravel.me/1295-mens-classical',
   inputForm: P1295Input,
   directions: P1295Directions,
+  ravelryTag: 'strickulator-p1295',
 };

@@ -8,16 +8,21 @@ export const Header: FunctionComponent = () => {
   const dispatch = useDispatch();
   return (
     <div className={styles.header}>
-      <span
-        onClick={() => dispatch(locationToggleMenuVisibility())}
-        className={styles.dots}
-      >
-        <span />
-        <span />
-        <span />
-      </span>
+      <div>
+        <span
+          onClick={() => dispatch(locationToggleMenuVisibility())}
+          className={styles.dots}
+        >
+          <span />
+          <span />
+          <span />
+        </span>
+        <h1>
+          <Link to="/">Strickulator</Link>
+        </h1>
+      </div>
       <p>
-        <Link to="/">Strickulator</Link>
+        <a href="mailto:hello@look-at-her-sew.com">Contact</a>
       </p>
     </div>
   );
