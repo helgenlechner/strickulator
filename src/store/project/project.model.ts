@@ -14,6 +14,7 @@ export interface Project {
   measurements: Measurements;
   knittingStyle: KnittingStyle;
   gauge?: GaugeCalculator;
+  notes?: string;
   createdAt: number;
   updatedAt: number;
 }

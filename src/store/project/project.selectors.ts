@@ -17,3 +17,8 @@ export const getProjectLabel = createSelector(
   [getProject],
   (project) => project?.label,
 );
+
+export const getProjectNotes = createSelector(
+  [getProject],
+  (project) => project?.notes,
+);

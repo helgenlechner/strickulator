@@ -8,6 +8,7 @@ import {
   projectUpdateKnittingStyle,
   projectUpdateLabel,
   projectUpdateMeasurements,
+  projectUpdateNotes,
   projectUpdateSwatch,
 } from './project.actions';
 import {
@@ -136,6 +137,17 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
         const { payload } = action as ReturnType<typeof projectDelete>;
 
         delete draft[payload.id];
+
+        return;
+      }
+      case ProjectActions.updateNotes: {
+        const { payload } = action as ReturnType<typeof projectUpdateNotes>;
+
+        if (!draft[payload.id]) {
+          return;
+        }
+
+        draft[payload.id].notes = payload.notes;
 
         return;
       }

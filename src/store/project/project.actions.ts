@@ -15,6 +15,7 @@ export enum ProjectActions {
   updateMeasurements = '@@project/UPDATE_MEASUREMENTS',
   updateKnittingStyle = '@@project/UPDATE_KNITTING_STYLE',
   updateGaugeCalculator = '@@project/UPDATE_GAUGE_CALCULATOR',
+  updateNotes = '@@project/UPDATE_NOTES',
   delete = '@@project/DELETE',
 }
 
@@ -77,6 +78,14 @@ export const projectUpdateGaugeCalculator = (
   payload: {
     id,
     gauge,
+  },
+});
+
+export const projectUpdateNotes = (id: ProjectId, notes: string) => ({
+  type: ProjectActions.updateNotes,
+  payload: {
+    id,
+    notes,
   },
 });
 

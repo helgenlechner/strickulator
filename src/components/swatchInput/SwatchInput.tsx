@@ -8,16 +8,22 @@ import {
   getSwatchWidth,
 } from '../../store/project/project.swatch.selectors';
 import { PatternProps } from '../../store/pattern/pattern.model';
-import { projectUpdateSwatch } from '../../store/project/project.actions';
+import {
+  projectUpdateNotes,
+  projectUpdateSwatch,
+} from '../../store/project/project.actions';
 import { ProjectId, Swatch } from '../../store/project/project.model';
 import { AppState } from '../../store/store.model';
 import { LabeledNumberInput } from '../labeledInput/LabeledNumberInput';
+import { LabeledTextArea } from '../labeledInput/LabeledTextArea';
+import { getProjectNotes } from '../../store/project/project.selectors';
 
 interface ConnectedState {
   numberOfStitches: number | undefined;
   numberOfRows: number | undefined;
   width: number | undefined;
   height: number | undefined;
+  notes: string | undefined;
 }
 
 const mapStateToProps = (
@@ -28,15 +34,22 @@ const mapStateToProps = (
   numberOfRows: getNumberOfSwatchRows(state, ownProps),
   width: getSwatchWidth(state, ownProps),
   height: getSwatchHeight(state, ownProps),
+  notes: getProjectNotes(state, ownProps),
 });
 
 interface ConnectedDispatch {
   updateSwatch: (projectId: ProjectId, swatch: Partial<Swatch>) => void;
+  updateNotes: (notes: string) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): ConnectedDispatch => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  ownProps: PatternProps,
+): ConnectedDispatch => ({
   updateSwatch: (projectId, swatch) =>
     dispatch(projectUpdateSwatch(projectId, swatch)),
+  updateNotes: (notes) =>
+    dispatch(projectUpdateNotes(ownProps.projectId, notes)),
 });
 
 const SwatchInput_: FunctionComponent<
@@ -47,7 +60,9 @@ const SwatchInput_: FunctionComponent<
   width,
   height,
   updateSwatch,
+  updateNotes,
   projectId,
+  notes,
 }) => {
   const onChange = (key: string, value: number | undefined) => {
     updateSwatch(projectId, { [key]: value });
@@ -90,6 +105,15 @@ const SwatchInput_: FunctionComponent<
       >
         Height
       </LabeledNumberInput>
+      <br />
+      <LabeledTextArea
+        name="notes"
+        placeholder="Stitch size, tension, etc."
+        onChange={(name: string, notes: string) => updateNotes(notes)}
+        value={notes ?? ''}
+      >
+        Notes
+      </LabeledTextArea>
     </>
   );
 };
