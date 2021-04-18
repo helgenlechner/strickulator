@@ -2,14 +2,15 @@
   position: sticky;
   top: 0;
   padding: 10px;
-  background-color: var(--piggy-pink);
+  background-color: var(--gunmetal-dark);
   z-index: 1;
   display: flex;
   justify-content: space-between;
+  color: white;
 }
 
 .header a {
-  color: black;
+  color: white;
   text-decoration: none;
 }
 
@@ -26,24 +27,45 @@
   vertical-align: top;
 }
 
-.dots {
+.menuToggle {
   display: inline-block;
   width: 20px;
   height: 19px;
   cursor: pointer;
   margin-top: 2px;
-  margin-right: 4px;
+  margin-right: 10px;
 }
 
-.dots span {
+.menuToggle span {
   display: block;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background-color: var(--pictorial-carmine);
-  margin-left: 8px;
+  width: 21px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: white;
+  opacity: 1;
+  transition: transform 250ms, opacity 250ms;
 }
 
-.dots span + span {
-  margin-top: 2px;
+.menuToggle span + span {
+  margin-top: 5px;
+}
+
+.menuToggle span:first-child {
+  transform-origin: top left;
+}
+
+.menuToggle span:last-child {
+  transform-origin: bottom left;
+}
+
+.menuToggle[data-is-menu-open='true'] span:first-child {
+  transform: rotate(45deg);
+}
+
+.menuToggle[data-is-menu-open='true'] span:nth-child(2) {
+  opacity: 0;
+}
+
+.menuToggle[data-is-menu-open='true'] span:last-child {
+  transform: rotate(-45deg);
 }

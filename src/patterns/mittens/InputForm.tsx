@@ -81,6 +81,7 @@ const MittensInput_: FunctionComponent<
 
   return (
     <>
+      <h2>Measurements</h2>
       <LabeledNumberInput
         name="cuffHeight"
         placeholder={5}

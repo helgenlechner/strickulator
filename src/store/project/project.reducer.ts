@@ -1,5 +1,6 @@
 import produce, { Draft } from 'immer';
 import { Reducer } from 'redux';
+import { CustomProjectReducer } from '../../patterns/custom/store/custom.reducer';
 import {
   ProjectActions,
   projectCreate,
@@ -18,7 +19,7 @@ import {
   Swatch,
 } from './project.model';
 
-const initialState: ProjectStore = {};
+export const initialState: ProjectStore = {};
 
 export const ProjectReducer: Reducer<ProjectStore> = produce(
   (draft: Draft<ProjectStore>, action) => {
@@ -152,6 +153,8 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
         return;
       }
     }
+
+    CustomProjectReducer(draft, action);
   },
   initialState,
 );

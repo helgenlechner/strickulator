@@ -44,7 +44,6 @@ export const Project: FunctionComponent = () => {
           <GaugeCalculator projectId={projectId} />
         </div>
       </section>
-      <h2>Measurements</h2>
       <div className={styles.inputForm}>
         <PatternInputForm projectId={projectId} />
       </div>

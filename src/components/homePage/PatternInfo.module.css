@@ -1,7 +1,7 @@
 .patternInfo {
   flex-basis: 50%;
   min-width: 200px;
-  background-color: var(--piggy-pink);
+  background-color: var(---jam-light);
   padding: 20px;
   background-origin: border-box;
 }

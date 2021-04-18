@@ -1,7 +1,7 @@
 nav {
   width: 200px;
   flex-shrink: 0;
-  background-color: var(--lavender-blush);
+  background-color: var(--light-gray);
   padding: 20px;
   box-sizing: border-box;
   margin-left: 0;
@@ -10,19 +10,20 @@ nav {
   position: sticky;
   top: 0;
   overflow-y: scroll;
+  border-right: 1px solid var(--gunmetal-light);
 }
 
 nav[data-is-visible='false'] {
   margin-left: -200px;
 }
 
-ul {
+nav ul {
   list-style-type: none;
   padding-left: 0px;
   margin-top: 0;
 }
 
-ul ul {
+nav ul ul {
   padding-left: 20px;
   list-style-type: disc;
 }
@@ -33,6 +34,6 @@ nav > ul > li + li {
 
 .delete {
   margin-left: 10px;
-  color: var(--pictorial-carmine);
+  color: var(--jam-dark);
   cursor: pointer;
 }

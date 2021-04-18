@@ -1,6 +1,7 @@
 export const drawPolygon = (
   context: CanvasRenderingContext2D,
   points: { x: number; y: number }[],
+  legacy: boolean = true,
 ) => {
   context.beginPath();
   context.moveTo(points[0].x, points[0].y);
@@ -9,6 +10,8 @@ export const drawPolygon = (
     context.lineTo(points[i].x, points[i].y);
   }
 
-  context.closePath();
-  context.stroke();
+  if (legacy) {
+    context.closePath();
+    context.stroke();
+  }
 };

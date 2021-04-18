@@ -5,7 +5,7 @@
 }
 
 .activeStep {
-  background-color: var(--banana-mania);
+  background-color: var(--banana-light);
   border-radius: 2px;
   padding: 4px;
   position: absolute;

@@ -3,40 +3,54 @@ import styles from './Input.module.css';
 
 interface Props {
   name: string;
-  placeholder?: number;
-  onChange: (value: number | undefined) => void;
-  value: number | string;
   unit?: string;
 }
 
-export const Input: FunctionComponent<Props> = ({
-  name,
-  placeholder,
-  onChange: onChange_,
-  value,
-  unit,
-}) => {
+interface NumberProps extends Props {
+  placeholder?: number;
+  type?: 'number';
+  onChange: (value: number | undefined) => void;
+  value: number | string;
+}
+
+interface TextProps extends Props {
+  placeholder?: string;
+  type: 'text';
+  onChange: (value: string | undefined) => void;
+  value: string;
+}
+
+const isNumberProps = (props: NumberProps | TextProps): props is NumberProps =>
+  props.type === undefined || props.type === 'number';
+
+export const Input: FunctionComponent<TextProps | NumberProps> = (props) => {
+  const { name, placeholder, value, unit, type = 'number' } = props;
+
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const numericValue = Number(event.target.value);
+    if (isNumberProps(props)) {
+      const numericValue = Number(event.target.value);
 
-    if (isNaN(numericValue)) {
-      return;
+      if (isNaN(numericValue)) {
+        return;
+      }
+
+      if (numericValue <= 0) {
+        props.onChange(undefined);
+
+        return;
+      }
+
+      props.onChange(numericValue);
+    } else {
+      props.onChange(event.target.value);
     }
-
-    if (numericValue <= 0) {
-      onChange_(undefined);
-
-      return;
-    }
-
-    onChange_(numericValue);
   };
 
   return (
     <>
       <input
         className={styles.input}
-        type="number"
+        type={type}
         placeholder={placeholder?.toString(10)}
         name={name}
         onChange={onChange}

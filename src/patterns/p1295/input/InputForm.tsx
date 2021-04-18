@@ -7,6 +7,7 @@ import { SleeveInput } from './SleeveInput';
 
 export const P1295Input: FunctionComponent<PatternProps> = ({ projectId }) => (
   <>
+    <h2>Measurements</h2>
     <h3>Shared</h3>
     <SharedMeasurementInput projectId={projectId} />
     <section>

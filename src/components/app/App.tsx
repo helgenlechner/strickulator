@@ -22,9 +22,9 @@ export const App = () => {
       <StoreProvider>
         <BrowserRouter>
           <ActiveStep />
-          <Menu />
-          <div>
-            <Header />
+          <Header />
+          <div className={styles.container}>
+            <Menu />
             <div className={styles.mainContent}>
               <Switch>
                 <Route exact path="/">

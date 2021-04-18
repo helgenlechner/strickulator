@@ -1,17 +1,21 @@
 import { FunctionComponent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { locationToggleMenuVisibility } from '../../store/location/location.actions';
 import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
+import { getIsMenuVisible } from '../../store/location/location.selectors';
 
 export const Header: FunctionComponent = () => {
   const dispatch = useDispatch();
+  const isMenuOpen = useSelector(getIsMenuVisible);
+
   return (
     <div className={styles.header}>
       <div>
         <span
+          data-is-menu-open={isMenuOpen}
           onClick={() => dispatch(locationToggleMenuVisibility())}
-          className={styles.dots}
+          className={styles.menuToggle}
         >
           <span />
           <span />

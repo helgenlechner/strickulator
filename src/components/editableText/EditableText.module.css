@@ -1,0 +1,23 @@
+.normal {
+  cursor: pointer;
+}
+
+.editing[data-component='h1'] {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.editing[data-component='h2'] {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.editing[data-component='h3'] {
+  font-size: 18.72px;
+  font-weight: bold;
+}
+
+.editing[data-component='p'] {
+  font-size: 16px;
+  margin: -4px 0 12px;
+}

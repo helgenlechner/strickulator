@@ -1,6 +1,7 @@
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { ChangeEvent, FunctionComponent } from 'react';
 import { Label } from '../label/Label';
+import styles from './LabeledTextArea.module.css';
 
 type Props = {
   name: string;
@@ -30,7 +31,12 @@ export const LabeledTextArea: FunctionComponent<Props> = ({
   return (
     <>
       <Label forInput={name}>{children}</Label>
-      <textarea value={value} placeholder={placeholder} onChange={onChange_} />
+      <textarea
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange_}
+        className={styles.textarea}
+      />
     </>
   );
 };

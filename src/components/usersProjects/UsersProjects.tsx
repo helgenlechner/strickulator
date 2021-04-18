@@ -37,7 +37,7 @@ export const UsersProjects: FC<Props> = ({ ravelryTag }) => {
 
   return (
     <>
-      <h2>User's Projects</h2>
+      <h2>Users' Projects</h2>
       <p className={styles.hint}>
         To get featured, tag your Ravelry project with "{ravelryTag}".
       </p>

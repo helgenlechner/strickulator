@@ -1,3 +1,17 @@
+:root {
+  --light-gray: #faf9fa;
+
+  --gunmetal-dark: #242f40;
+  --gunmetal-medium: #6a717c;
+  --gunmetal-light: #aeb2b7;
+
+  --jam-dark: #9e0059;
+  --jam-medium: #ba528d;
+  --jam-light: #d6a2bf;
+
+  --banana-light: #fbe8b2;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,39 +19,21 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--light-gray);
+  color: var(--gunmetal-dark);
 }
 
-:root {
-  --tyrian-purple: #490b3d;
-  --shocking-pink: #df2abb;
-  --piggy-pink: #f9dce5;
-  --lavender-blush: #fceef2;
-  --pictorial-carmine: #bd1e51;
-  --orange-yellow: #f1b814;
-  --banana-mania: #fbe8b2;
-}
-
-#root {
-  display: flex;
-}
-
-a {
-  color: var(--pictorial-carmine);
-}
-
-a:visited {
-  color: var(--tyrian-purple);
-}
-
+a,
+a:visited,
 a:visited:hover {
-  color: var(--pictorial-carmine);
+  color: var(--jam-dark);
 }
 
 button {
-  background-color: var(--pictorial-carmine);
+  background-color: var(--jam-dark);
   color: white;
   border: none;
-  padding: 5px 8px;
+  padding: 7px 9px;
   margin: 0 2px;
   font-size: 16px;
   border-radius: 5px;
