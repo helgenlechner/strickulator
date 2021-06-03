@@ -6,23 +6,15 @@ import {
   getWidthOfOneStitch,
 } from '../../../../store/project/project.swatch.selectors';
 import { getStep } from '../../store/custom.input.selectors';
-import { Shape } from '../../custom.model';
+import { isRectangle } from './rectangle.model';
 
-export const getWidth = createSelector([getStep], (step) => {
-  if (step?.shape === Shape.Rectangle) {
-    return step?.width;
-  }
+export const getRectangle = createSelector([getStep], (step) =>
+  isRectangle(step) ? step : undefined,
+);
 
-  return undefined;
-});
+export const getWidth = createSelector([getRectangle], (step) => step?.width);
 
-export const getHeight = createSelector([getStep], (step) => {
-  if (step?.shape === Shape.Rectangle) {
-    return step?.height;
-  }
-
-  return undefined;
-});
+export const getHeight = createSelector([getRectangle], (step) => step?.height);
 
 export const getNumberOfStitches = createSelector(
   [getWidth, getWidthOfOneStitch],

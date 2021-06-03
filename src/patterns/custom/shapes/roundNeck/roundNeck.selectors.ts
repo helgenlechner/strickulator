@@ -8,31 +8,23 @@ import {
   getHeightOfOneRow,
 } from '../../../../store/project/project.swatch.selectors';
 import { getStep } from '../../store/custom.input.selectors';
-import { Shape } from '../../custom.model';
+import { isRoundNeck } from './roundNeck.model';
 
-export const getBottomWidth = createSelector([getStep], (step) => {
-  if (step?.shape === Shape.RoundNeck) {
-    return step?.bottomWidth;
-  }
+export const getRoundNeck = createSelector([getStep], (step) =>
+  isRoundNeck(step) ? step : undefined,
+);
 
-  return undefined;
-});
+export const getBottomWidth = createSelector(
+  [getRoundNeck],
+  (step) => step?.bottomWidth,
+);
 
-export const getTopWidth = createSelector([getStep], (step) => {
-  if (step?.shape === Shape.RoundNeck) {
-    return step?.topWidth;
-  }
+export const getTopWidth = createSelector(
+  [getRoundNeck],
+  (step) => step?.topWidth,
+);
 
-  return undefined;
-});
-
-export const getHeight = createSelector([getStep], (step) => {
-  if (step?.shape === Shape.RoundNeck) {
-    return step?.height;
-  }
-
-  return undefined;
-});
+export const getHeight = createSelector([getRoundNeck], (step) => step?.height);
 
 export const getNumberOfBottomStitches = createSelector(
   [getBottomWidth, getWidthOfOneStitch],

@@ -14,6 +14,7 @@ export interface ShapeConfiguration {
   name: Shape;
   Preview: React.ComponentType<ShapeRendererProps>;
   Input: React.ComponentType<ShapeRendererProps>;
+  getWidestMeasurement: (shape: CustomShape) => number | undefined;
 }
 
 export interface ShapeRendererProps {
@@ -22,7 +23,7 @@ export interface ShapeRendererProps {
   stepIndex: number;
 }
 
-export type CustomStep = { name: string } & (Rectangle | Trapezoid | RoundNeck);
+export type CustomStep = { name: string } & CustomShape;
 
 export enum Shape {
   Rectangle,
@@ -30,24 +31,8 @@ export enum Shape {
   RoundNeck,
 }
 
-export interface Rectangle {
-  shape: Shape.Rectangle;
-  width?: number;
-  height?: number;
-}
-
-export interface Trapezoid {
-  shape: Shape.Trapezoid;
-  bottomWidth?: number;
-  topWidth?: number;
-  height?: number;
-}
-
-export interface RoundNeck {
-  shape: Shape.RoundNeck;
-  bottomWidth?: number;
-  topWidth?: number;
-  height?: number;
+export interface CustomShape {
+  shape: Shape;
 }
 
 export const PREVIEW_FACTOR = 20;

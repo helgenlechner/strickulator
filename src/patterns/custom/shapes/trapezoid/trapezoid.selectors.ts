@@ -7,31 +7,23 @@ import {
   getWidthOfOneStitch,
 } from '../../../../store/project/project.swatch.selectors';
 import { getStep } from '../../store/custom.input.selectors';
-import { Shape } from '../../custom.model';
+import { isTrapezoid } from './trapezoid.model';
 
-export const getBottomWidth = createSelector([getStep], (step) => {
-  if (step?.shape === Shape.Trapezoid) {
-    return step?.bottomWidth;
-  }
+export const getTrapezoid = createSelector([getStep], (step) =>
+  isTrapezoid(step) ? step : undefined,
+);
 
-  return undefined;
-});
+export const getBottomWidth = createSelector(
+  [getTrapezoid],
+  (step) => step?.bottomWidth,
+);
 
-export const getTopWidth = createSelector([getStep], (step) => {
-  if (step?.shape === Shape.Trapezoid) {
-    return step?.topWidth;
-  }
+export const getTopWidth = createSelector(
+  [getTrapezoid],
+  (step) => step?.topWidth,
+);
 
-  return undefined;
-});
-
-export const getHeight = createSelector([getStep], (step) => {
-  if (step?.shape === Shape.Trapezoid) {
-    return step?.height;
-  }
-
-  return undefined;
-});
+export const getHeight = createSelector([getTrapezoid], (step) => step?.height);
 
 export const getNumberOfBottomStitches = createSelector(
   [getBottomWidth, getWidthOfOneStitch],
