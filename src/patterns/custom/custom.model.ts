@@ -1,5 +1,4 @@
-import { fontSize } from '../../constants/fontSize';
-import { Measurements } from '../../store/project/project.model';
+import { Measurements, ProjectId } from '../../store/project/project.model';
 
 export interface CustomMeasurements extends Measurements {
   // @ts-ignore
@@ -9,6 +8,18 @@ export interface CustomMeasurements extends Measurements {
 export interface CustomPatternPiece {
   name: string;
   steps: CustomStep[];
+}
+
+export interface ShapeConfiguration {
+  name: Shape;
+  Preview: React.ComponentType<ShapeRendererProps>;
+  Input: React.ComponentType<ShapeRendererProps>;
+}
+
+export interface ShapeRendererProps {
+  projectId: ProjectId;
+  patternPieceIndex: number;
+  stepIndex: number;
 }
 
 export type CustomStep = { name: string } & (Rectangle | Trapezoid | RoundNeck);

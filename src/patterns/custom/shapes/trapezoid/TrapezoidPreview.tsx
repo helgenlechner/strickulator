@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Slope } from '../../../helpers/slope';
-import { ProjectId } from '../../../store/project/project.model';
-import { AppState } from '../../../store/store.model';
+import { Slope } from '../../../../helpers/slope';
+import { AppState } from '../../../../store/store.model';
 import {
   getBottomWidth,
   getHeight,
@@ -11,23 +10,21 @@ import {
   getNumberOfTopStitches,
   getSlope,
   getTopWidth,
-} from '../store/custom.trapezoid.selectors';
-import { ArrowHead } from '../../../components/canvas/ArrowHead';
-import { Polygon } from '../../../components/canvas/Polygon';
-import { LineDash } from '../../../components/canvas/LineDash';
-import { StrokeStyle } from '../../../components/canvas/StrokeStyle';
-import { BasicSetup } from '../../../components/canvas/BasicSetup';
-import { ClearRect } from '../../../components/canvas/ClearRect';
-import { leftHalfOfPattern, topMargin } from '../custom.model';
-import { Canvas } from '../../../components/canvas/Canvas';
-import styles from './Preview.module.css';
-import { SlopeDescription } from '../../../components/slopeDescription/SlopeDescription';
-
-interface Props {
-  projectId: ProjectId;
-  patternPieceIndex: number;
-  stepIndex: number;
-}
+} from './trapezoid.selectors';
+import { ArrowHead } from '../../../../components/canvas/ArrowHead';
+import { Polygon } from '../../../../components/canvas/Polygon';
+import { LineDash } from '../../../../components/canvas/LineDash';
+import { StrokeStyle } from '../../../../components/canvas/StrokeStyle';
+import { BasicSetup } from '../../../../components/canvas/BasicSetup';
+import { ClearRect } from '../../../../components/canvas/ClearRect';
+import {
+  leftHalfOfPattern,
+  ShapeRendererProps,
+  topMargin,
+} from '../../custom.model';
+import { Canvas } from '../../../../components/canvas/Canvas';
+import styles from '../Preview.module.css';
+import { SlopeDescription } from '../../../../components/slopeDescription/SlopeDescription';
 
 interface ConnectedState {
   bottomWidth: number | undefined;
@@ -39,7 +36,10 @@ interface ConnectedState {
   slope: Slope | undefined;
 }
 
-const mapStateToProps = (state: AppState, props: Props): ConnectedState => ({
+const mapStateToProps = (
+  state: AppState,
+  props: ShapeRendererProps,
+): ConnectedState => ({
   bottomWidth: getBottomWidth(state, props),
   topWidth: getTopWidth(state, props),
   height: getHeight(state, props),
@@ -49,7 +49,9 @@ const mapStateToProps = (state: AppState, props: Props): ConnectedState => ({
   slope: getSlope(state, props),
 });
 
-const TrapezoidPreview_: React.FunctionComponent<Props & ConnectedState> = ({
+const TrapezoidPreview_: React.FunctionComponent<
+  ShapeRendererProps & ConnectedState
+> = ({
   bottomWidth = 0,
   topWidth = 0,
   height = 0,

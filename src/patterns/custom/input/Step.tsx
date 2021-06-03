@@ -9,13 +9,15 @@ import {
 } from '../store/custom.actions';
 import { ShapeSelect } from './ShapeSelect';
 import { Label } from '../../../components/label/Label';
-import { RectangleInput } from './ShapeInput/Rectangle';
-import { TrapezoidInput } from './ShapeInput/Trapezoid';
+import { RectangleInput } from '../shapes/rectangle/RectangleInput';
+import { TrapezoidInput } from '../shapes/trapezoid/TrapezoidInput';
 import styles from './Step.module.css';
-import { RectanglePreview } from '../preview/Rectangle';
-import { TrapezoidPreview } from '../preview/Trapezoid';
-import { RoundNeckInput } from './ShapeInput/RoundNeck';
-import { RoundNeckPreview } from '../preview/RoundNeck';
+import { RectanglePreview } from '../shapes/rectangle/RectanglePreview';
+import { TrapezoidPreview } from '../shapes/trapezoid/TrapezoidPreview';
+import { RoundNeckInput } from '../shapes/roundNeck/RoundNeckInput';
+import { RoundNeckPreview } from '../shapes/roundNeck/RoundNeckPreview';
+import { findPreview } from '../shapes/findPreview';
+import { findInput } from '../shapes/findInput';
 
 interface Props {
   projectId: ProjectId;
@@ -51,6 +53,13 @@ export const Step: FunctionComponent<Props> = (props) => {
     );
   };
 
+  const Preview = findPreview(step.shape);
+  const Input = findInput(step.shape);
+
+  if (!Preview || !Input) {
+    return null;
+  }
+
   return (
     <li className={styles.step}>
       <div className={styles.flexContainer}>
@@ -64,26 +73,10 @@ export const Step: FunctionComponent<Props> = (props) => {
             <Label forInput="shape">Shape</Label>
             <ShapeSelect value={step.shape} onChange={onShapeChange} />
           </p>
-          {step.shape === Shape.Rectangle && (
-            <RectangleInput {...propsToPass} />
-          )}
-          {step.shape === Shape.Trapezoid && (
-            <TrapezoidInput {...propsToPass} />
-          )}
-          {step.shape === Shape.RoundNeck && (
-            <RoundNeckInput {...propsToPass} />
-          )}
+          <Input {...propsToPass} />
         </div>
         <div className={styles.preview}>
-          {step.shape === Shape.Rectangle && (
-            <RectanglePreview {...propsToPass} />
-          )}
-          {step.shape === Shape.Trapezoid && (
-            <TrapezoidPreview {...propsToPass} />
-          )}
-          {step.shape === Shape.RoundNeck && (
-            <RoundNeckPreview {...propsToPass} />
-          )}
+          <Preview {...propsToPass} />
         </div>
       </div>
     </li>

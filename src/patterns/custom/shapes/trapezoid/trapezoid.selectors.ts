@@ -1,13 +1,13 @@
 import { createSelector } from 'redux-views';
-import { divideAndRoundToEvenNumber } from '../../../helpers/divideAndRoundToEvenNumber';
-import { divideRoundToEvenNumberAndHalve } from '../../../helpers/divideRoundToEvenNumberAndHalve';
-import { calculateSlope } from '../../../helpers/slope';
+import { divideAndRoundToEvenNumber } from '../../../../helpers/divideAndRoundToEvenNumber';
+import { divideRoundToEvenNumberAndHalve } from '../../../../helpers/divideRoundToEvenNumberAndHalve';
+import { calculateSlope } from '../../../../helpers/slope';
 import {
   getHeightOfOneRow,
   getWidthOfOneStitch,
-} from '../../../store/project/project.swatch.selectors';
-import { getStep } from './custom.input.selectors';
-import { Shape } from '../custom.model';
+} from '../../../../store/project/project.swatch.selectors';
+import { getStep } from '../../store/custom.input.selectors';
+import { Shape } from '../../custom.model';
 
 export const getBottomWidth = createSelector([getStep], (step) => {
   if (step?.shape === Shape.Trapezoid) {

@@ -1,19 +1,18 @@
 import { FunctionComponent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LabeledNumberInput } from '../../../../components/labeledInput/LabeledNumberInput';
-import { ProjectId } from '../../../../store/project/project.model';
 import { AppState } from '../../../../store/store.model';
+import { ShapeRendererProps } from '../../custom.model';
 import { customProjectUpdateStepMeasurement } from '../../store/custom.actions';
-import { getHeight, getWidth } from '../../store/custom.rectangle.selectors';
+import { getBottomWidth, getHeight, getTopWidth } from './roundNeck.selectors';
 
-interface Props {
-  projectId: ProjectId;
-  patternPieceIndex: number;
-  stepIndex: number;
-}
-
-export const RectangleInput: FunctionComponent<Props> = (props) => {
-  const width = useSelector((state: AppState) => getWidth(state, props));
+export const RoundNeckInput: FunctionComponent<ShapeRendererProps> = (
+  props,
+) => {
+  const bottomWidth = useSelector((state: AppState) =>
+    getBottomWidth(state, props),
+  );
+  const topWidth = useSelector((state: AppState) => getTopWidth(state, props));
   const height = useSelector((state: AppState) => getHeight(state, props));
 
   const dispatch = useDispatch();
@@ -32,8 +31,20 @@ export const RectangleInput: FunctionComponent<Props> = (props) => {
 
   return (
     <>
-      <LabeledNumberInput name="width" value={width ?? ''} onChange={onChange}>
-        Width
+      <LabeledNumberInput
+        name="bottomWidth"
+        value={bottomWidth ?? ''}
+        onChange={onChange}
+      >
+        Width at Start
+      </LabeledNumberInput>
+      <br />
+      <LabeledNumberInput
+        name="topWidth"
+        value={topWidth ?? ''}
+        onChange={onChange}
+      >
+        Shoulder Width
       </LabeledNumberInput>
       <br />
       <LabeledNumberInput

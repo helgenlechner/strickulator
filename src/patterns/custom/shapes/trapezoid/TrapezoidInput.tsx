@@ -1,22 +1,14 @@
 import { FunctionComponent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LabeledNumberInput } from '../../../../components/labeledInput/LabeledNumberInput';
-import { ProjectId } from '../../../../store/project/project.model';
 import { AppState } from '../../../../store/store.model';
+import { ShapeRendererProps } from '../../custom.model';
 import { customProjectUpdateStepMeasurement } from '../../store/custom.actions';
-import {
-  getBottomWidth,
-  getHeight,
-  getTopWidth,
-} from '../../store/custom.trapezoid.selectors';
+import { getBottomWidth, getHeight, getTopWidth } from './trapezoid.selectors';
 
-interface Props {
-  projectId: ProjectId;
-  patternPieceIndex: number;
-  stepIndex: number;
-}
-
-export const TrapezoidInput: FunctionComponent<Props> = (props) => {
+export const TrapezoidInput: FunctionComponent<ShapeRendererProps> = (
+  props,
+) => {
   const bottomWidth = useSelector((state: AppState) =>
     getBottomWidth(state, props),
   );

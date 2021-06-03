@@ -1,14 +1,17 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { ArrowHead } from '../../../components/canvas/ArrowHead';
-import { BasicSetup } from '../../../components/canvas/BasicSetup';
-import { ClearRect } from '../../../components/canvas/ClearRect';
-import { LineDash } from '../../../components/canvas/LineDash';
-import { Polygon } from '../../../components/canvas/Polygon';
-import { StrokeStyle } from '../../../components/canvas/StrokeStyle';
-import { ProjectId } from '../../../store/project/project.model';
-import { AppState } from '../../../store/store.model';
-import { leftHalfOfPattern, topMargin } from '../custom.model';
+import { ArrowHead } from '../../../../components/canvas/ArrowHead';
+import { BasicSetup } from '../../../../components/canvas/BasicSetup';
+import { ClearRect } from '../../../../components/canvas/ClearRect';
+import { LineDash } from '../../../../components/canvas/LineDash';
+import { Polygon } from '../../../../components/canvas/Polygon';
+import { StrokeStyle } from '../../../../components/canvas/StrokeStyle';
+import { AppState } from '../../../../store/store.model';
+import {
+  leftHalfOfPattern,
+  ShapeRendererProps,
+  topMargin,
+} from '../../custom.model';
 import {
   getBottomWidth,
   getHeight,
@@ -17,20 +20,14 @@ import {
   getNumberOfRows,
   getNumberOfTopStitches,
   getTopWidth,
-} from '../store/custom.roundNeck.selectors';
-import { UnevenSlope } from '../../../helpers/slope';
+} from './roundNeck.selectors';
+import { UnevenSlope } from '../../../../helpers/slope';
 import {
   getHeightOfOneRow,
   getWidthOfOneStitch,
-} from '../../../store/project/project.swatch.selectors';
-import { Canvas } from '../../../components/canvas/Canvas';
-import styles from './Preview.module.css';
-
-interface Props {
-  projectId: ProjectId;
-  patternPieceIndex: number;
-  stepIndex: number;
-}
+} from '../../../../store/project/project.swatch.selectors';
+import { Canvas } from '../../../../components/canvas/Canvas';
+import styles from '../Preview.module.css';
 
 interface ConnectedState {
   bottomWidth: number | undefined;
@@ -44,7 +41,10 @@ interface ConnectedState {
   heightOfOneRow: number | undefined;
 }
 
-const mapStateToProps = (state: AppState, props: Props): ConnectedState => ({
+const mapStateToProps = (
+  state: AppState,
+  props: ShapeRendererProps,
+): ConnectedState => ({
   bottomWidth: getBottomWidth(state, props),
   topWidth: getTopWidth(state, props),
   height: getHeight(state, props),
@@ -56,7 +56,7 @@ const mapStateToProps = (state: AppState, props: Props): ConnectedState => ({
   heightOfOneRow: getHeightOfOneRow(state, props),
 });
 
-const RoundNeckPreview_: React.FC<Props & ConnectedState> = ({
+const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
   bottomWidth,
   topWidth,
   height,

@@ -1,28 +1,26 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { ArrowHead } from '../../../components/canvas/ArrowHead';
-import { BasicSetup } from '../../../components/canvas/BasicSetup';
-import { Canvas } from '../../../components/canvas/Canvas';
-import { ClearRect } from '../../../components/canvas/ClearRect';
-import { LineDash } from '../../../components/canvas/LineDash';
-import { Polygon } from '../../../components/canvas/Polygon';
-import { StrokeStyle } from '../../../components/canvas/StrokeStyle';
-import { ProjectId } from '../../../store/project/project.model';
-import { AppState } from '../../../store/store.model';
-import { leftHalfOfPattern, PREVIEW_FACTOR, topMargin } from '../custom.model';
+import { ArrowHead } from '../../../../components/canvas/ArrowHead';
+import { BasicSetup } from '../../../../components/canvas/BasicSetup';
+import { Canvas } from '../../../../components/canvas/Canvas';
+import { ClearRect } from '../../../../components/canvas/ClearRect';
+import { LineDash } from '../../../../components/canvas/LineDash';
+import { Polygon } from '../../../../components/canvas/Polygon';
+import { StrokeStyle } from '../../../../components/canvas/StrokeStyle';
+import { AppState } from '../../../../store/store.model';
+import {
+  leftHalfOfPattern,
+  PREVIEW_FACTOR,
+  ShapeRendererProps,
+  topMargin,
+} from '../../custom.model';
 import {
   getHeight,
   getNumberOfStitches,
   getNumberOfRows,
   getWidth,
-} from '../store/custom.rectangle.selectors';
-import styles from './Preview.module.css';
-
-interface Props {
-  projectId: ProjectId;
-  patternPieceIndex: number;
-  stepIndex: number;
-}
+} from './rectangle.selectors';
+import styles from '../Preview.module.css';
 
 interface ConnectedState {
   width: number | undefined;
@@ -31,19 +29,19 @@ interface ConnectedState {
   numberOfRows: number | undefined;
 }
 
-const mapStateToProps = (state: AppState, props: Props): ConnectedState => ({
+const mapStateToProps = (
+  state: AppState,
+  props: ShapeRendererProps,
+): ConnectedState => ({
   width: getWidth(state, props),
   height: getHeight(state, props),
   numberOfStitches: getNumberOfStitches(state, props),
   numberOfRows: getNumberOfRows(state, props),
 });
 
-const RectanglePreview_: React.FunctionComponent<Props & ConnectedState> = ({
-  width,
-  height,
-  numberOfStitches,
-  numberOfRows,
-}) => {
+const RectanglePreview_: React.FunctionComponent<
+  ShapeRendererProps & ConnectedState
+> = ({ width, height, numberOfStitches, numberOfRows }) => {
   if (!width || !height) {
     return null;
   }
