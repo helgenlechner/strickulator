@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Slope } from '../../../../helpers/slope';
 import { AppState } from '../../../../store/store.model';
 import {
@@ -25,6 +25,7 @@ import {
 import { Canvas } from '../../../../components/canvas/Canvas';
 import styles from '../Preview.module.css';
 import { SlopeDescription } from '../../../../components/slopeDescription/SlopeDescription';
+import { getWidestWidthForProject } from '../../store/custom.project.selectors';
 
 interface ConnectedState {
   bottomWidth: number | undefined;
@@ -52,17 +53,21 @@ const mapStateToProps = (
 const TrapezoidPreview_: React.FunctionComponent<
   ShapeRendererProps & ConnectedState
 > = ({
-  bottomWidth = 0,
-  topWidth = 0,
-  height = 0,
+  bottomWidth,
+  topWidth,
+  height,
   numberOfBottomStitches,
   numberOfTopStitches,
   numberOfRows,
   slope,
+  projectId,
 }) => {
   const [containerWidth, setContainerWidth] = React.useState<number>(600);
+  const widestMeasurement = useSelector((state: AppState) =>
+    getWidestWidthForProject(state, { projectId }),
+  );
 
-  if (bottomWidth === 0 || topWidth === 0 || height === 0) {
+  if (!bottomWidth || !topWidth || !height || !widestMeasurement) {
     return null;
   }
 
@@ -75,7 +80,7 @@ const TrapezoidPreview_: React.FunctionComponent<
   };
 
   const scaleFactor =
-    containerWidth / (Math.max(bottomWidth, topWidth) / 2 + leftHalfOfPattern);
+    containerWidth / (widestMeasurement / 2 + leftHalfOfPattern);
 
   const canvasHeight = height * scaleFactor + 22;
 

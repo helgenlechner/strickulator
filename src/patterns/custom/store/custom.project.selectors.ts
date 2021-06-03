@@ -1,13 +1,30 @@
 import { createSelector } from 'redux-views';
+import { isNotUndefined } from '../../../helpers/isNotUndefined';
+import { findShapeConfiguration } from '../shapes/findShapeConfiguration';
 import { getPatternPieces } from './custom.input.selectors';
 
-export const getWidestNumberOfStitchesForProject = createSelector(
+export const getWidestWidthForProject = createSelector(
   [getPatternPieces],
   (patternPieces) => {
-    const allSteps = patternPieces?.map((piece) => piece.steps).flat();
+    if (!patternPieces) {
+      return undefined;
+    }
 
-    allSteps?.map((step) => {});
+    const allSteps = patternPieces.map((piece) => piece.steps).flat();
 
-    console.log(allSteps);
+    return allSteps
+      .map((step) => {
+        const configuration = findShapeConfiguration(step.shape);
+
+        if (!configuration) {
+          return undefined;
+        }
+
+        return configuration.getWidestMeasurement(step);
+      })
+      .filter(isNotUndefined)
+      .reduce((maximum, current) => {
+        return Math.max(maximum, current);
+      }, 0);
   },
 );
