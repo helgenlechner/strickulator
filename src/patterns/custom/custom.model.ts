@@ -40,8 +40,5 @@ export interface RoundNeck {
 }
 
 export const PREVIEW_FACTOR = 20;
-export const leftMargin = 50;
 export const leftHalfOfPattern = 20;
-export const rightMargin = 50;
 export const topMargin = 10;
-export const lineHeight = fontSize + 2;

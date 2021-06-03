@@ -7,16 +7,9 @@ import { ClearRect } from '../../../components/canvas/ClearRect';
 import { LineDash } from '../../../components/canvas/LineDash';
 import { Polygon } from '../../../components/canvas/Polygon';
 import { StrokeStyle } from '../../../components/canvas/StrokeStyle';
-import { drawArrowHead } from '../../../helpers/drawArrowHead';
-import { drawPolygon } from '../../../helpers/drawPolygon';
 import { ProjectId } from '../../../store/project/project.model';
 import { AppState } from '../../../store/store.model';
-import {
-  leftHalfOfPattern,
-  leftMargin,
-  PREVIEW_FACTOR,
-  topMargin,
-} from '../custom.model';
+import { leftHalfOfPattern, PREVIEW_FACTOR, topMargin } from '../custom.model';
 import {
   getHeight,
   getNumberOfStitches,
@@ -46,15 +39,12 @@ const mapStateToProps = (state: AppState, props: Props): ConnectedState => ({
 });
 
 const RectanglePreview_: React.FunctionComponent<Props & ConnectedState> = ({
-  width = 0,
-  height = 0,
+  width,
+  height,
   numberOfStitches,
   numberOfRows,
 }) => {
-  const [canvasRef, setCanvasRef] =
-    React.useState<HTMLCanvasElement | null>(null);
-
-  if (width === 0 || height === 0) {
+  if (!width || !height) {
     return null;
   }
 
@@ -63,26 +53,6 @@ const RectanglePreview_: React.FunctionComponent<Props & ConnectedState> = ({
 
   const previewWidth = (width * PREVIEW_FACTOR) / 2;
   const previewHeight = height * PREVIEW_FACTOR;
-
-  const context = canvasRef?.getContext('2d');
-
-  if (context) {
-    drawPolygon(
-      context,
-      [
-        { x: 10, y: 10 },
-        { x: previewWidth + 20, y: 10 },
-        { x: previewWidth + 20, y: previewHeight + 10 },
-        { x: 10, y: previewHeight + 10 },
-      ],
-      false,
-    );
-    context.stroke();
-
-    // arrow heads
-    drawArrowHead(context, [4, 10]);
-    drawArrowHead(context, [4, previewHeight + 10]);
-  }
 
   return (
     <div className={styles.container}>
@@ -93,8 +63,8 @@ const RectanglePreview_: React.FunctionComponent<Props & ConnectedState> = ({
         <LineDash value={[10, 4]} />
         <Polygon
           points={[
-            { x: leftHalfOfPattern + leftMargin, y: topMargin },
-            { x: leftHalfOfPattern + leftMargin, y: previewHeight + topMargin },
+            { x: leftHalfOfPattern, y: topMargin },
+            { x: leftHalfOfPattern, y: previewHeight + topMargin },
           ]}
         />
         <StrokeStyle value="#242f40" />
@@ -107,8 +77,8 @@ const RectanglePreview_: React.FunctionComponent<Props & ConnectedState> = ({
             { x: 10, y: previewHeight + 10 },
           ]}
         />
-        <ArrowHead x={4 + leftMargin} y={topMargin} />
-        <ArrowHead x={4 + leftMargin} y={previewHeight + topMargin} />
+        <ArrowHead x={4} y={topMargin} />
+        <ArrowHead x={4} y={previewHeight + topMargin} />
       </Canvas>
       <p className={styles.leftLabel} style={{ maxWidth: canvasHeight }}>
         {numberOfRows}&#8239;R

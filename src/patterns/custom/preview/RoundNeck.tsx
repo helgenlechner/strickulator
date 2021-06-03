@@ -8,12 +8,7 @@ import { Polygon } from '../../../components/canvas/Polygon';
 import { StrokeStyle } from '../../../components/canvas/StrokeStyle';
 import { ProjectId } from '../../../store/project/project.model';
 import { AppState } from '../../../store/store.model';
-import {
-  leftHalfOfPattern,
-  leftMargin,
-  rightMargin,
-  topMargin,
-} from '../custom.model';
+import { leftHalfOfPattern, topMargin } from '../custom.model';
 import {
   getBottomWidth,
   getHeight,
@@ -62,9 +57,9 @@ const mapStateToProps = (state: AppState, props: Props): ConnectedState => ({
 });
 
 const RoundNeckPreview_: React.FC<Props & ConnectedState> = ({
-  bottomWidth = 0,
-  topWidth = 0,
-  height = 0,
+  bottomWidth,
+  topWidth,
+  height,
   numberOfBottomStitches,
   numberOfTopStitches,
   numberOfRows,
@@ -72,10 +67,9 @@ const RoundNeckPreview_: React.FC<Props & ConnectedState> = ({
   widthOfOneStitch = 0,
   heightOfOneRow = 0,
 }) => {
-  const [containerWidth, setContainerWidth] =
-    React.useState<number | undefined>(undefined);
+  const [containerWidth, setContainerWidth] = React.useState<number>(600);
 
-  if (bottomWidth === 0 || topWidth === 0 || height === 0 || !neckCurve) {
+  if (!bottomWidth || !topWidth || !height || !neckCurve) {
     return null;
   }
 
@@ -87,9 +81,7 @@ const RoundNeckPreview_: React.FC<Props & ConnectedState> = ({
     setContainerWidth(Math.min(ref.clientWidth, 600));
   };
 
-  const scaleFactor =
-    ((containerWidth ?? 600) - leftMargin - rightMargin) /
-    (Math.max(bottomWidth, topWidth) / 2);
+  const scaleFactor = containerWidth / (Math.max(bottomWidth, topWidth) / 2);
 
   const canvasHeight = height * scaleFactor + 22;
 
@@ -102,14 +94,14 @@ const RoundNeckPreview_: React.FC<Props & ConnectedState> = ({
   return (
     <div ref={onContainerRefChange} className={styles.container}>
       <Canvas width={containerWidth} height={canvasHeight}>
-        <ClearRect width={containerWidth ?? 600} height={canvasHeight} />
+        <ClearRect width={containerWidth} height={canvasHeight} />
         <BasicSetup />
         <StrokeStyle value="#aeb2b7" />
         <LineDash value={[10, 4]} />
         <Polygon
           points={[
-            { x: leftHalfOfPattern + leftMargin, y: topMargin },
-            { x: leftHalfOfPattern + leftMargin, y: previewHeight + topMargin },
+            { x: leftHalfOfPattern, y: topMargin },
+            { x: leftHalfOfPattern, y: previewHeight + topMargin },
           ]}
         />
         <StrokeStyle value="#242f40" />
@@ -117,22 +109,19 @@ const RoundNeckPreview_: React.FC<Props & ConnectedState> = ({
         <Polygon
           points={[
             {
-              x:
-                leftMargin +
-                leftHalfOfPattern +
-                (previewBottomWidth - previewTopWidth),
+              x: leftHalfOfPattern + (previewBottomWidth - previewTopWidth),
               y: topMargin,
             },
             {
-              x: previewBottomWidth + leftHalfOfPattern + leftMargin,
+              x: previewBottomWidth + leftHalfOfPattern,
               y: topMargin,
             },
             {
-              x: previewBottomWidth + leftHalfOfPattern + leftMargin,
+              x: previewBottomWidth + leftHalfOfPattern,
               y: previewHeight + topMargin,
             },
-            { x: 10 + leftMargin, y: previewHeight + topMargin },
-            { x: leftHalfOfPattern + leftMargin, y: previewHeight + topMargin },
+            { x: leftHalfOfPattern / 2, y: previewHeight + topMargin },
+            { x: leftHalfOfPattern, y: previewHeight + topMargin },
             ...Object.entries(neckCurve).map(([row, decrease]) => {
               const y = Math.max(
                 previewHeight +
@@ -145,14 +134,12 @@ const RoundNeckPreview_: React.FC<Props & ConnectedState> = ({
                 {
                   x:
                     leftHalfOfPattern +
-                    leftMargin +
                     neckCurveDecreasesSoFar * scaleFactor * widthOfOneStitch,
                   y,
                 },
                 {
                   x:
                     leftHalfOfPattern +
-                    leftMargin +
                     (decrease + neckCurveDecreasesSoFar) *
                       scaleFactor *
                       widthOfOneStitch,
@@ -167,7 +154,7 @@ const RoundNeckPreview_: React.FC<Props & ConnectedState> = ({
           ].flat()}
           closePath={true}
         />
-        <ArrowHead x={4 + leftMargin} y={previewHeight + topMargin} />
+        <ArrowHead x={4} y={previewHeight + topMargin} />
       </Canvas>
       <p className={styles.leftLabel} style={{ maxWidth: canvasHeight }}>
         {numberOfRows}&#8239;R
