@@ -3,6 +3,7 @@
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
   grid-template-areas: 'rowCount preview' 'empty stitchCount';
+  overflow: hidden;
 }
 
 .widthLabel {

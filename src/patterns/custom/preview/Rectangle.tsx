@@ -1,10 +1,21 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { BasicSetup } from '../../../components/canvas/BasicSetup';
+import { ClearRect } from '../../../components/canvas/ClearRect';
+import { LineDash } from '../../../components/canvas/LineDash';
+import { Polygon } from '../../../components/canvas/Polygon';
+import { StrokeStyle } from '../../../components/canvas/StrokeStyle';
+import { CanvasContext } from '../../../context/canvas.context';
 import { drawArrowHead } from '../../../helpers/drawArrowHead';
 import { drawPolygon } from '../../../helpers/drawPolygon';
 import { ProjectId } from '../../../store/project/project.model';
 import { AppState } from '../../../store/store.model';
-import { PREVIEW_FACTOR } from '../custom.model';
+import {
+  leftHalfOfPattern,
+  leftMargin,
+  PREVIEW_FACTOR,
+  topMargin,
+} from '../custom.model';
 import {
   getHeight,
   getNumberOfStitches,
@@ -56,32 +67,6 @@ const RectanglePreview_: React.FunctionComponent<Props & ConnectedState> = ({
   const context = canvasRef?.getContext('2d');
 
   if (context) {
-    context.lineWidth = 2;
-    context.font = '16px sans-serif';
-    context.textAlign = 'center';
-    context.fillStyle = '#242f40';
-    context.rotate(0);
-
-    context.clearRect(0, 0, canvasWidth, canvasHeight);
-
-    // line at center of pattern piece
-    context.strokeStyle = '#aeb2b7';
-    context.setLineDash([10, 4]);
-
-    drawPolygon(
-      context,
-      [
-        { x: 20, y: 10 },
-        { x: 20, y: previewHeight + 10 },
-      ],
-      false,
-    );
-    context.stroke();
-
-    // pattern piece
-    context.strokeStyle = '#242f40';
-    context.setLineDash([]);
-
     drawPolygon(
       context,
       [
@@ -102,6 +87,28 @@ const RectanglePreview_: React.FunctionComponent<Props & ConnectedState> = ({
   return (
     <div className={styles.container}>
       <canvas ref={setCanvasRef} width={canvasWidth} height={canvasHeight} />
+      <CanvasContext.Provider value={canvasRef?.getContext('2d') ?? undefined}>
+        <ClearRect width={canvasWidth} height={canvasHeight} />
+        <BasicSetup />
+        <StrokeStyle value="#aeb2b7" />
+        <LineDash value={[10, 4]} />
+        <Polygon
+          points={[
+            { x: leftHalfOfPattern + leftMargin, y: topMargin },
+            { x: leftHalfOfPattern + leftMargin, y: previewHeight + topMargin },
+          ]}
+        />
+        <StrokeStyle value="#242f40" />
+        <LineDash value={[]} />
+        <Polygon
+          points={[
+            { x: 10, y: 10 },
+            { x: previewWidth + 20, y: 10 },
+            { x: previewWidth + 20, y: previewHeight + 10 },
+            { x: 10, y: previewHeight + 10 },
+          ]}
+        />
+      </CanvasContext.Provider>
       <p className={styles.heightLabel} style={{ maxWidth: canvasHeight }}>
         {numberOfRows}&#8239;R
         <br />

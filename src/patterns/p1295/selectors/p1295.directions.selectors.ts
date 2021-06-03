@@ -413,8 +413,6 @@ export const getNumberOfSleeveHeadStitches = createSelector(
 
     const sum = frontArmscyeStitchSum + backArmscyeStitchSum;
 
-    console.log(frontArmscyeStitchSum, backArmscyeStitchSum);
-
     return roundToEvenNumber(sum * 0.2) / 2;
   },
 );

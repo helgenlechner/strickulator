@@ -15,6 +15,10 @@ const shapeOptions = [
     value: Shape.Trapezoid,
     label: 'Trapezoid',
   },
+  {
+    value: Shape.RoundNeck,
+    label: 'Round Neck Opening',
+  },
 ];
 
 export const ShapeSelect: FunctionComponent<Props> = ({ value, onChange }) => (

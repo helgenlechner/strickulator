@@ -22,6 +22,13 @@ export const CustomProjectReducer = (
         typeof customProjectAddPatternPiece
       >;
 
+      if (!draft[payload.id]?.measurements?.patternPieces) {
+        draft[payload.id].measurements = {
+          // @ts-ignore
+          patternPieces: [],
+        };
+      }
+
       (draft[payload.id]?.measurements as
         | CustomMeasurements
         | undefined)?.patternPieces?.push({

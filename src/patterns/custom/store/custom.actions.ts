@@ -1,5 +1,5 @@
 import { ProjectId } from '../../../store/project/project.model';
-import { Rectangle, Shape, Trapezoid } from '../custom.model';
+import { Shape } from '../custom.model';
 
 export enum CustomProjectActions {
   addPatternPiece = '@@customProject/ADD_PATTERN_PIECE',

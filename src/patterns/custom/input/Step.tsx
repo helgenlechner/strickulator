@@ -13,6 +13,9 @@ import { RectangleInput } from './ShapeInput/Rectangle';
 import { TrapezoidInput } from './ShapeInput/Trapezoid';
 import styles from './Step.module.css';
 import { RectanglePreview } from '../preview/Rectangle';
+import { TrapezoidPreview } from '../preview/Trapezoid';
+import { RoundNeckInput } from './ShapeInput/RoundNeck';
+import { RoundNeckPreview } from '../preview/RoundNeck';
 
 interface Props {
   projectId: ProjectId;
@@ -67,10 +70,19 @@ export const Step: FunctionComponent<Props> = (props) => {
           {step.shape === Shape.Trapezoid && (
             <TrapezoidInput {...propsToPass} />
           )}
+          {step.shape === Shape.RoundNeck && (
+            <RoundNeckInput {...propsToPass} />
+          )}
         </div>
         <div className={styles.preview}>
           {step.shape === Shape.Rectangle && (
             <RectanglePreview {...propsToPass} />
+          )}
+          {step.shape === Shape.Trapezoid && (
+            <TrapezoidPreview {...propsToPass} />
+          )}
+          {step.shape === Shape.RoundNeck && (
+            <RoundNeckPreview {...propsToPass} />
           )}
         </div>
       </div>
