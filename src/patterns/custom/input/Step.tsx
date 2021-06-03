@@ -9,13 +9,7 @@ import {
 } from '../store/custom.actions';
 import { ShapeSelect } from './ShapeSelect';
 import { Label } from '../../../components/label/Label';
-import { RectangleInput } from '../shapes/rectangle/RectangleInput';
-import { TrapezoidInput } from '../shapes/trapezoid/TrapezoidInput';
 import styles from './Step.module.css';
-import { RectanglePreview } from '../shapes/rectangle/RectanglePreview';
-import { TrapezoidPreview } from '../shapes/trapezoid/TrapezoidPreview';
-import { RoundNeckInput } from '../shapes/roundNeck/RoundNeckInput';
-import { RoundNeckPreview } from '../shapes/roundNeck/RoundNeckPreview';
 import { findPreview } from '../shapes/findPreview';
 import { findInput } from '../shapes/findInput';
 
@@ -69,10 +63,9 @@ export const Step: FunctionComponent<Props> = (props) => {
             onChange={onStepNameChange}
             component="p"
           />
-          <p>
-            <Label forInput="shape">Shape</Label>
-            <ShapeSelect value={step.shape} onChange={onShapeChange} />
-          </p>
+          <Label forInput="shape">Shape</Label>
+          <ShapeSelect value={step.shape} onChange={onShapeChange} />
+          <br />
           <Input {...propsToPass} />
         </div>
         <div className={styles.preview}>

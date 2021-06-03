@@ -35,6 +35,6 @@ export interface CustomShape {
   shape: Shape;
 }
 
-export const PREVIEW_FACTOR = 20;
+export const previewWidth = 500;
 export const leftHalfOfPattern = 20;
-export const topMargin = 10;
+export const verticalMargin = 6;

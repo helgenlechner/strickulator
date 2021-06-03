@@ -10,7 +10,7 @@ import { AppState } from '../../../../store/store.model';
 import {
   leftHalfOfPattern,
   ShapeRendererProps,
-  topMargin,
+  verticalMargin,
 } from '../../custom.model';
 import {
   getBottomWidth,
@@ -28,6 +28,7 @@ import {
 } from '../../../../store/project/project.swatch.selectors';
 import { Canvas } from '../../../../components/canvas/Canvas';
 import styles from '../Preview.module.css';
+import { getScaleFactorForProject } from '../../store/custom.project.selectors';
 
 interface ConnectedState {
   bottomWidth: number | undefined;
@@ -39,6 +40,7 @@ interface ConnectedState {
   neckCurve: UnevenSlope['pattern'] | undefined;
   widthOfOneStitch: number | undefined;
   heightOfOneRow: number | undefined;
+  scaleFactor: number | undefined;
 }
 
 const mapStateToProps = (
@@ -54,6 +56,7 @@ const mapStateToProps = (
   neckCurve: getNeckCurve(state, props),
   widthOfOneStitch: getWidthOfOneStitch(state, props),
   heightOfOneRow: getHeightOfOneRow(state, props),
+  scaleFactor: getScaleFactorForProject(state, props),
 });
 
 const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
@@ -66,10 +69,11 @@ const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
   neckCurve,
   widthOfOneStitch = 0,
   heightOfOneRow = 0,
+  scaleFactor,
 }) => {
   const [containerWidth, setContainerWidth] = React.useState<number>(600);
 
-  if (!bottomWidth || !topWidth || !height || !neckCurve) {
+  if (!bottomWidth || !topWidth || !height || !neckCurve || !scaleFactor) {
     return null;
   }
 
@@ -80,8 +84,6 @@ const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
 
     setContainerWidth(Math.min(ref.clientWidth, 600));
   };
-
-  const scaleFactor = containerWidth / (Math.max(bottomWidth, topWidth) / 2);
 
   const canvasHeight = height * scaleFactor + 22;
 
@@ -100,8 +102,8 @@ const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
         <LineDash value={[10, 4]} />
         <Polygon
           points={[
-            { x: leftHalfOfPattern, y: topMargin },
-            { x: leftHalfOfPattern, y: previewHeight + topMargin },
+            { x: leftHalfOfPattern, y: verticalMargin },
+            { x: leftHalfOfPattern, y: previewHeight + verticalMargin },
           ]}
         />
         <StrokeStyle value="#242f40" />
@@ -110,24 +112,24 @@ const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
           points={[
             {
               x: leftHalfOfPattern + (previewBottomWidth - previewTopWidth),
-              y: topMargin,
+              y: verticalMargin,
             },
             {
               x: previewBottomWidth + leftHalfOfPattern,
-              y: topMargin,
+              y: verticalMargin,
             },
             {
               x: previewBottomWidth + leftHalfOfPattern,
-              y: previewHeight + topMargin,
+              y: previewHeight + verticalMargin,
             },
-            { x: leftHalfOfPattern / 2, y: previewHeight + topMargin },
-            { x: leftHalfOfPattern, y: previewHeight + topMargin },
+            { x: leftHalfOfPattern / 2, y: previewHeight + verticalMargin },
+            { x: leftHalfOfPattern, y: previewHeight + verticalMargin },
             ...Object.entries(neckCurve).map(([row, decrease]) => {
               const y = Math.max(
                 previewHeight +
-                  topMargin -
+                  verticalMargin -
                   Number(row) * scaleFactor * heightOfOneRow,
-                topMargin,
+                verticalMargin,
               );
 
               const points = [
@@ -154,7 +156,10 @@ const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
           ].flat()}
           closePath={true}
         />
-        <ArrowHead x={4} y={previewHeight + topMargin} />
+        <ArrowHead
+          x={leftHalfOfPattern / 2}
+          y={previewHeight + verticalMargin}
+        />
       </Canvas>
       <p className={styles.leftLabel} style={{ maxWidth: canvasHeight }}>
         {numberOfRows}&#8239;R

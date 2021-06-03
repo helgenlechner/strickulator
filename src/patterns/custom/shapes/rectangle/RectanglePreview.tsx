@@ -10,9 +10,9 @@ import { StrokeStyle } from '../../../../components/canvas/StrokeStyle';
 import { AppState } from '../../../../store/store.model';
 import {
   leftHalfOfPattern,
-  PREVIEW_FACTOR,
+  previewWidth,
   ShapeRendererProps,
-  topMargin,
+  verticalMargin,
 } from '../../custom.model';
 import {
   getHeight,
@@ -21,12 +21,14 @@ import {
   getWidth,
 } from './rectangle.selectors';
 import styles from '../Preview.module.css';
+import { getScaleFactorForProject } from '../../store/custom.project.selectors';
 
 interface ConnectedState {
   width: number | undefined;
   height: number | undefined;
   numberOfStitches: number | undefined;
   numberOfRows: number | undefined;
+  scaleFactor: number | undefined;
 }
 
 const mapStateToProps = (
@@ -37,53 +39,65 @@ const mapStateToProps = (
   height: getHeight(state, props),
   numberOfStitches: getNumberOfStitches(state, props),
   numberOfRows: getNumberOfRows(state, props),
+  scaleFactor: getScaleFactorForProject(state, props),
 });
 
 const RectanglePreview_: React.FunctionComponent<
   ShapeRendererProps & ConnectedState
-> = ({ width, height, numberOfStitches, numberOfRows }) => {
-  if (!width || !height) {
+> = ({ width, height, numberOfStitches, numberOfRows, scaleFactor }) => {
+  if (!width || !height || !scaleFactor) {
     return null;
   }
 
-  const canvasWidth = 22 + (width * PREVIEW_FACTOR) / 2;
-  const canvasHeight = height * PREVIEW_FACTOR + 22;
+  const canvasHeight = Math.ceil(height * scaleFactor + verticalMargin * 2);
 
-  const previewWidth = (width * PREVIEW_FACTOR) / 2;
-  const previewHeight = height * PREVIEW_FACTOR;
+  const previewRectangleHeight = height * scaleFactor;
+  const previewRectangleWidth = (width / 2) * scaleFactor;
 
   return (
     <div className={styles.container}>
-      <Canvas width={canvasWidth} height={canvasHeight}>
-        <ClearRect width={canvasWidth} height={canvasHeight} />
+      <Canvas width={previewWidth} height={canvasHeight}>
+        <ClearRect width={previewWidth} height={canvasHeight} />
         <BasicSetup />
         <StrokeStyle value="#aeb2b7" />
         <LineDash value={[10, 4]} />
         <Polygon
           points={[
-            { x: leftHalfOfPattern, y: topMargin },
-            { x: leftHalfOfPattern, y: previewHeight + topMargin },
+            { x: leftHalfOfPattern, y: verticalMargin },
+            {
+              x: leftHalfOfPattern,
+              y: previewRectangleHeight + verticalMargin,
+            },
           ]}
         />
         <StrokeStyle value="#242f40" />
         <LineDash value={[]} />
         <Polygon
           points={[
-            { x: 10, y: 10 },
-            { x: previewWidth + 20, y: 10 },
-            { x: previewWidth + 20, y: previewHeight + 10 },
-            { x: 10, y: previewHeight + 10 },
+            { x: leftHalfOfPattern / 2, y: verticalMargin },
+            { x: previewRectangleWidth + leftHalfOfPattern, y: verticalMargin },
+            {
+              x: previewRectangleWidth + leftHalfOfPattern,
+              y: previewRectangleHeight + verticalMargin,
+            },
+            {
+              x: leftHalfOfPattern / 2,
+              y: previewRectangleHeight + verticalMargin,
+            },
           ]}
         />
-        <ArrowHead x={4} y={topMargin} />
-        <ArrowHead x={4} y={previewHeight + topMargin} />
+        <ArrowHead x={leftHalfOfPattern / 2} y={verticalMargin} />
+        <ArrowHead
+          x={leftHalfOfPattern / 2}
+          y={previewRectangleHeight + verticalMargin}
+        />
       </Canvas>
-      <p className={styles.leftLabel} style={{ maxWidth: canvasHeight }}>
+      <p className={styles.leftLabel}>
         {numberOfRows}&#8239;R
         <br />
         {height}&#8239;cm
       </p>
-      <p className={styles.bottomLabel} style={{ maxWidth: canvasWidth }}>
+      <p className={styles.bottomLabel}>
         {numberOfStitches}&times;2 = {width}&#8239;cm
       </p>
     </div>

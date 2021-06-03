@@ -18,9 +18,9 @@ export const ArrowHead: React.FC<Props> = ({ x, y }) => {
   }
 
   drawPolygon(context, [
-    { x, y },
-    { x: x + width, y: y - height / 2 },
-    { x: x + width, y: y + height / 2 },
+    { x: x - width, y },
+    { x: x, y: y - height / 2 },
+    { x: x, y: y + height / 2 },
   ]);
 
   context.fill();

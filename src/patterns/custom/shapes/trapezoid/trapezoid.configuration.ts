@@ -1,5 +1,5 @@
 import { Shape, ShapeConfiguration } from '../../custom.model';
-import { isTrapezoid, Trapezoid } from './trapezoid.model';
+import { isTrapezoid } from './trapezoid.model';
 import { TrapezoidInput } from './TrapezoidInput';
 import { TrapezoidPreview } from './TrapezoidPreview';
 

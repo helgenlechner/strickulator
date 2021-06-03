@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { Slope } from '../../../../helpers/slope';
 import { AppState } from '../../../../store/store.model';
 import {
@@ -19,13 +19,14 @@ import { BasicSetup } from '../../../../components/canvas/BasicSetup';
 import { ClearRect } from '../../../../components/canvas/ClearRect';
 import {
   leftHalfOfPattern,
+  previewWidth,
   ShapeRendererProps,
-  topMargin,
+  verticalMargin,
 } from '../../custom.model';
 import { Canvas } from '../../../../components/canvas/Canvas';
 import styles from '../Preview.module.css';
 import { SlopeDescription } from '../../../../components/slopeDescription/SlopeDescription';
-import { getWidestWidthForProject } from '../../store/custom.project.selectors';
+import { getScaleFactorForProject } from '../../store/custom.project.selectors';
 
 interface ConnectedState {
   bottomWidth: number | undefined;
@@ -35,6 +36,7 @@ interface ConnectedState {
   numberOfTopStitches: number | undefined;
   numberOfRows: number | undefined;
   slope: Slope | undefined;
+  scaleFactor: number | undefined;
 }
 
 const mapStateToProps = (
@@ -48,6 +50,7 @@ const mapStateToProps = (
   numberOfTopStitches: getNumberOfTopStitches(state, props),
   numberOfRows: getNumberOfRows(state, props),
   slope: getSlope(state, props),
+  scaleFactor: getScaleFactorForProject(state, props),
 });
 
 const TrapezoidPreview_: React.FunctionComponent<
@@ -60,75 +63,61 @@ const TrapezoidPreview_: React.FunctionComponent<
   numberOfTopStitches,
   numberOfRows,
   slope,
-  projectId,
+  scaleFactor,
 }) => {
-  const [containerWidth, setContainerWidth] = React.useState<number>(600);
-  const widestMeasurement = useSelector((state: AppState) =>
-    getWidestWidthForProject(state, { projectId }),
-  );
-
-  if (!bottomWidth || !topWidth || !height || !widestMeasurement) {
+  if (!bottomWidth || !topWidth || !height || !scaleFactor) {
     return null;
   }
 
-  const onContainerRefChange = (ref: HTMLDivElement | null) => {
-    if (!ref) {
-      return;
-    }
-
-    setContainerWidth(Math.min(ref.clientWidth, 600));
-  };
-
-  const scaleFactor =
-    containerWidth / (widestMeasurement / 2 + leftHalfOfPattern);
-
-  const canvasHeight = height * scaleFactor + 22;
-
+  const canvasHeight = Math.ceil(height * scaleFactor + verticalMargin * 2);
   const previewBottomWidth = (bottomWidth * scaleFactor) / 2;
   const previewTopWidth = (topWidth * scaleFactor) / 2;
   const previewHeight = height * scaleFactor;
 
   return (
-    <div ref={onContainerRefChange} className={styles.container}>
-      <Canvas width={containerWidth} height={canvasHeight}>
-        <ClearRect width={containerWidth} height={canvasHeight} />
+    <div className={styles.container}>
+      <Canvas width={previewWidth} height={canvasHeight}>
+        <ClearRect width={previewWidth} height={canvasHeight} />
         <BasicSetup />
         <StrokeStyle value="#aeb2b7" />
         <LineDash value={[10, 4]} />
         <Polygon
           points={[
-            { x: leftHalfOfPattern, y: topMargin },
-            { x: leftHalfOfPattern, y: previewHeight + topMargin },
+            { x: leftHalfOfPattern, y: verticalMargin },
+            { x: leftHalfOfPattern, y: previewHeight + verticalMargin },
           ]}
         />
         <StrokeStyle value="#242f40" />
         <LineDash value={[]} />
         <Polygon
           points={[
-            { x: 10, y: topMargin },
+            { x: leftHalfOfPattern / 2, y: verticalMargin },
             {
               x: previewTopWidth + leftHalfOfPattern,
-              y: topMargin,
+              y: verticalMargin,
             },
             {
               x: previewBottomWidth + leftHalfOfPattern,
-              y: previewHeight + topMargin,
+              y: previewHeight + verticalMargin,
             },
-            { x: 10, y: previewHeight + topMargin },
+            { x: leftHalfOfPattern / 2, y: previewHeight + verticalMargin },
           ]}
         />
-        <ArrowHead x={4} y={topMargin} />
-        <ArrowHead x={4} y={previewHeight + topMargin} />
+        <ArrowHead x={leftHalfOfPattern / 2} y={verticalMargin} />
+        <ArrowHead
+          x={leftHalfOfPattern / 2}
+          y={previewHeight + verticalMargin}
+        />
       </Canvas>
-      <p className={styles.leftLabel} style={{ maxWidth: canvasHeight }}>
+      <p className={styles.leftLabel}>
         {numberOfRows}&#8239;R
         <br />
         {height}&#8239;cm
       </p>
-      <p className={styles.bottomLabel} style={{ maxWidth: containerWidth }}>
+      <p className={styles.bottomLabel}>
         {numberOfBottomStitches}&times;2 = {bottomWidth}&#8239;cm
       </p>
-      <p className={styles.topLabel} style={{ maxWidth: containerWidth }}>
+      <p className={styles.topLabel}>
         {numberOfTopStitches}&times;2 = {topWidth}&#8239;cm
       </p>
       <p className={styles.rightLabel}>

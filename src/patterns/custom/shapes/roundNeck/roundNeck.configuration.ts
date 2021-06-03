@@ -1,5 +1,5 @@
 import { Shape, ShapeConfiguration } from '../../custom.model';
-import { isRoundNeck, RoundNeck } from './roundNeck.model';
+import { isRoundNeck } from './roundNeck.model';
 import { RoundNeckInput } from './RoundNeckInput';
 import { RoundNeckPreview } from './RoundNeckPreview';
 
