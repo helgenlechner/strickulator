@@ -6,13 +6,11 @@ import { ClearRect } from '../../../components/canvas/ClearRect';
 import { LineDash } from '../../../components/canvas/LineDash';
 import { Polygon } from '../../../components/canvas/Polygon';
 import { StrokeStyle } from '../../../components/canvas/StrokeStyle';
-import { Text } from '../../../components/canvas/Text';
 import { ProjectId } from '../../../store/project/project.model';
 import { AppState } from '../../../store/store.model';
 import {
   leftHalfOfPattern,
   leftMargin,
-  lineHeight,
   rightMargin,
   topMargin,
 } from '../custom.model';
@@ -31,6 +29,7 @@ import {
   getWidthOfOneStitch,
 } from '../../../store/project/project.swatch.selectors';
 import { Canvas } from '../../../components/canvas/Canvas';
+import styles from './Preview.module.css';
 
 interface Props {
   projectId: ProjectId;
@@ -101,7 +100,7 @@ const RoundNeckPreview_: React.FC<Props & ConnectedState> = ({
   let neckCurveDecreasesSoFar = 0;
 
   return (
-    <div ref={onContainerRefChange}>
+    <div ref={onContainerRefChange} className={styles.container}>
       <Canvas width={containerWidth} height={canvasHeight}>
         <ClearRect width={containerWidth ?? 600} height={canvasHeight} />
         <BasicSetup />
@@ -169,34 +168,18 @@ const RoundNeckPreview_: React.FC<Props & ConnectedState> = ({
           closePath={true}
         />
         <ArrowHead x={4 + leftMargin} y={previewHeight + topMargin} />
-        <Text
-          content={`${numberOfRows}\u202fR`}
-          x={leftMargin / 2}
-          y={canvasHeight / 2 - lineHeight}
-          maxWidth={leftMargin}
-        />
-        <Text
-          content={`${height}\u202fcm`}
-          x={leftMargin / 2}
-          y={canvasHeight / 2}
-          maxWidth={leftMargin}
-        />
-        <Text
-          content={`${numberOfBottomStitches}\u00d72 = ${bottomWidth}\u202fcm`}
-          x={leftMargin + leftHalfOfPattern + previewBottomWidth / 2}
-          y={canvasHeight - lineHeight}
-        />
-        <Text
-          content={`${numberOfTopStitches} = ${topWidth}\u202fcm`}
-          x={
-            leftMargin +
-            leftHalfOfPattern +
-            previewTopWidth / 2 +
-            (previewBottomWidth - previewTopWidth)
-          }
-          y={topMargin + lineHeight + 4}
-        />
       </Canvas>
+      <p className={styles.leftLabel} style={{ maxWidth: canvasHeight }}>
+        {numberOfRows}&#8239;R
+        <br />
+        {height}&#8239;cm
+      </p>
+      <p className={styles.bottomLabel} style={{ maxWidth: containerWidth }}>
+        {numberOfBottomStitches}&times;2 = {bottomWidth}&#8239;cm
+      </p>
+      <p className={styles.topLabel} style={{ maxWidth: containerWidth }}>
+        {numberOfTopStitches} = {topWidth}&#8239;cm
+      </p>
     </div>
   );
 };

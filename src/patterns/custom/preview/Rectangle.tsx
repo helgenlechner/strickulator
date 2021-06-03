@@ -22,7 +22,7 @@ import {
   getNumberOfRows,
   getWidth,
 } from '../store/custom.rectangle.selectors';
-import styles from './Rectangle.module.css';
+import styles from './Preview.module.css';
 
 interface Props {
   projectId: ProjectId;
@@ -107,12 +107,12 @@ const RectanglePreview_: React.FunctionComponent<Props & ConnectedState> = ({
           ]}
         />
       </Canvas>
-      <p className={styles.heightLabel} style={{ maxWidth: canvasHeight }}>
+      <p className={styles.leftLabel} style={{ maxWidth: canvasHeight }}>
         {numberOfRows}&#8239;R
         <br />
         {height}&#8239;cm
       </p>
-      <p className={styles.widthLabel} style={{ maxWidth: canvasWidth }}>
+      <p className={styles.bottomLabel} style={{ maxWidth: canvasWidth }}>
         {numberOfStitches}&times;2 = {width}&#8239;cm
       </p>
     </div>

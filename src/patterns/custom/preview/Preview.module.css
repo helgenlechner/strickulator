@@ -1,0 +1,33 @@
+.container {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  grid-template-areas: 'emptyTopLeft topLabel rightLabel' 'leftLabel preview rightLabel' 'emptyBottomLeft bottomLabel rightLabel';
+  overflow: hidden;
+}
+
+.container p {
+  margin: 0;
+  text-align: center;
+  align-self: center;
+}
+
+.container canvas {
+  grid-area: preview;
+}
+
+.topLabel {
+  grid-area: topLabel;
+}
+
+.rightLabel {
+  grid-area: rightLabel;
+}
+
+.bottomLabel {
+  grid-area: bottomLabel;
+}
+
+.leftLabel {
+  grid-area: leftLabel;
+}

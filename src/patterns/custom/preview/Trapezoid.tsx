@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { SlopeDescription } from './Slope';
 import { Slope } from '../../../helpers/slope';
 import { ProjectId } from '../../../store/project/project.model';
 import { AppState } from '../../../store/store.model';
@@ -28,6 +27,8 @@ import {
   topMargin,
 } from '../custom.model';
 import { Canvas } from '../../../components/canvas/Canvas';
+import styles from './Preview.module.css';
+import { SlopeDescription } from '../../../components/slopeDescription/SlopeDescription';
 
 interface Props {
   projectId: ProjectId;
@@ -92,7 +93,7 @@ const TrapezoidPreview_: React.FunctionComponent<Props & ConnectedState> = ({
   const previewHeight = height * scaleFactor;
 
   return (
-    <div ref={onContainerRefChange}>
+    <div ref={onContainerRefChange} className={styles.container}>
       <Canvas width={containerWidth} height={canvasHeight}>
         <ClearRect width={containerWidth ?? 600} height={canvasHeight} />
         <BasicSetup />
@@ -122,40 +123,21 @@ const TrapezoidPreview_: React.FunctionComponent<Props & ConnectedState> = ({
         />
         <ArrowHead x={4 + leftMargin} y={topMargin} />
         <ArrowHead x={4 + leftMargin} y={previewHeight + topMargin} />
-        <Text
-          content={`${numberOfRows}\u202fR`}
-          x={leftMargin / 2}
-          y={canvasHeight / 2 - lineHeight}
-          maxWidth={leftMargin}
-        />
-        <Text
-          content={`${height}\u202fcm`}
-          x={leftMargin / 2}
-          y={canvasHeight / 2}
-          maxWidth={leftMargin}
-        />
-        <Text
-          content={`${numberOfBottomStitches}\u00d72 = ${bottomWidth}\u202fcm`}
-          x={leftMargin + leftHalfOfPattern + previewBottomWidth / 2}
-          y={canvasHeight - lineHeight}
-        />
-        <Text
-          content={`${numberOfTopStitches}\u00d72 = ${topWidth}\u202fcm`}
-          x={leftMargin + leftHalfOfPattern + previewTopWidth / 2}
-          y={topMargin + lineHeight + 4}
-        />
-        <SlopeDescription
-          slope={slope}
-          x={
-            leftMargin +
-            leftHalfOfPattern +
-            previewTopWidth +
-            (previewBottomWidth - previewTopWidth) / 2
-          }
-          y={previewHeight / 2}
-          patternPieceWidth={Math.max(previewTopWidth, previewBottomWidth)}
-        />
       </Canvas>
+      <p className={styles.leftLabel} style={{ maxWidth: canvasHeight }}>
+        {numberOfRows}&#8239;R
+        <br />
+        {height}&#8239;cm
+      </p>
+      <p className={styles.bottomLabel} style={{ maxWidth: containerWidth }}>
+        {numberOfBottomStitches}&times;2 = {bottomWidth}&#8239;cm
+      </p>
+      <p className={styles.topLabel} style={{ maxWidth: containerWidth }}>
+        {numberOfTopStitches}&times;2 = {topWidth}&#8239;cm
+      </p>
+      <p className={styles.rightLabel}>
+        <SlopeDescription slope={slope} />
+      </p>
     </div>
   );
 };

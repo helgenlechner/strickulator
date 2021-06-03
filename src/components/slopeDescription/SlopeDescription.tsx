@@ -32,28 +32,23 @@ export const SlopeDescription: FunctionComponent<Props> = ({
 
   if (slope && 'pattern' in slope) {
     return (
-      <>
-        Knit for <HighlightedValue>{numberOfRows}</HighlightedValue> rows,{' '}
-        {slope.type} the stated number of stitches {manipulationLocation}{' '}
-        according to the following pattern:
-        <ul className={styles.pattern}>
-          {Object.entries(slope.pattern).map((entry) => {
-            const formattedCount = `${slope.type === 'increasing' ? '+' : '-'}${
-              entry[1]
-            }`;
-            const rc = Number(entry[0]);
+      <ul className={styles.pattern}>
+        {Object.entries(slope.pattern).map((entry) => {
+          const formattedCount = `${slope.type === 'increasing' ? '+' : '-'}${
+            entry[1]
+          }`;
+          const rc = Number(entry[0]);
 
-            return (
-              <li key={entry[0]}>
-                RC {duplicateRowCounts ? rc * 2 : rc}:{' '}
-                <span className={styles.count} data-count={formattedCount}>
-                  {formattedCount}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
-      </>
+          return (
+            <li key={entry[0]}>
+              RC&#8239;{duplicateRowCounts ? rc * 2 : rc}:&nbsp;
+              <span className={styles.count} data-count={formattedCount}>
+                {formattedCount}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
     );
   }
 
