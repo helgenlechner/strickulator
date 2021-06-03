@@ -70,7 +70,7 @@ const MittensDirections_: FunctionComponent<ConnectedState> = ({
         <Step id="1">
           <SlopeDescription
             slope={thumbRootSlope}
-            duplicateRowCounts={isKnittingInTheRound}
+            doubleRowCounts={isKnittingInTheRound}
           />
         </Step>
         <Step id="2">
@@ -117,7 +117,7 @@ const MittensDirections_: FunctionComponent<ConnectedState> = ({
                 ? 'at the pinkie side of both beds'
                 : 'at the pinkie side of both tips'
             }
-            duplicateRowCounts={isKnittingInTheRound}
+            doubleRowCounts={isKnittingInTheRound}
           />
         </Step>
         <Step id="3">
@@ -128,7 +128,7 @@ const MittensDirections_: FunctionComponent<ConnectedState> = ({
                 ? 'at the index finger side of both beds'
                 : 'at the index finger side of both tips'
             }
-            duplicateRowCounts={isKnittingInTheRound}
+            doubleRowCounts={isKnittingInTheRound}
           />
         </Step>
         <Step id="3">

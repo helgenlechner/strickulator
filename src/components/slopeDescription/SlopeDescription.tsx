@@ -7,16 +7,16 @@ import styles from './SlopeDescription.module.css';
 interface Props {
   slope: Slope | undefined;
   manipulationLocation?: string;
-  duplicateRowCounts?: boolean;
+  doubleRowCounts?: boolean;
 }
 
 export const SlopeDescription: FunctionComponent<Props> = ({
   slope,
   manipulationLocation = 'on either end',
-  duplicateRowCounts = false,
+  doubleRowCounts = false,
 }) => {
   const numberOfRows = slope
-    ? duplicateRowCounts
+    ? doubleRowCounts
       ? slope.numberOfRows * 2
       : slope.numberOfRows
     : undefined;
@@ -41,7 +41,7 @@ export const SlopeDescription: FunctionComponent<Props> = ({
 
           return (
             <li key={entry[0]}>
-              RC&#8239;{duplicateRowCounts ? rc * 2 : rc}:&nbsp;
+              RC&#8239;{doubleRowCounts ? rc * 2 : rc}:&nbsp;
               <span className={styles.count} data-count={formattedCount}>
                 {formattedCount}
               </span>
@@ -58,9 +58,7 @@ export const SlopeDescription: FunctionComponent<Props> = ({
       {slope?.type} <HighlightedValue>{slope?.stitchDelta}</HighlightedValue>{' '}
       {pluralizeStitch(slope?.stitchDelta)} {manipulationLocation} every{' '}
       <HighlightedValue>
-        {duplicateRowCounts && slope
-          ? slope.rowInterval * 2
-          : slope?.rowInterval}
+        {doubleRowCounts && slope ? slope.rowInterval * 2 : slope?.rowInterval}
       </HighlightedValue>{' '}
       rows.{' '}
     </>

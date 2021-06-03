@@ -80,7 +80,7 @@ const SleeveDirections_: FunctionComponent<PatternProps & ConnectedState> = ({
       <Step id="1">
         <SlopeDescription
           slope={slopeForSleeveIncreases}
-          duplicateRowCounts={isKnittedInTheRound}
+          doubleRowCounts={isKnittedInTheRound}
         />
       </Step>
       <Step id="2">
@@ -102,7 +102,7 @@ const SleeveDirections_: FunctionComponent<PatternProps & ConnectedState> = ({
       <Step id="2">
         <SlopeDescription
           slope={sleeveArmScyeSlope}
-          duplicateRowCounts={isKnittedInTheRound}
+          doubleRowCounts={isKnittedInTheRound}
         />
       </Step>
       <Step id="3">

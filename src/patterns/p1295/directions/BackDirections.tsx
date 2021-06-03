@@ -116,7 +116,7 @@ const BackDirections_: FunctionComponent<PatternProps & ConnectedState> = ({
       <Step id="1">
         <SlopeDescription
           slope={slopeForBodiceIncreases}
-          duplicateRowCounts={isKnittedInTheRound}
+          doubleRowCounts={isKnittedInTheRound}
         />
       </Step>
       <Step id="2">

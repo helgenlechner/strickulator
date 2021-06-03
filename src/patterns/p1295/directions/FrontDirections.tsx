@@ -84,10 +84,8 @@ const mapStateToProps = (
     state,
     ownProps,
   ),
-  numberOfStitchesAfterLowerBottomArmholeDecreases: getNumberOfStitchesAfterLowerBottomArmholeDecreases(
-    state,
-    ownProps,
-  ),
+  numberOfStitchesAfterLowerBottomArmholeDecreases:
+    getNumberOfStitchesAfterLowerBottomArmholeDecreases(state, ownProps),
   slopeForUpperBottomArmholeDecreases: getSlopeForUpperBottomArmholeDecreases(
     state,
     ownProps,
@@ -99,10 +97,8 @@ const mapStateToProps = (
   doesNecklineStartInSectionE: getDoesNecklineStartInSectionE(state, ownProps),
   armscyeSlope: getFrontArmscyeSlope(state, ownProps),
   doesNecklineStartInSectionF: getDoesNecklineStartInSectionF(state, ownProps),
-  numberOfStitchesForFrontShoulderCastOff: getNumberOfStitchesForFrontShoulderCastOff(
-    state,
-    ownProps,
-  ),
+  numberOfStitchesForFrontShoulderCastOff:
+    getNumberOfStitchesForFrontShoulderCastOff(state, ownProps),
 });
 
 const FrontDirections_: FunctionComponent<PatternProps & ConnectedState> = ({
@@ -195,7 +191,7 @@ const FrontDirections_: FunctionComponent<PatternProps & ConnectedState> = ({
         <Step id="1">
           <SlopeDescription
             slope={slopeForBodiceIncreases}
-            duplicateRowCounts={isKnittedInTheRound}
+            doubleRowCounts={isKnittedInTheRound}
           />
         </Step>
         <Step id="2">
