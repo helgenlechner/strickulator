@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { ArrowHead } from '../../../components/canvas/ArrowHead';
 import { BasicSetup } from '../../../components/canvas/BasicSetup';
 import { Canvas } from '../../../components/canvas/Canvas';
 import { ClearRect } from '../../../components/canvas/ClearRect';
@@ -106,6 +107,8 @@ const RectanglePreview_: React.FunctionComponent<Props & ConnectedState> = ({
             { x: 10, y: previewHeight + 10 },
           ]}
         />
+        <ArrowHead x={4 + leftMargin} y={topMargin} />
+        <ArrowHead x={4 + leftMargin} y={previewHeight + topMargin} />
       </Canvas>
       <p className={styles.leftLabel} style={{ maxWidth: canvasHeight }}>
         {numberOfRows}&#8239;R
