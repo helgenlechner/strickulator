@@ -1,10 +1,10 @@
 import { createSelector } from 'redux-views';
-import { getProject } from '../../store/project/project.selectors';
-import { AppState } from '../../store/store.model';
-import { CustomMeasurements } from './custom.model';
+import { getProject } from '../../../store/project/project.selectors';
+import { AppState } from '../../../store/store.model';
+import { CustomMeasurements } from '../custom.model';
 
 const getPatternPieceIndexFromProps = <
-  Props extends { patternPieceIndex: number }
+  Props extends { patternPieceIndex: number },
 >(
   state: AppState,
   props: Props,

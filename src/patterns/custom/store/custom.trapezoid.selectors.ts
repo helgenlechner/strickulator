@@ -6,7 +6,7 @@ import {
   getHeightOfOneRow,
   getWidthOfOneStitch,
 } from '../../../store/project/project.swatch.selectors';
-import { getStep } from '../custom.input.selectors';
+import { getStep } from './custom.input.selectors';
 import { Shape } from '../custom.model';
 
 export const getBottomWidth = createSelector([getStep], (step) => {

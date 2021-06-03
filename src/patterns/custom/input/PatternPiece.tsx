@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { EditableText } from '../../../components/editableText/EditableText';
 import { ProjectId } from '../../../store/project/project.model';
 import { AppState } from '../../../store/store.model';
-import { getSteps } from '../custom.input.selectors';
+import { getSteps } from '../store/custom.input.selectors';
 import { CustomPatternPiece, Shape } from '../custom.model';
 import {
   customProjectAddStep,

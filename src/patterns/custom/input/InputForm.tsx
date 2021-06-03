@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PatternProps } from '../../../store/pattern/pattern.model';
 import { AppState } from '../../../store/store.model';
-import { getPatternPieces } from '../custom.input.selectors';
+import { getPatternPieces } from '../store/custom.input.selectors';
 import { customProjectAddPatternPiece } from '../store/custom.actions';
 import { PatternPiece } from './PatternPiece';
 import styles from './InputForm.module.css';
