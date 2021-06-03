@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { BasicSetup } from '../../../components/canvas/BasicSetup';
+import { Canvas } from '../../../components/canvas/Canvas';
 import { ClearRect } from '../../../components/canvas/ClearRect';
 import { LineDash } from '../../../components/canvas/LineDash';
 import { Polygon } from '../../../components/canvas/Polygon';
 import { StrokeStyle } from '../../../components/canvas/StrokeStyle';
-import { CanvasContext } from '../../../context/canvas.context';
 import { drawArrowHead } from '../../../helpers/drawArrowHead';
 import { drawPolygon } from '../../../helpers/drawPolygon';
 import { ProjectId } from '../../../store/project/project.model';
@@ -50,9 +50,8 @@ const RectanglePreview_: React.FunctionComponent<Props & ConnectedState> = ({
   numberOfStitches,
   numberOfRows,
 }) => {
-  const [canvasRef, setCanvasRef] = React.useState<HTMLCanvasElement | null>(
-    null,
-  );
+  const [canvasRef, setCanvasRef] =
+    React.useState<HTMLCanvasElement | null>(null);
 
   if (width === 0 || height === 0) {
     return null;
@@ -86,8 +85,7 @@ const RectanglePreview_: React.FunctionComponent<Props & ConnectedState> = ({
 
   return (
     <div className={styles.container}>
-      <canvas ref={setCanvasRef} width={canvasWidth} height={canvasHeight} />
-      <CanvasContext.Provider value={canvasRef?.getContext('2d') ?? undefined}>
+      <Canvas width={canvasWidth} height={canvasHeight}>
         <ClearRect width={canvasWidth} height={canvasHeight} />
         <BasicSetup />
         <StrokeStyle value="#aeb2b7" />
@@ -108,7 +106,7 @@ const RectanglePreview_: React.FunctionComponent<Props & ConnectedState> = ({
             { x: 10, y: previewHeight + 10 },
           ]}
         />
-      </CanvasContext.Provider>
+      </Canvas>
       <p className={styles.heightLabel} style={{ maxWidth: canvasHeight }}>
         {numberOfRows}&#8239;R
         <br />

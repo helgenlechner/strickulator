@@ -13,7 +13,6 @@ import {
   getSlope,
   getTopWidth,
 } from '../store/custom.trapezoid.selectors';
-import { CanvasContext } from '../../../context/canvas.context';
 import { Text } from '../../../components/canvas/Text';
 import { ArrowHead } from '../../../components/canvas/ArrowHead';
 import { Polygon } from '../../../components/canvas/Polygon';
@@ -28,6 +27,7 @@ import {
   rightMargin,
   topMargin,
 } from '../custom.model';
+import { Canvas } from '../../../components/canvas/Canvas';
 
 interface Props {
   projectId: ProjectId;
@@ -93,12 +93,7 @@ const TrapezoidPreview_: React.FunctionComponent<Props & ConnectedState> = ({
 
   return (
     <div ref={onContainerRefChange}>
-      <canvas
-        ref={setCanvasRef}
-        width={containerWidth ?? 600}
-        height={canvasHeight}
-      />
-      <CanvasContext.Provider value={canvasRef?.getContext('2d') ?? undefined}>
+      <Canvas width={containerWidth} height={canvasHeight}>
         <ClearRect width={containerWidth ?? 600} height={canvasHeight} />
         <BasicSetup />
         <StrokeStyle value="#aeb2b7" />
@@ -160,7 +155,7 @@ const TrapezoidPreview_: React.FunctionComponent<Props & ConnectedState> = ({
           y={previewHeight / 2}
           patternPieceWidth={Math.max(previewTopWidth, previewBottomWidth)}
         />
-      </CanvasContext.Provider>
+      </Canvas>
     </div>
   );
 };

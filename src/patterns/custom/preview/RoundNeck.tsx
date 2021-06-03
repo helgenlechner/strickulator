@@ -6,7 +6,6 @@ import { ClearRect } from '../../../components/canvas/ClearRect';
 import { LineDash } from '../../../components/canvas/LineDash';
 import { Polygon } from '../../../components/canvas/Polygon';
 import { StrokeStyle } from '../../../components/canvas/StrokeStyle';
-import { CanvasContext } from '../../../context/canvas.context';
 import { Text } from '../../../components/canvas/Text';
 import { ProjectId } from '../../../store/project/project.model';
 import { AppState } from '../../../store/store.model';
@@ -31,6 +30,7 @@ import {
   getHeightOfOneRow,
   getWidthOfOneStitch,
 } from '../../../store/project/project.swatch.selectors';
+import { Canvas } from '../../../components/canvas/Canvas';
 
 interface Props {
   projectId: ProjectId;
@@ -73,8 +73,6 @@ const RoundNeckPreview_: React.FC<Props & ConnectedState> = ({
   widthOfOneStitch = 0,
   heightOfOneRow = 0,
 }) => {
-  const [canvasRef, setCanvasRef] =
-    React.useState<HTMLCanvasElement | null>(null);
   const [containerWidth, setContainerWidth] =
     React.useState<number | undefined>(undefined);
 
@@ -104,12 +102,7 @@ const RoundNeckPreview_: React.FC<Props & ConnectedState> = ({
 
   return (
     <div ref={onContainerRefChange}>
-      <canvas
-        ref={setCanvasRef}
-        width={containerWidth ?? 600}
-        height={canvasHeight}
-      />
-      <CanvasContext.Provider value={canvasRef?.getContext('2d') ?? undefined}>
+      <Canvas width={containerWidth} height={canvasHeight}>
         <ClearRect width={containerWidth ?? 600} height={canvasHeight} />
         <BasicSetup />
         <StrokeStyle value="#aeb2b7" />
@@ -203,7 +196,7 @@ const RoundNeckPreview_: React.FC<Props & ConnectedState> = ({
           }
           y={topMargin + lineHeight + 4}
         />
-      </CanvasContext.Provider>
+      </Canvas>
     </div>
   );
 };
