@@ -1,6 +1,6 @@
 import produce, { Draft } from 'immer';
 import { Reducer } from 'redux';
-import { CustomProjectReducer } from '../../patterns/custom/store/custom.reducer';
+import { CustomProjectReducer } from '../../project/store/custom.reducer';
 import {
   ProjectActions,
   projectCreate,

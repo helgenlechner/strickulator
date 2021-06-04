@@ -8,9 +8,9 @@ import { projectCreate } from '../../store/project/project.actions';
 import { getProject } from '../../store/project/project.selectors';
 import { AppState } from '../../store/store.model';
 import { SwatchInput } from '../swatchInput/SwatchInput';
-import { InputForm } from '../../patterns/custom/input/InputForm';
 import { GaugeCalculator } from '../gaugeCalculator/GaugeCalculator';
 import { Title } from '../project/Title';
+import { InputForm } from '../../project/input/InputForm';
 
 export const Project: FunctionComponent = () => {
   const { trackPageView } = useMatomo();
