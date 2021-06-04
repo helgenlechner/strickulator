@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { getKnittingStyle } from '../../patterns/custom/store/custom.project.selectors';
-import { PatternProps } from '../../store/pattern/pattern.model';
+import { ProjectProps } from '../../store/project/project.model';
 import { projectUpdateKnittingStyle } from '../../store/project/project.actions';
 import { KnittingStyle as KnittingStyleEnum } from '../../store/project/project.model';
 import { AppState } from '../../store/store.model';
@@ -19,7 +19,7 @@ interface ConnectedState {
 
 const mapStateToProps = (
   state: AppState,
-  ownProps: PatternProps,
+  ownProps: ProjectProps,
 ): ConnectedState => ({
   knittingStyle: getKnittingStyle(state, ownProps),
 });
@@ -30,7 +30,7 @@ interface ConnectedDispatch {
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
-  ownProps: PatternProps,
+  ownProps: ProjectProps,
 ): ConnectedDispatch => ({
   updateKnittingStyle: (measurements) =>
     dispatch(projectUpdateKnittingStyle(ownProps.projectId, measurements)),

@@ -7,12 +7,15 @@ import {
   getSwatchHeight,
   getSwatchWidth,
 } from '../../store/project/project.swatch.selectors';
-import { PatternProps } from '../../store/pattern/pattern.model';
 import {
   projectUpdateNotes,
   projectUpdateSwatch,
 } from '../../store/project/project.actions';
-import { ProjectId, Swatch } from '../../store/project/project.model';
+import {
+  ProjectId,
+  Swatch,
+  ProjectProps,
+} from '../../store/project/project.model';
 import { AppState } from '../../store/store.model';
 import { LabeledNumberInput } from '../labeledInput/LabeledNumberInput';
 import { LabeledTextArea } from '../labeledInput/LabeledTextArea';
@@ -28,7 +31,7 @@ interface ConnectedState {
 
 const mapStateToProps = (
   state: AppState,
-  ownProps: PatternProps,
+  ownProps: ProjectProps,
 ): ConnectedState => ({
   numberOfStitches: getNumberOfSwatchStitches(state, ownProps),
   numberOfRows: getNumberOfSwatchRows(state, ownProps),
@@ -44,7 +47,7 @@ interface ConnectedDispatch {
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
-  ownProps: PatternProps,
+  ownProps: ProjectProps,
 ): ConnectedDispatch => ({
   updateSwatch: (projectId, swatch) =>
     dispatch(projectUpdateSwatch(projectId, swatch)),
@@ -53,7 +56,7 @@ const mapDispatchToProps = (
 });
 
 const SwatchInput_: FunctionComponent<
-  PatternProps & ConnectedState & ConnectedDispatch
+  ProjectProps & ConnectedState & ConnectedDispatch
 > = ({
   numberOfStitches,
   numberOfRows,

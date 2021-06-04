@@ -4,7 +4,7 @@ import { MatomoProvider, useMatomo } from '@datapunt/matomo-tracker-react';
 import { StoreProvider } from '../../store/store.provider';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Menu } from '../menu/Menu';
-import { Pattern } from '../pattern/Pattern';
+import { Project } from '../project/Project';
 import { ActiveStep } from '../activeStep/ActiveStep';
 import { Header } from '../header/Header';
 import { HomePage } from '../homePage/HomePage';
@@ -31,7 +31,7 @@ export const App = () => {
                   <HomePage />
                 </Route>
                 <Route path="/projects/:projectId">
-                  <Pattern />
+                  <Project />
                 </Route>
               </Switch>
             </div>

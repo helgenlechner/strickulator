@@ -1,10 +1,9 @@
 import { getProjects } from '../../store/project/project.selectors';
 import { createSelector } from 'redux-views';
 import { ProjectId } from '../../store/project/project.model';
-import { PatternId } from '../../store/pattern/pattern.model';
 
 export interface MenuItem {
-  id: ProjectId | PatternId;
+  id: ProjectId;
   label: string;
   isActive: boolean;
   updatedAt?: number;

@@ -1,6 +1,6 @@
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import React, { FunctionComponent, useEffect } from 'react';
-import styles from './Pattern.module.css';
+import styles from './Project.module.css';
 import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { ProjectId } from '../../store/project/project.model';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ import { InputForm } from '../../patterns/custom/input/InputForm';
 import { GaugeCalculator } from '../gaugeCalculator/GaugeCalculator';
 import { Title } from '../project/Title';
 
-export const Pattern: FunctionComponent = () => {
+export const Project: FunctionComponent = () => {
   const { trackPageView } = useMatomo();
   const history = useHistory();
   const { projectId } = useParams<{ projectId: ProjectId }>();

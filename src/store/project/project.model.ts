@@ -1,5 +1,9 @@
 export type ProjectId = string;
 
+export interface ProjectProps {
+  projectId: ProjectId;
+}
+
 export interface ProjectStore {
   [ProjectId: string]: Project;
 }

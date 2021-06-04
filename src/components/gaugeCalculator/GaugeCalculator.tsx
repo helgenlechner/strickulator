@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Slope } from '../../helpers/slope';
-import { PatternProps } from '../../store/pattern/pattern.model';
+import { ProjectProps } from '../../store/project/project.model';
 import { projectUpdateGaugeCalculator } from '../../store/project/project.actions';
 import {
   getGaugeHeight,
@@ -37,7 +37,7 @@ interface ConnectedState {
 
 const mapStateToProps = (
   state: AppState,
-  ownProps: PatternProps,
+  ownProps: ProjectProps,
 ): ConnectedState => ({
   width: getGaugeWidth(state, ownProps),
   height: getGaugeHeight(state, ownProps),
@@ -57,102 +57,101 @@ interface ConnectedDispatch {
 
 const mapDispatchToProps = (
   dispatch: Dispatch,
-  ownProps: PatternProps,
+  ownProps: ProjectProps,
 ): ConnectedDispatch => ({
   updateGauge: (gauge) =>
     dispatch(projectUpdateGaugeCalculator(ownProps.projectId, gauge)),
 });
 
-const GaugeCalculator_: FunctionComponent<
-  ConnectedState & ConnectedDispatch
-> = ({
-  hasGauge,
-  width,
-  height,
-  numberOfStitches,
-  numberOfRows,
-  slopeWidth,
-  slopeHeight,
-  slope,
-  updateGauge,
-}) => {
-  if (!hasGauge) {
-    return null;
-  }
+const GaugeCalculator_: FunctionComponent<ConnectedState & ConnectedDispatch> =
+  ({
+    hasGauge,
+    width,
+    height,
+    numberOfStitches,
+    numberOfRows,
+    slopeWidth,
+    slopeHeight,
+    slope,
+    updateGauge,
+  }) => {
+    if (!hasGauge) {
+      return null;
+    }
 
-  const onChange = (key: string, value: number | undefined) => {
-    updateGauge({ [key]: value });
+    const onChange = (key: string, value: number | undefined) => {
+      updateGauge({ [key]: value });
+    };
+
+    return (
+      <div className={styles.gaugeCalculator}>
+        <h2>Gauge Calculator</h2>
+        <p>
+          Use this calculator for any ad-hoc adjustments to the pattern that has
+          been generated for you (such as adding bust darts). It can calculate
+          the number of stitches/rows in a measurement and slopes.
+        </p>
+        <div className={styles.row}>
+          <div className={styles.cell}>
+            <LabeledNumberInput
+              name="width"
+              value={width ?? ''}
+              onChange={onChange}
+              labelWidth={110}
+              unit="cm"
+            >
+              Width
+            </LabeledNumberInput>
+          </div>
+          <div className={styles.cell}>
+            <HighlightedValue>{numberOfStitches}</HighlightedValue> stitches
+          </div>
+        </div>
+        <div className={styles.row}>
+          <div className={styles.cell}>
+            <LabeledNumberInput
+              name="height"
+              value={height ?? ''}
+              onChange={onChange}
+              labelWidth={110}
+              unit="cm"
+            >
+              Height
+            </LabeledNumberInput>
+          </div>
+          <div className={styles.cell}>
+            <HighlightedValue>{numberOfRows}</HighlightedValue> rows
+          </div>
+        </div>
+        <div className={styles.row}>
+          <div className={styles.cell}>
+            <LabeledNumberInput
+              name="slopeWidth"
+              value={slopeWidth ?? ''}
+              onChange={onChange}
+              labelWidth={110}
+              unit="cm"
+            >
+              Slope Width
+            </LabeledNumberInput>
+            <br />
+            <LabeledNumberInput
+              name="slopeHeight"
+              value={slopeHeight ?? ''}
+              onChange={onChange}
+              labelWidth={110}
+              unit="cm"
+            >
+              Slope Height
+            </LabeledNumberInput>
+          </div>
+          <div className={styles.cell}>
+            <SlopeDescription slope={slope} />
+          </div>
+        </div>
+      </div>
+    );
   };
-
-  return (
-    <div className={styles.gaugeCalculator}>
-      <h2>Gauge Calculator</h2>
-      <p>
-        Use this calculator for any ad-hoc adjustments to the pattern that has
-        been generated for you (such as adding bust darts). It can calculate the
-        number of stitches/rows in a measurement and slopes.
-      </p>
-      <div className={styles.row}>
-        <div className={styles.cell}>
-          <LabeledNumberInput
-            name="width"
-            value={width ?? ''}
-            onChange={onChange}
-            labelWidth={110}
-            unit="cm"
-          >
-            Width
-          </LabeledNumberInput>
-        </div>
-        <div className={styles.cell}>
-          <HighlightedValue>{numberOfStitches}</HighlightedValue> stitches
-        </div>
-      </div>
-      <div className={styles.row}>
-        <div className={styles.cell}>
-          <LabeledNumberInput
-            name="height"
-            value={height ?? ''}
-            onChange={onChange}
-            labelWidth={110}
-            unit="cm"
-          >
-            Height
-          </LabeledNumberInput>
-        </div>
-        <div className={styles.cell}>
-          <HighlightedValue>{numberOfRows}</HighlightedValue> rows
-        </div>
-      </div>
-      <div className={styles.row}>
-        <div className={styles.cell}>
-          <LabeledNumberInput
-            name="slopeWidth"
-            value={slopeWidth ?? ''}
-            onChange={onChange}
-            labelWidth={110}
-            unit="cm"
-          >
-            Slope Width
-          </LabeledNumberInput>
-          <br />
-          <LabeledNumberInput
-            name="slopeHeight"
-            value={slopeHeight ?? ''}
-            onChange={onChange}
-            labelWidth={110}
-            unit="cm"
-          >
-            Slope Height
-          </LabeledNumberInput>
-        </div>
-        <div className={styles.cell}>
-          <SlopeDescription slope={slope} />
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export const GaugeCalculator = connect(
   mapStateToProps,
