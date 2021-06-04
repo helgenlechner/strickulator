@@ -1,49 +1,36 @@
-import React, { FunctionComponent } from 'react';
-import { pluralizeStitch } from '../../helpers/pluralize';
+import { FunctionComponent } from 'react';
 import { Slope } from '../../helpers/slope';
-import { HighlightedValue } from '../highlightedValue/HighlightedValue';
 import styles from './SlopeDescription.module.css';
 
 interface Props {
   slope: Slope | undefined;
-  manipulationLocation?: string;
   doubleRowCounts?: boolean;
 }
 
 export const SlopeDescription: FunctionComponent<Props> = ({
   slope,
-  manipulationLocation = 'on either end',
   doubleRowCounts = false,
 }) => {
-  const numberOfRows = slope
-    ? doubleRowCounts
-      ? slope.numberOfRows * 2
-      : slope.numberOfRows
-    : undefined;
-
   if (!slope || slope.delta === 0) {
-    return (
-      <>
-        Knit straight for <HighlightedValue>{numberOfRows}</HighlightedValue>{' '}
-        rows.
-      </>
-    );
+    return null;
   }
 
   if (slope && 'pattern' in slope) {
     return (
       <ul className={styles.pattern}>
         {Object.entries(slope.pattern).map((entry) => {
-          const formattedCount = `${slope.type === 'increasing' ? '+' : '-'}${
-            entry[1]
-          }`;
           const rc = Number(entry[0]);
 
           return (
             <li key={entry[0]}>
               RC&#8239;{doubleRowCounts ? rc * 2 : rc}:&nbsp;
-              <span className={styles.count} data-count={formattedCount}>
-                {formattedCount}
+              <span
+                className={styles.count}
+                data-delta={entry[1] / 10}
+                data-sign={slope.type}
+              >
+                {slope.type}
+                {entry[1]}
               </span>
             </li>
           );
@@ -53,14 +40,11 @@ export const SlopeDescription: FunctionComponent<Props> = ({
   }
 
   return (
-    <>
-      Knit for <HighlightedValue>{numberOfRows}</HighlightedValue> rows,{' '}
-      {slope?.type} <HighlightedValue>{slope?.stitchDelta}</HighlightedValue>{' '}
-      {pluralizeStitch(slope?.stitchDelta)} {manipulationLocation} every{' '}
-      <HighlightedValue>
-        {doubleRowCounts && slope ? slope.rowInterval * 2 : slope?.rowInterval}
-      </HighlightedValue>{' '}
-      rows.{' '}
-    </>
+    <p>
+      {slope.type}
+      {slope.numberOfRows}&times;{slope.stitchDelta}
+      &#8239;&bull;&#8239;RC&#8239;
+      {doubleRowCounts ? slope.rowInterval * 2 : slope.rowInterval}
+    </p>
   );
 };

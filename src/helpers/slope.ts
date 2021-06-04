@@ -1,6 +1,6 @@
 type BaseSlope = {
   delta: number;
-  type: 'increasing' | 'decreasing';
+  type: '+' | '-';
   numberOfRows: number;
 };
 
@@ -36,10 +36,7 @@ export const calculateSlope = (
     secondNumberOfStitches,
   );
 
-  const type =
-    firstNumberOfStitches === wideNumberOfStitches
-      ? 'decreasing'
-      : 'increasing';
+  const type = firstNumberOfStitches === wideNumberOfStitches ? '-' : '+';
 
   const stitchDelta = wideNumberOfStitches - narrowNumberOfStitches;
 

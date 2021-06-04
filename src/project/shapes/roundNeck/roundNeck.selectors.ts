@@ -43,7 +43,11 @@ export const getNumberOfRows = createSelector(
 
 export const getNeckCurve = createSelector(
   [getNumberOfBottomStitches, getNumberOfTopStitches, getNumberOfRows],
-  (numberOfBottomStitches, numberOfTopStitches, numberOfRows) => {
+  (
+    numberOfBottomStitches,
+    numberOfTopStitches,
+    numberOfRows,
+  ): UnevenSlope | undefined => {
     if (!numberOfBottomStitches || !numberOfTopStitches || !numberOfRows) {
       return undefined;
     }
@@ -65,9 +69,19 @@ export const getNeckCurve = createSelector(
           ? baselineDecrease * -1
           : Math.round(ellipseCartesianFunction(a, b, y - 2));
 
-      pattern[y] = x - previousX;
+      if (x - previousX > 0) {
+        pattern[y] = x - previousX;
+      }
     }
 
-    return pattern;
+    return {
+      type: '-',
+      delta: Object.values(pattern).reduce(
+        (total, current) => (total += current),
+        0,
+      ),
+      numberOfRows,
+      pattern,
+    };
   },
 );

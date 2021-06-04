@@ -29,6 +29,7 @@ import {
   verticalMargin,
 } from '../../store/custom.model';
 import { getScaleFactorForProject } from '../../store/custom.project.selectors';
+import { SlopeDescription } from '../../../components/slopeDescription/SlopeDescription';
 
 interface ConnectedState {
   bottomWidth: number | undefined;
@@ -37,7 +38,7 @@ interface ConnectedState {
   numberOfBottomStitches: number | undefined;
   numberOfTopStitches: number | undefined;
   numberOfRows: number | undefined;
-  neckCurve: UnevenSlope['pattern'] | undefined;
+  neckCurve: UnevenSlope | undefined;
   widthOfOneStitch: number | undefined;
   heightOfOneRow: number | undefined;
   scaleFactor: number | undefined;
@@ -124,7 +125,7 @@ const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
             },
             { x: leftHalfOfPattern / 2, y: previewHeight + verticalMargin },
             { x: leftHalfOfPattern, y: previewHeight + verticalMargin },
-            ...Object.entries(neckCurve).map(([row, decrease]) => {
+            ...Object.entries(neckCurve.pattern).map(([row, decrease]) => {
               const y = Math.max(
                 previewHeight +
                   verticalMargin -
@@ -172,6 +173,9 @@ const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
       <p className={styles.topLabel}>
         {numberOfTopStitches} = {topWidth}&#8239;cm
       </p>
+      <div className={styles.rightLabel}>
+        <SlopeDescription slope={neckCurve} />
+      </div>
     </div>
   );
 };
