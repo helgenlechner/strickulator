@@ -5,8 +5,6 @@ import { ProjectId } from '../../store/project/project.model';
 export interface MenuItem {
   id: ProjectId;
   label: string;
-  isActive: boolean;
-  updatedAt?: number;
 }
 
 export const getMenuStructure = createSelector(
@@ -17,7 +15,5 @@ export const getMenuStructure = createSelector(
       .map((project) => ({
         id: project.id,
         label: project.label,
-        isActive: false,
-        updatedAt: project.updatedAt,
       })),
 );
