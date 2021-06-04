@@ -120,9 +120,9 @@ const TrapezoidPreview_: React.FunctionComponent<
       <p className={styles.topLabel}>
         {numberOfTopStitches}&times;2 = {topWidth}&#8239;cm
       </p>
-      <p className={styles.rightLabel}>
+      <div className={styles.rightLabel}>
         <SlopeDescription slope={slope} />
-      </p>
+      </div>
     </div>
   );
 };
