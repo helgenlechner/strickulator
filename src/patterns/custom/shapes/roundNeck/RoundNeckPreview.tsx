@@ -161,15 +161,15 @@ const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
           y={previewHeight + verticalMargin}
         />
       </Canvas>
-      <p className={styles.leftLabel} style={{ maxWidth: canvasHeight }}>
+      <p className={styles.leftLabel}>
         {numberOfRows}&#8239;R
         <br />
         {height}&#8239;cm
       </p>
-      <p className={styles.bottomLabel} style={{ maxWidth: containerWidth }}>
+      <p className={styles.bottomLabel}>
         {numberOfBottomStitches}&times;2 = {bottomWidth}&#8239;cm
       </p>
-      <p className={styles.topLabel} style={{ maxWidth: containerWidth }}>
+      <p className={styles.topLabel}>
         {numberOfTopStitches} = {topWidth}&#8239;cm
       </p>
     </div>
