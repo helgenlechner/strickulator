@@ -18,7 +18,6 @@ export const getWidestWidthForProject = createSelector(
         const configuration = findShapeConfiguration(step.shape);
 
         if (!configuration) {
-          console.log('no configuration');
           return undefined;
         }
 
