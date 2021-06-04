@@ -5,9 +5,12 @@ import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { ProjectId } from '../../store/project/project.model';
 import { useDispatch, useSelector } from 'react-redux';
 import { projectCreate } from '../../store/project/project.actions';
-import { Project } from '../project/Project';
 import { getProject } from '../../store/project/project.selectors';
 import { AppState } from '../../store/store.model';
+import { SwatchInput } from '../swatchInput/SwatchInput';
+import { InputForm } from '../../patterns/custom/input/InputForm';
+import { GaugeCalculator } from '../gaugeCalculator/GaugeCalculator';
+import { Title } from '../project/Title';
 
 export const Pattern: FunctionComponent = () => {
   const { trackPageView } = useMatomo();
@@ -28,6 +31,7 @@ export const Pattern: FunctionComponent = () => {
 
   return (
     <div className={styles.container}>
+      <Title projectId={projectId} />
       <div className={styles.pattern}>
         <p>
           All measurements are in centimeters. The preview images show you what
@@ -43,7 +47,18 @@ export const Pattern: FunctionComponent = () => {
           </button>
         </p>
       </div>
-      <Project />
+      <section>
+        <div>
+          <h2>Swatch</h2>
+          <SwatchInput projectId={projectId} />
+        </div>
+        <div>
+          <GaugeCalculator projectId={projectId} />
+        </div>
+      </section>
+      <div className={styles.inputForm}>
+        <InputForm projectId={projectId} />
+      </div>
     </div>
   );
 };

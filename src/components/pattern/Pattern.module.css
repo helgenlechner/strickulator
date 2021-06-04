@@ -1,3 +1,23 @@
 .pattern {
   border-bottom: 1px solid gray;
 }
+
+.project {
+  margin: 20px 0;
+}
+
+.container section {
+  display: flex;
+}
+
+.container section > div {
+  flex-basis: 50%;
+}
+
+.container section > div:first-child {
+  margin-right: 10px;
+}
+
+.container section > div + div {
+  margin-left: 10px;
+}
