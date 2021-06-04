@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import { Shape } from '../custom.model';
+import styles from './ShapeSelect.module.css';
 
 interface Props {
   value: Shape;
@@ -26,6 +27,7 @@ export const ShapeSelect: FunctionComponent<Props> = ({ value, onChange }) => (
     value={value}
     onChange={(event) => onChange(Number(event.target.value) as Shape)}
     id="shape"
+    className={styles.shapeSelect}
   >
     {shapeOptions.map((option) => (
       <option key={option.value} value={option.value}>
