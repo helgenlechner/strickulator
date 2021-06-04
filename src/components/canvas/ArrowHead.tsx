@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CanvasContext } from '../../context/canvas.context';
+import { useCanvasContext } from '../../context/canvas.context';
 import { drawPolygon } from '../../helpers/drawPolygon';
 
 const width = 6;
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const ArrowHead: React.FC<Props> = ({ x, y }) => {
-  const context = React.useContext(CanvasContext);
+  const context = useCanvasContext();
 
   if (!context) {
     return null;

@@ -8,7 +8,7 @@ nav {
   transition: margin-left 250ms ease-in-out;
   height: 100vh;
   position: sticky;
-  top: 0;
+  top: 47px;
   overflow-y: scroll;
   border-right: 1px solid var(--gunmetal-light);
 }

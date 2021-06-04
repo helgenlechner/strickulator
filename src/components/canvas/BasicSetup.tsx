@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { fontSize } from '../../constants/fontSize';
-import { CanvasContext } from '../../context/canvas.context';
+import { useCanvasContext } from '../../context/canvas.context';
 
 export const BasicSetup: React.FC = () => {
-  const context = React.useContext(CanvasContext);
+  const context = useCanvasContext();
 
   if (!context) {
     return null;

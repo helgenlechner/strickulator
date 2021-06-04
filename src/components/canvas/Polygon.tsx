@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CanvasContext } from '../../context/canvas.context';
+import { useCanvasContext } from '../../context/canvas.context';
 
 interface Props {
   points: { x: number; y: number }[];
@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const Polygon: React.FC<Props> = ({ points, closePath }) => {
-  const context = React.useContext(CanvasContext);
+  const context = useCanvasContext();
 
   if (!context) {
     return null;
