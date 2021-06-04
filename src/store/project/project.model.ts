@@ -1,5 +1,3 @@
-import { PatternId } from '../pattern/pattern.model';
-
 export type ProjectId = string;
 
 export interface ProjectStore {
@@ -8,7 +6,6 @@ export interface ProjectStore {
 
 export interface Project {
   id: ProjectId;
-  patternId: PatternId;
   label: string;
   swatch: Swatch;
   measurements: Measurements;

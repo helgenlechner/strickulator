@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { getKnittingStyle } from '../../patterns/p1295/selectors/p1295.knittingStyle.selectors';
+import { getKnittingStyle } from '../../patterns/custom/store/custom.project.selectors';
 import { PatternProps } from '../../store/pattern/pattern.model';
 import { projectUpdateKnittingStyle } from '../../store/project/project.actions';
 import { KnittingStyle as KnittingStyleEnum } from '../../store/project/project.model';

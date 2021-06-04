@@ -3,11 +3,11 @@ import { CanvasContext } from '../../context/canvas.context';
 import { FrameCountContext } from '../../context/frameCount.context';
 
 interface Props {
-  width: number | undefined;
+  width: number;
   height: number | undefined;
 }
 
-export const Canvas: React.FC<Props> = ({ children, width = 600, height }) => {
+export const Canvas: React.FC<Props> = ({ children, width, height }) => {
   const [canvasRef, setCanvasRef] =
     React.useState<HTMLCanvasElement | null>(null);
   const [frameCount, setFrameCount] = React.useState(0);

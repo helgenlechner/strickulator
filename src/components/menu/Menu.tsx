@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { getIsMenuVisible } from '../../store/location/location.selectors';
-import { PatternId } from '../../store/pattern/pattern.model';
 import {
   projectCreate,
   projectDelete,
@@ -26,13 +25,12 @@ const mapStateToProps = (state: AppState): ConnectedState => ({
 
 interface ConnectedDispatch {
   deleteProject: (projectId: ProjectId) => void;
-  createProject: (history: History, patternId: PatternId) => void;
+  createProject: (history: History) => void;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ConnectedDispatch => ({
   deleteProject: (projectId) => dispatch(projectDelete(projectId)),
-  createProject: (history, patternId) =>
-    dispatch(projectCreate(history, patternId)),
+  createProject: (history) => dispatch(projectCreate(history)),
 });
 
 const Menu_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
@@ -55,30 +53,24 @@ const Menu_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
 
   return (
     <nav data-is-visible={menuIsVisible}>
+      <h1>My Projects</h1>
       <ul>
-        {menuStructure.map((pattern) => (
-          <li key={pattern.id}>
-            {pattern.label}
-            <ul>
-              {pattern.children.map((project) => (
-                <li key={project.id}>
-                  <Link to={`/projects/${project.id}`}>{project.label}</Link>
-                  <span
-                    className={styles.delete}
-                    onClick={() => onDeleteClick(project.id)}
-                  >
-                    <i className="far fa-trash-alt"></i>
-                  </span>
-                </li>
-              ))}
-              <li key="new">
-                <a onClick={() => createProject(history, pattern.id)} href="">
-                  <i>Add new project</i>
-                </a>
-              </li>
-            </ul>
+        {menuStructure.map((project) => (
+          <li key={project.id}>
+            <Link to={`/projects/${project.id}`}>{project.label}</Link>
+            <span
+              className={styles.delete}
+              onClick={() => onDeleteClick(project.id)}
+            >
+              <i className="far fa-trash-alt"></i>
+            </span>
           </li>
         ))}
+        <li key="new">
+          <button onClick={() => createProject(history)}>
+            Add new project
+          </button>
+        </li>
       </ul>
     </nav>
   );

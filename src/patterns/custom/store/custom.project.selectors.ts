@@ -3,6 +3,8 @@ import { isNotUndefined } from '../../../helpers/isNotUndefined';
 import { leftHalfOfPattern, previewWidth } from '../custom.model';
 import { findShapeConfiguration } from '../shapes/findShapeConfiguration';
 import { getPatternPieces } from './custom.input.selectors';
+import { KnittingStyle } from '../../../store/project/project.model';
+import { getProject } from '../../../store/project/project.selectors';
 
 export const getWidestWidthForProject = createSelector(
   [getPatternPieces],
@@ -39,4 +41,14 @@ export const getScaleFactorForProject = createSelector(
 
     return Math.floor((previewWidth - leftHalfOfPattern) / (widestWidth / 2));
   },
+);
+
+export const getKnittingStyle = createSelector(
+  [getProject],
+  (project) => project?.knittingStyle ?? KnittingStyle.inTheRound,
+);
+
+export const getIsKnittedInTheRound = createSelector(
+  [getKnittingStyle],
+  (knittingStyle) => knittingStyle === KnittingStyle.inTheRound,
 );

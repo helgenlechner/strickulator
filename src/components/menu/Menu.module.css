@@ -6,15 +6,19 @@ nav {
   box-sizing: border-box;
   margin-left: 0;
   transition: margin-left 250ms ease-in-out;
-  height: 100vh;
+  height: calc(100vh - 47px);
   position: sticky;
   top: 47px;
-  overflow-y: scroll;
+  overflow-y: auto;
   border-right: 1px solid var(--gunmetal-light);
 }
 
 nav[data-is-visible='false'] {
   margin-left: -200px;
+}
+
+nav h1 {
+  margin-top: 0;
 }
 
 nav ul {
@@ -23,13 +27,16 @@ nav ul {
   margin-top: 0;
 }
 
-nav ul ul {
-  padding-left: 20px;
-  list-style-type: disc;
+nav > ul > li + li {
+  margin-top: 10px;
 }
 
-nav > ul > li + li {
-  margin-top: 20px;
+nav button {
+  background-color: transparent;
+  color: var(--jam-dark);
+  text-decoration: underline;
+  font-style: italic;
+  padding: 0;
 }
 
 .delete {

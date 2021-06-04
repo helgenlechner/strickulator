@@ -35,7 +35,6 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
 
         draft[projectId] = {
           id: projectId,
-          patternId: payload.patternId,
           label: 'New Project',
           swatch:
             (copySource?.swatch &&

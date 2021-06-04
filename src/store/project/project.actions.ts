@@ -1,4 +1,3 @@
-import { PatternId } from '../pattern/pattern.model';
 import {
   GaugeCalculator,
   KnittingStyle,
@@ -19,15 +18,10 @@ export enum ProjectActions {
   delete = '@@project/DELETE',
 }
 
-export const projectCreate = (
-  history: History,
-  patternId: PatternId,
-  copySource?: ProjectId,
-) => ({
+export const projectCreate = (history: History, copySource?: ProjectId) => ({
   type: ProjectActions.create,
   payload: {
     history,
-    patternId,
     copySource,
   },
 });

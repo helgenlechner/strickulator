@@ -33,17 +33,16 @@ export const EditableText: FunctionComponent<Props> = ({
     className: styles.normal,
     onClick: () => setIsBeingEdited(true),
     title: 'Click to edit',
-    children: value,
   };
 
   switch (component) {
     case 'h1':
-      return <h1 {...props} />;
+      return <h1 {...props}>{value}</h1>;
     case 'h2':
-      return <h2 {...props} />;
+      return <h2 {...props}>{value}</h2>;
     case 'h3':
-      return <h3 {...props} />;
+      return <h3 {...props}>{value}</h3>;
     default:
-      return <p {...props} />;
+      return <p {...props}>{value}</p>;
   }
 };
