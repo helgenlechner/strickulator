@@ -68,9 +68,9 @@ export const calculateSlope = (
 
   const pattern: UnevenSlope['pattern'] = {};
 
-  for (let i = 0; i <= numberOfRows; i++) {
+  for (let i = 0; i <= numberOfRows; i += 2) {
     const current = Math.round(i * singleRowSlope);
-    const previous = i === 0 ? 0 : Math.round((i - 1) * singleRowSlope);
+    const previous = i === 0 ? 0 : Math.round((i - 2) * singleRowSlope);
 
     if (current - previous !== 0) {
       pattern[i] = current - previous;

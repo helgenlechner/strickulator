@@ -8,13 +8,14 @@ describe('calculateSlope', () => {
 
     const expected = {
       type: 'decreasing',
+      numberOfRows,
       delta: 5,
       pattern: {
         2: 1,
         4: 1,
         6: 1,
-        9: 1,
-        11: 1,
+        10: 1,
+        12: 1,
       },
     };
     const actual = calculateSlope(
@@ -33,20 +34,15 @@ describe('calculateSlope', () => {
 
     const expected = {
       delta: 30,
+      numberOfRows,
       type: 'increasing',
       pattern: {
-        1: 3,
-        2: 2,
-        3: 3,
-        4: 2,
-        5: 3,
-        6: 2,
-        7: 3,
-        8: 2,
-        9: 3,
-        10: 2,
-        11: 3,
-        12: 2,
+        2: 5,
+        4: 5,
+        6: 5,
+        8: 5,
+        10: 5,
+        12: 5,
       },
     };
     const actual = calculateSlope(
