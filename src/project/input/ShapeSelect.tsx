@@ -1,4 +1,5 @@
 import { FunctionComponent } from 'react';
+import { shapes } from '../shapes/shapes';
 import { Shape } from '../store/custom.model';
 import styles from './ShapeSelect.module.css';
 
@@ -7,25 +8,16 @@ interface Props {
   onChange: (value: Shape) => void;
 }
 
-const shapeOptions = [
-  {
-    value: Shape.Rectangle,
-    label: 'Rectangle',
-  },
-  {
-    value: Shape.Trapezoid,
-    label: 'Trapezoid',
-  },
-  {
-    value: Shape.RoundNeck,
-    label: 'Round Neck Opening',
-  },
-];
+const shapeOptions = shapes.map((shape) => ({
+  value: shape.name,
+  label: shape.label,
+}));
 
 export const ShapeSelect: FunctionComponent<Props> = ({ value, onChange }) => (
   <select
     value={value}
     onChange={(event) => onChange(Number(event.target.value) as Shape)}
+    // Todo: add in patternPieceIndex and stepIndex
     id="shape"
     className={styles.shapeSelect}
   >

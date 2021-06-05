@@ -1,62 +1,32 @@
-import React, { FunctionComponent } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { getKnittingStyle } from '../../project/store/custom.project.selectors';
-import { ProjectProps } from '../../store/project/project.model';
-import { projectUpdateKnittingStyle } from '../../store/project/project.actions';
+import { FunctionComponent } from 'react';
 import { KnittingStyle as KnittingStyleEnum } from '../../store/project/project.model';
-import { AppState } from '../../store/store.model';
-import { LabeledRadioInput } from '../labeledInput/LabeledRadioInput';
 
 const options = [
-  { id: KnittingStyleEnum.flat, label: 'Flat' },
-  { id: KnittingStyleEnum.inTheRound, label: 'In the round' },
+  { id: KnittingStyleEnum.flat, label: 'No' },
+  { id: KnittingStyleEnum.inTheRound, label: 'Yes' },
 ];
 
-interface ConnectedState {
-  knittingStyle: KnittingStyleEnum;
+interface Props {
+  value: KnittingStyleEnum;
+  onChange: (value: KnittingStyleEnum) => void;
 }
 
-const mapStateToProps = (
-  state: AppState,
-  ownProps: ProjectProps,
-): ConnectedState => ({
-  knittingStyle: getKnittingStyle(state, ownProps),
-});
-
-interface ConnectedDispatch {
-  updateKnittingStyle: (knittingStyle: KnittingStyleEnum) => void;
-}
-
-const mapDispatchToProps = (
-  dispatch: Dispatch,
-  ownProps: ProjectProps,
-): ConnectedDispatch => ({
-  updateKnittingStyle: (measurements) =>
-    dispatch(projectUpdateKnittingStyle(ownProps.projectId, measurements)),
-});
-
-const KnittingStyle_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
-  knittingStyle,
-  updateKnittingStyle,
+export const KnittingStyle: FunctionComponent<Props> = ({
+  value,
+  onChange,
 }) => {
-  const onChange = (value: string | number) => {
-    if (typeof value === 'number') {
-      updateKnittingStyle(value);
-    }
-  };
-
   return (
-    <LabeledRadioInput
-      name="flatOrRound"
-      options={options}
-      onChange={onChange}
-      value={knittingStyle}
-    />
+    <select
+      value={value}
+      onChange={(event) =>
+        onChange(Number(event.target.value) as KnittingStyleEnum)
+      }
+    >
+      {options.map((option) => (
+        <option key={option.id} value={option.id}>
+          {option.label}
+        </option>
+      ))}
+    </select>
   );
 };
-
-export const KnittingStyle = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(KnittingStyle_);

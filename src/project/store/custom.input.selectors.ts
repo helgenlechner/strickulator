@@ -25,9 +25,14 @@ export const getPatternPieces = createSelector(
   (measurements) => measurements?.patternPieces,
 );
 
-export const getSteps = createSelector(
+export const getPatternPiece = createSelector(
   [getPatternPieces, getPatternPieceIndexFromProps],
-  (patternPieces, index) => patternPieces?.[index]?.steps,
+  (patternPieces, index) => patternPieces?.[index],
+);
+
+export const getSteps = createSelector(
+  [getPatternPiece],
+  (patternPiece) => patternPiece?.steps,
 );
 
 export const getStep = createSelector(

@@ -21,7 +21,10 @@ import {
   getWidth,
 } from './rectangle.selectors';
 import styles from '../Preview.module.css';
-import { getScaleFactorForProject } from '../../store/custom.project.selectors';
+import {
+  getIsKnittedInTheRound,
+  getScaleFactorForProject,
+} from '../../store/custom.project.selectors';
 
 interface ConnectedState {
   width: number | undefined;
@@ -29,6 +32,7 @@ interface ConnectedState {
   numberOfStitches: number | undefined;
   numberOfRows: number | undefined;
   scaleFactor: number | undefined;
+  doubleRowCount: boolean;
 }
 
 const mapStateToProps = (
@@ -40,12 +44,20 @@ const mapStateToProps = (
   numberOfStitches: getNumberOfStitches(state, props),
   numberOfRows: getNumberOfRows(state, props),
   scaleFactor: getScaleFactorForProject(state, props),
+  doubleRowCount: getIsKnittedInTheRound(state, props),
 });
 
 const RectanglePreview_: React.FunctionComponent<
   ShapeRendererProps & ConnectedState
-> = ({ width, height, numberOfStitches, numberOfRows, scaleFactor }) => {
-  if (!width || !height || !scaleFactor) {
+> = ({
+  width,
+  height,
+  numberOfStitches,
+  numberOfRows,
+  scaleFactor,
+  doubleRowCount,
+}) => {
+  if (!width || !height || !scaleFactor || !numberOfRows) {
     return null;
   }
 
@@ -93,7 +105,7 @@ const RectanglePreview_: React.FunctionComponent<
         />
       </Canvas>
       <p className={styles.leftLabel}>
-        {numberOfRows}&#8239;R
+        {doubleRowCount ? numberOfRows * 2 : numberOfRows}&#8239;R
         <br />
         {height}&#8239;cm
       </p>

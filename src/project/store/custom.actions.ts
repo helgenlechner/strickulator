@@ -1,4 +1,4 @@
-import { ProjectId } from '../../store/project/project.model';
+import { KnittingStyle, ProjectId } from '../../store/project/project.model';
 import { Shape } from './custom.model';
 
 export enum CustomProjectActions {
@@ -8,6 +8,7 @@ export enum CustomProjectActions {
   updateStepName = '@@customProject/UPDATE_STEP_NAME',
   updateStepShape = '@@customProject/UPDATE_STEP_SHAPE',
   updateStepMeasurement = '@@customProject/UPDATE_STEP_MEASUREMENT',
+  updateStepKnittingStyle = '@@customProject/UPDATE_STEP_KNITTING_STYLE',
 }
 
 export const customProjectAddPatternPiece = (id: ProjectId) => ({
@@ -85,5 +86,20 @@ export const customProjectUpdateStepMeasurement = (
     stepIndex,
     name,
     value,
+  },
+});
+
+export const customProjectUpdateStepKnittingStyle = (
+  id: ProjectId,
+  patternPieceIndex: number,
+  stepIndex: number,
+  knittingStyle: KnittingStyle,
+) => ({
+  type: CustomProjectActions.updateStepKnittingStyle,
+  payload: {
+    id,
+    patternPieceIndex,
+    stepIndex,
+    knittingStyle,
   },
 });

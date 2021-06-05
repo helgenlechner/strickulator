@@ -1,12 +1,13 @@
 import { Draft } from 'immer';
 import { Action } from 'redux';
-import { ProjectStore } from '../../store/project/project.model';
+import { KnittingStyle, ProjectStore } from '../../store/project/project.model';
 import { CustomMeasurements } from './custom.model';
 import {
   CustomProjectActions,
   customProjectAddPatternPiece,
   customProjectAddStep,
   customProjectUpdatePatternPieceName,
+  customProjectUpdateStepKnittingStyle,
   customProjectUpdateStepMeasurement,
   customProjectUpdateStepName,
   customProjectUpdateStepShape,
@@ -61,6 +62,7 @@ export const CustomProjectReducer = (
       )?.patternPieces?.[payload.patternPieceIndex]?.steps.push({
         name: '',
         shape: payload.shape,
+        knittingStyle: KnittingStyle.flat,
       });
 
       return;
@@ -107,6 +109,21 @@ export const CustomProjectReducer = (
       if (step) {
         // @ts-ignore
         step[payload.name] = payload.value;
+      }
+
+      return;
+    }
+    case CustomProjectActions.updateStepKnittingStyle: {
+      const { payload } = action as ReturnType<
+        typeof customProjectUpdateStepKnittingStyle
+      >;
+
+      const step = (
+        draft[payload.id]?.measurements as CustomMeasurements | undefined
+      )?.patternPieces?.[payload.patternPieceIndex]?.steps[payload.stepIndex];
+
+      if (step) {
+        step.knittingStyle = payload.knittingStyle;
       }
 
       return;

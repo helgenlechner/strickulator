@@ -28,7 +28,10 @@ import {
   leftHalfOfPattern,
   verticalMargin,
 } from '../../store/custom.model';
-import { getScaleFactorForProject } from '../../store/custom.project.selectors';
+import {
+  getIsKnittedInTheRound,
+  getScaleFactorForProject,
+} from '../../store/custom.project.selectors';
 import { SlopeDescription } from '../../../components/slopeDescription/SlopeDescription';
 
 interface ConnectedState {
@@ -42,6 +45,7 @@ interface ConnectedState {
   widthOfOneStitch: number | undefined;
   heightOfOneRow: number | undefined;
   scaleFactor: number | undefined;
+  doubleRowCount: boolean;
 }
 
 const mapStateToProps = (
@@ -58,6 +62,7 @@ const mapStateToProps = (
   widthOfOneStitch: getWidthOfOneStitch(state, props),
   heightOfOneRow: getHeightOfOneRow(state, props),
   scaleFactor: getScaleFactorForProject(state, props),
+  doubleRowCount: getIsKnittedInTheRound(state, props),
 });
 
 const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
@@ -71,10 +76,18 @@ const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
   widthOfOneStitch = 0,
   heightOfOneRow = 0,
   scaleFactor,
+  doubleRowCount,
 }) => {
   const [containerWidth, setContainerWidth] = React.useState<number>(600);
 
-  if (!bottomWidth || !topWidth || !height || !neckCurve || !scaleFactor) {
+  if (
+    !bottomWidth ||
+    !topWidth ||
+    !height ||
+    !neckCurve ||
+    !scaleFactor ||
+    !numberOfRows
+  ) {
     return null;
   }
 
@@ -163,7 +176,7 @@ const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
         />
       </Canvas>
       <p className={styles.leftLabel}>
-        {numberOfRows}&#8239;R
+        {doubleRowCount ? numberOfRows * 2 : numberOfRows}&#8239;R
         <br />
         {height}&#8239;cm
       </p>
@@ -174,7 +187,7 @@ const RoundNeckPreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
         {numberOfTopStitches} = {topWidth}&#8239;cm
       </p>
       <div className={styles.rightLabel}>
-        <SlopeDescription slope={neckCurve} />
+        <SlopeDescription slope={neckCurve} doubleRowCounts={doubleRowCount} />
       </div>
     </div>
   );

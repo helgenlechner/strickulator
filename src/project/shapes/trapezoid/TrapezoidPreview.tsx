@@ -26,7 +26,10 @@ import {
 import { Canvas } from '../../../components/canvas/Canvas';
 import styles from '../Preview.module.css';
 import { SlopeDescription } from '../../../components/slopeDescription/SlopeDescription';
-import { getScaleFactorForProject } from '../../store/custom.project.selectors';
+import {
+  getIsKnittedInTheRound,
+  getScaleFactorForProject,
+} from '../../store/custom.project.selectors';
 
 interface ConnectedState {
   bottomWidth: number | undefined;
@@ -37,6 +40,7 @@ interface ConnectedState {
   numberOfRows: number | undefined;
   slope: Slope | undefined;
   scaleFactor: number | undefined;
+  doubleRowCount: boolean;
 }
 
 const mapStateToProps = (
@@ -51,6 +55,7 @@ const mapStateToProps = (
   numberOfRows: getNumberOfRows(state, props),
   slope: getSlope(state, props),
   scaleFactor: getScaleFactorForProject(state, props),
+  doubleRowCount: getIsKnittedInTheRound(state, props),
 });
 
 const TrapezoidPreview_: React.FunctionComponent<
@@ -64,8 +69,9 @@ const TrapezoidPreview_: React.FunctionComponent<
   numberOfRows,
   slope,
   scaleFactor,
+  doubleRowCount,
 }) => {
-  if (!bottomWidth || !topWidth || !height || !scaleFactor) {
+  if (!bottomWidth || !topWidth || !height || !scaleFactor || !numberOfRows) {
     return null;
   }
 
@@ -110,7 +116,7 @@ const TrapezoidPreview_: React.FunctionComponent<
         />
       </Canvas>
       <p className={styles.leftLabel}>
-        {numberOfRows}&#8239;R
+        {doubleRowCount ? numberOfRows * 2 : numberOfRows}&#8239;R
         <br />
         {height}&#8239;cm
       </p>
@@ -121,7 +127,7 @@ const TrapezoidPreview_: React.FunctionComponent<
         {numberOfTopStitches}&times;2 = {topWidth}&#8239;cm
       </p>
       <div className={styles.rightLabel}>
-        <SlopeDescription slope={slope} />
+        <SlopeDescription slope={slope} doubleRowCounts={doubleRowCount} />
       </div>
     </div>
   );

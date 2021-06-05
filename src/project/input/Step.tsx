@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import {
+  customProjectUpdateStepKnittingStyle,
   customProjectUpdateStepName,
   customProjectUpdateStepShape,
 } from '../store/custom.actions';
@@ -8,10 +9,15 @@ import { ShapeSelect } from './ShapeSelect';
 import styles from './Step.module.css';
 import { findPreview } from '../shapes/findPreview';
 import { findInput } from '../shapes/findInput';
-import { ProjectId } from '../../store/project/project.model';
+import {
+  ProjectId,
+  KnittingStyle as KnittingStyleEnum,
+} from '../../store/project/project.model';
 import { CustomStep, Shape } from '../store/custom.model';
 import { EditableText } from '../../components/editableText/EditableText';
 import { Label } from '../../components/label/Label';
+import { KnittingStyle } from '../../components/knittingStyle/KnittingStyle';
+import { Hint } from '../../components/hint/Hint';
 
 interface Props {
   projectId: ProjectId;
@@ -47,6 +53,17 @@ export const Step: FunctionComponent<Props> = (props) => {
     );
   };
 
+  const onKnittingStyleChange = (value: KnittingStyleEnum) => {
+    dispatch(
+      customProjectUpdateStepKnittingStyle(
+        projectId,
+        patternPieceIndex,
+        stepIndex,
+        value,
+      ),
+    );
+  };
+
   const Preview = findPreview(step.shape);
   const Input = findInput(step.shape);
 
@@ -63,10 +80,21 @@ export const Step: FunctionComponent<Props> = (props) => {
             onChange={onStepNameChange}
             component="p"
           />
-          <Label forInput="shape">Shape</Label>
+          <Label forInput={`shape-${patternPieceIndex}-${stepIndex}`}>
+            Shape
+          </Label>
           <ShapeSelect value={step.shape} onChange={onShapeChange} />
           <br />
           <Input {...propsToPass} />
+          <br />
+          <Label forInput={`knittingStyle-${patternPieceIndex}`}>
+            Double Row Counts
+          </Label>
+          <KnittingStyle
+            value={step.knittingStyle}
+            onChange={onKnittingStyleChange}
+          />
+          <Hint>Useful when knitting in the round</Hint>
         </div>
         <div className={styles.preview}>
           <Preview {...propsToPass} />

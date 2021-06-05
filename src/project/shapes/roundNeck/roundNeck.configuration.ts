@@ -5,6 +5,7 @@ import { RoundNeckPreview } from './RoundNeckPreview';
 
 export const roundNeck: ShapeConfiguration = {
   name: Shape.RoundNeck,
+  label: 'Round Neck Opening',
   Input: RoundNeckInput,
   Preview: RoundNeckPreview,
   getWidestMeasurement: (shape) =>

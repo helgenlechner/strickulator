@@ -5,6 +5,7 @@ import { TrapezoidPreview } from './TrapezoidPreview';
 
 export const trapezoid: ShapeConfiguration = {
   name: Shape.Trapezoid,
+  label: 'Trapezoid',
   Preview: TrapezoidPreview,
   Input: TrapezoidInput,
   getWidestMeasurement: (shape) =>

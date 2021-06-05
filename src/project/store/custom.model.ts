@@ -1,4 +1,8 @@
-import { Measurements, ProjectId } from '../../store/project/project.model';
+import {
+  KnittingStyle,
+  Measurements,
+  ProjectId,
+} from '../../store/project/project.model';
 
 export interface CustomMeasurements extends Measurements {
   // @ts-ignore
@@ -12,6 +16,7 @@ export interface CustomPatternPiece {
 
 export interface ShapeConfiguration {
   name: Shape;
+  label: string;
   Preview: React.ComponentType<ShapeRendererProps>;
   Input: React.ComponentType<ShapeRendererProps>;
   getWidestMeasurement: (shape: CustomShape) => number | undefined;
@@ -23,7 +28,10 @@ export interface ShapeRendererProps {
   stepIndex: number;
 }
 
-export type CustomStep = { name: string } & CustomShape;
+export type CustomStep = {
+  name: string;
+  knittingStyle: KnittingStyle;
+} & CustomShape;
 
 export enum Shape {
   Rectangle,

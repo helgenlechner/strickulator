@@ -5,6 +5,7 @@ import { RectanglePreview } from './RectanglePreview';
 
 export const rectangle: ShapeConfiguration = {
   name: Shape.Rectangle,
+  label: 'Rectangle',
   Preview: RectanglePreview,
   Input: RectangleInput,
   getWidestMeasurement: (shape) =>
