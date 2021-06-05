@@ -11,6 +11,7 @@ import { ProjectId } from '../../store/project/project.model';
 import { AppState } from '../../store/store.model';
 import { CustomPatternPiece, Shape } from '../store/custom.model';
 import { EditableText } from '../../components/editableText/EditableText';
+import { getEstimatedWeightOfPatternPiece } from '../store/custom.project.selectors';
 
 interface OwnProps {
   projectId: ProjectId;
@@ -24,6 +25,9 @@ export const PatternPiece: FC<OwnProps> = ({
   patternPieceIndex,
 }) => {
   const dispatch = useDispatch();
+  const estimatedWeight = useSelector((state: AppState) =>
+    getEstimatedWeightOfPatternPiece(state, { projectId, patternPieceIndex }),
+  );
 
   const onNameChange = (value: string) => {
     dispatch(
@@ -49,6 +53,9 @@ export const PatternPiece: FC<OwnProps> = ({
         onChange={onNameChange}
         component="h3"
       />
+      {estimatedWeight && (
+        <p>Estimated Weight: {Math.round(estimatedWeight)}</p>
+      )}
       <ul className={styles.stepList}>
         {steps.map((step, stepIndex) => (
           <Step

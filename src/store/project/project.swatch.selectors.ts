@@ -23,6 +23,11 @@ export const getSwatchHeight = createSelector(
   (swatch) => swatch?.height,
 );
 
+export const getSwatchWeight = createSelector(
+  [getSwatch],
+  (swatch) => swatch?.weight,
+);
+
 export const getWidthOfOneStitch = createSelector(
   [getNumberOfSwatchStitches, getSwatchWidth],
   (numberOfStitches, width) => {
@@ -50,5 +55,18 @@ export const getHeightOfOneRow = createSelector(
     }
 
     return height / numberOfRows;
+  },
+);
+
+export const getWeightOfOneStitch = createSelector(
+  [getSwatchWeight, getNumberOfSwatchStitches, getNumberOfSwatchRows],
+  (weight, stitches, rows) => {
+    if (!weight || !stitches || !rows) {
+      return undefined;
+    }
+
+    const numberOfStitches = stitches * rows;
+
+    return weight / numberOfStitches;
   },
 );

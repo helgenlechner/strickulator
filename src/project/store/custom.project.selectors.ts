@@ -1,8 +1,13 @@
 import { createSelector } from 'redux-views';
 import { isNotUndefined } from '../../helpers/isNotUndefined';
 import { KnittingStyle } from '../../store/project/project.model';
+import {
+  getHeightOfOneRow,
+  getWeightOfOneStitch,
+  getWidthOfOneStitch,
+} from '../../store/project/project.swatch.selectors';
 import { findShapeConfiguration } from '../shapes/findShapeConfiguration';
-import { getPatternPieces, getStep } from './custom.input.selectors';
+import { getPatternPieces, getStep, getSteps } from './custom.input.selectors';
 import { previewWidth, leftHalfOfPattern } from './custom.model';
 
 export const getWidestWidthForProject = createSelector(
@@ -50,4 +55,28 @@ export const getKnittingStyle = createSelector(
 export const getIsKnittedInTheRound = createSelector(
   [getKnittingStyle],
   (knittingStyle) => knittingStyle === KnittingStyle.inTheRound,
+);
+
+export const getEstimatedWeightOfPatternPiece = createSelector(
+  [getSteps, getWeightOfOneStitch, getWidthOfOneStitch, getHeightOfOneRow],
+  (steps, weightOfOneStitch, widthOfOneStitch, heightOfOneRow) => {
+    if (!steps || !weightOfOneStitch || !widthOfOneStitch || !heightOfOneRow) {
+      return;
+    }
+
+    return steps.reduce((total, currentStep) => {
+      const configuration = findShapeConfiguration(currentStep.shape);
+      const numberOfStitches = configuration?.getNumberOfStiches(
+        currentStep,
+        widthOfOneStitch,
+        heightOfOneRow,
+      );
+
+      if (!numberOfStitches) {
+        return total;
+      }
+
+      return total + numberOfStitches * weightOfOneStitch;
+    }, 0);
+  },
 );

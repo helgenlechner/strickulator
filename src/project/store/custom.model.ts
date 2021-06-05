@@ -20,6 +20,11 @@ export interface ShapeConfiguration {
   Preview: React.ComponentType<ShapeRendererProps>;
   Input: React.ComponentType<ShapeRendererProps>;
   getWidestMeasurement: (shape: CustomShape) => number | undefined;
+  getNumberOfStiches: (
+    shape: CustomShape,
+    widthOfOneStitch: number | undefined,
+    heightOfOneRow: number | undefined,
+  ) => number;
 }
 
 export interface ShapeRendererProps {

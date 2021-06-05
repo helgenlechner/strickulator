@@ -5,6 +5,7 @@ import {
   getNumberOfSwatchRows,
   getNumberOfSwatchStitches,
   getSwatchHeight,
+  getSwatchWeight,
   getSwatchWidth,
 } from '../../store/project/project.swatch.selectors';
 import {
@@ -26,6 +27,7 @@ interface ConnectedState {
   numberOfRows: number | undefined;
   width: number | undefined;
   height: number | undefined;
+  weight: number | undefined;
   notes: string | undefined;
 }
 
@@ -37,6 +39,7 @@ const mapStateToProps = (
   numberOfRows: getNumberOfSwatchRows(state, ownProps),
   width: getSwatchWidth(state, ownProps),
   height: getSwatchHeight(state, ownProps),
+  weight: getSwatchWeight(state, ownProps),
   notes: getProjectNotes(state, ownProps),
 });
 
@@ -62,6 +65,7 @@ const SwatchInput_: FunctionComponent<
   numberOfRows,
   width,
   height,
+  weight,
   updateSwatch,
   updateNotes,
   projectId,
@@ -107,6 +111,15 @@ const SwatchInput_: FunctionComponent<
         value={height ?? ''}
       >
         Height
+      </LabeledNumberInput>
+      <br />
+      <LabeledNumberInput
+        name="weight"
+        placeholder={75}
+        onChange={onChange}
+        value={weight ?? ''}
+      >
+        Weight
       </LabeledNumberInput>
       <br />
       <LabeledTextArea

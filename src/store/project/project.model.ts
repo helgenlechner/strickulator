@@ -25,6 +25,7 @@ export interface Swatch {
   numberOfRows?: number;
   width?: number;
   height?: number;
+  weight?: number;
 }
 
 export interface Measurements {
