@@ -40,10 +40,7 @@ export const Project: FunctionComponent = () => {
         </p>
         <p>
           <button onClick={() => dispatch(projectCreate(history, projectId))}>
-            Create new project as copy of current project
-          </button>
-          <button onClick={() => dispatch(projectCreate(history))}>
-            Create new project from scratch
+            Create new project as copy of this project
           </button>
         </p>
       </div>
