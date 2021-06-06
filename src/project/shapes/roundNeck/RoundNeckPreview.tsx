@@ -16,7 +16,7 @@ import {
   getNumberOfTopStitches,
   getTopWidth,
 } from './roundNeck.selectors';
-import { UnevenSlope } from '../../../helpers/slope';
+import { Slope } from '../../../helpers/slope';
 import {
   getHeightOfOneRow,
   getWidthOfOneStitch,
@@ -41,7 +41,7 @@ interface ConnectedState {
   numberOfBottomStitches: number | undefined;
   numberOfTopStitches: number | undefined;
   numberOfRows: number | undefined;
-  neckCurve: UnevenSlope | undefined;
+  neckCurve: Slope | undefined;
   widthOfOneStitch: number | undefined;
   heightOfOneRow: number | undefined;
   scaleFactor: number | undefined;

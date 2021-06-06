@@ -2,7 +2,7 @@ import { createSelector } from 'redux-views';
 import { divideAndRoundToEvenNumber } from '../../../helpers/divideAndRoundToEvenNumber';
 import { divideRoundToEvenNumberAndHalve } from '../../../helpers/divideRoundToEvenNumberAndHalve';
 import { ellipseCartesianFunction } from '../../../helpers/ellipseCartesianFunction';
-import { UnevenSlope } from '../../../helpers/slope';
+import { Slope } from '../../../helpers/slope';
 import {
   getWidthOfOneStitch,
   getHeightOfOneRow,
@@ -47,7 +47,7 @@ export const getNeckCurve = createSelector(
     numberOfBottomStitches,
     numberOfTopStitches,
     numberOfRows,
-  ): UnevenSlope | undefined => {
+  ): Slope | undefined => {
     if (!numberOfBottomStitches || !numberOfTopStitches || !numberOfRows) {
       return undefined;
     }
@@ -59,7 +59,7 @@ export const getNeckCurve = createSelector(
     const a = numberOfBottomStitches - numberOfTopStitches - baselineDecrease;
     const b = numberOfRows;
 
-    const pattern: UnevenSlope['pattern'] = { 0: baselineDecrease };
+    const pattern: Slope['pattern'] = { 0: baselineDecrease };
 
     for (let y = 2; y <= numberOfRows; y += 2) {
       const x = Math.round(ellipseCartesianFunction(a, b, y));

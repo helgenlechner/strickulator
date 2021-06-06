@@ -34,7 +34,7 @@ export const LabeledTextArea: FunctionComponent<Props> = ({
       <Label forInput={name}>{children}</Label>
       <TextareaAutosize
         value={value}
-        defaultValue={placeholder}
+        placeholder={placeholder}
         onChange={onChange_}
         className={styles.textarea}
       />

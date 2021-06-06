@@ -15,8 +15,16 @@ export const SlopeDescription: FunctionComponent<Props> = ({
     return null;
   }
 
-  if (slope && 'pattern' in slope) {
-    return (
+  return (
+    <>
+      {slope.rowInterval && slope.stitchDelta && (
+        <p className={styles.evenPattern}>
+          {slope.type}
+          {Object.values(slope.pattern).length}&times;{slope.stitchDelta}
+          &#8239;&bull;&#8239;RC&#8239;
+          {doubleRowCounts ? slope.rowInterval * 2 : slope.rowInterval}:
+        </p>
+      )}
       <ul className={styles.pattern}>
         {Object.entries(slope.pattern).map((entry) => {
           const rc = Number(entry[0]);
@@ -36,15 +44,6 @@ export const SlopeDescription: FunctionComponent<Props> = ({
           );
         })}
       </ul>
-    );
-  }
-
-  return (
-    <p>
-      {slope.type}
-      {slope.numberOfRows}&times;{slope.stitchDelta}
-      &#8239;&bull;&#8239;RC&#8239;
-      {doubleRowCounts ? slope.rowInterval * 2 : slope.rowInterval}
-    </p>
+    </>
   );
 };

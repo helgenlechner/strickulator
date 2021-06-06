@@ -1,19 +1,11 @@
-type BaseSlope = {
+export type Slope = {
   delta: number;
   type: '+' | '-';
   numberOfRows: number;
-};
-
-export type EvenSlope = BaseSlope & {
-  rowInterval: number;
-  stitchDelta: number;
-};
-
-export type UnevenSlope = BaseSlope & {
   pattern: { [row: number]: number };
+  rowInterval?: number;
+  stitchDelta?: number;
 };
-
-export type Slope = EvenSlope | UnevenSlope;
 
 export const calculateSlope = (
   firstNumberOfStitches: number | undefined,
@@ -36,34 +28,14 @@ export const calculateSlope = (
     secondNumberOfStitches,
   );
 
-  const type = firstNumberOfStitches === wideNumberOfStitches ? '-' : '+';
+  const type: Slope['type'] =
+    firstNumberOfStitches === wideNumberOfStitches ? '-' : '+';
 
   const stitchDelta = wideNumberOfStitches - narrowNumberOfStitches;
 
   const singleRowSlope = stitchDelta / numberOfRows;
-  const doubleRowSlope = stitchDelta / (numberOfRows / 2);
 
-  if (doubleRowSlope === 1) {
-    return {
-      rowInterval: 2,
-      stitchDelta: 1,
-      delta: numberOfRows / 2,
-      type,
-      numberOfRows,
-    };
-  }
-
-  if (singleRowSlope === 1) {
-    return {
-      rowInterval: 1,
-      stitchDelta: 1,
-      delta: numberOfRows,
-      type,
-      numberOfRows,
-    };
-  }
-
-  const pattern: UnevenSlope['pattern'] = {};
+  const pattern: Slope['pattern'] = {};
 
   for (let i = 0; i <= numberOfRows; i += 2) {
     const current = Math.round(i * singleRowSlope);
@@ -74,7 +46,7 @@ export const calculateSlope = (
     }
   }
 
-  return {
+  const rawSlope: Slope = {
     pattern,
     delta: Object.values(pattern).reduce(
       (previousValue, currentValue) => previousValue + currentValue,
@@ -83,4 +55,42 @@ export const calculateSlope = (
     type,
     numberOfRows,
   };
+
+  rawSlope.stitchDelta = Object.values(pattern).reduce<number | undefined>(
+    (status, current, index) => {
+      if (index === 0) {
+        return current;
+      }
+
+      if (current === status) {
+        return status;
+      }
+
+      return undefined;
+    },
+    undefined,
+  );
+
+  if (rawSlope.stitchDelta) {
+    rawSlope.rowInterval = Object.keys(pattern).reduce<number | undefined>(
+      (status, current, index, array) => {
+        if (index === 0) {
+          return parseInt(current);
+        }
+
+        if (!status) {
+          return undefined;
+        }
+
+        if (status === parseInt(current) - parseInt(array[index - 1])) {
+          return status;
+        }
+
+        return undefined;
+      },
+      undefined,
+    );
+  }
+
+  return rawSlope;
 };

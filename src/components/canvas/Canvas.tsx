@@ -14,6 +14,7 @@ export const Canvas: React.FC<Props> = ({ children, width, height }) => {
 
   React.useEffect(() => {
     setFrameCount(frameCount + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, height]);
 
   return (
