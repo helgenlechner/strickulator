@@ -17,12 +17,7 @@ import { LineDash } from '../../../components/canvas/LineDash';
 import { StrokeStyle } from '../../../components/canvas/StrokeStyle';
 import { BasicSetup } from '../../../components/canvas/BasicSetup';
 import { ClearRect } from '../../../components/canvas/ClearRect';
-import {
-  leftHalfOfPattern,
-  previewWidth,
-  ShapeRendererProps,
-  verticalMargin,
-} from '../../store/custom.model';
+import { ShapeRendererProps } from '../../../store/project/project.model';
 import { Canvas } from '../../../components/canvas/Canvas';
 import styles from '../Preview.module.css';
 import { SlopeDescription } from '../../../components/slopeDescription/SlopeDescription';
@@ -30,6 +25,11 @@ import {
   getIsKnittedInTheRound,
   getScaleFactorForProject,
 } from '../../store/custom.project.selectors';
+import {
+  verticalMargin,
+  previewWidth,
+  leftHalfOfPattern,
+} from '../../../constants/preview';
 
 interface ConnectedState {
   bottomWidth: number | undefined;

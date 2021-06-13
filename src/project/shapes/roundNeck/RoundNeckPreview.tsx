@@ -23,16 +23,13 @@ import {
 } from '../../../store/project/project.swatch.selectors';
 import { Canvas } from '../../../components/canvas/Canvas';
 import styles from '../Preview.module.css';
-import {
-  ShapeRendererProps,
-  leftHalfOfPattern,
-  verticalMargin,
-} from '../../store/custom.model';
+import { ShapeRendererProps } from '../../../store/project/project.model';
 import {
   getIsKnittedInTheRound,
   getScaleFactorForProject,
 } from '../../store/custom.project.selectors';
 import { SlopeDescription } from '../../../components/slopeDescription/SlopeDescription';
+import { leftHalfOfPattern, verticalMargin } from '../../../constants/preview';
 
 interface ConnectedState {
   bottomWidth: number | undefined;

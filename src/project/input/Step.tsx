@@ -13,7 +13,7 @@ import {
   ProjectId,
   KnittingStyle as KnittingStyleEnum,
 } from '../../store/project/project.model';
-import { CustomStep, Shape } from '../store/custom.model';
+import { Step as StepModel, Shape } from '../../store/project/project.model';
 import { EditableText } from '../../components/editableText/EditableText';
 import { Label } from '../../components/label/Label';
 import { KnittingStyle } from '../../components/knittingStyle/KnittingStyle';
@@ -22,7 +22,7 @@ import { Hint } from '../../components/hint/Hint';
 interface Props {
   projectId: ProjectId;
   patternPieceIndex: number;
-  step: CustomStep;
+  step: StepModel;
   stepIndex: number;
 }
 

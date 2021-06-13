@@ -1,4 +1,7 @@
-import { Shape, ShapeConfiguration } from '../../store/custom.model';
+import {
+  Shape,
+  ShapeConfiguration,
+} from '../../../store/project/project.model';
 import { isRoundNeck } from './roundNeck.model';
 import {
   getNumberOfBottomStitches,

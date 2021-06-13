@@ -1,4 +1,5 @@
 import { createSelector } from 'redux-views';
+import { previewWidth, leftHalfOfPattern } from '../../constants/preview';
 import { isNotUndefined } from '../../helpers/isNotUndefined';
 import { KnittingStyle } from '../../store/project/project.model';
 import {
@@ -7,11 +8,10 @@ import {
   getWidthOfOneStitch,
 } from '../../store/project/project.swatch.selectors';
 import { findShapeConfiguration } from '../shapes/findShapeConfiguration';
-import { getPatternPieces, getStep, getSteps } from './custom.input.selectors';
-import { previewWidth, leftHalfOfPattern } from './custom.model';
+import { getMeasurements, getStep, getSteps } from './custom.input.selectors';
 
 export const getWidestWidthForProject = createSelector(
-  [getPatternPieces],
+  [getMeasurements],
   (patternPieces) => {
     if (!patternPieces) {
       return undefined;

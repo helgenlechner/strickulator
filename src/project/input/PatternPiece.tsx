@@ -9,13 +9,16 @@ import { Step } from './Step';
 import styles from './PatternPiece.module.css';
 import { ProjectId } from '../../store/project/project.model';
 import { AppState } from '../../store/store.model';
-import { CustomPatternPiece, Shape } from '../store/custom.model';
+import {
+  PatternPiece as PatternPieceModel,
+  Shape,
+} from '../../store/project/project.model';
 import { EditableText } from '../../components/editableText/EditableText';
 import { getEstimatedWeightOfPatternPiece } from '../store/custom.project.selectors';
 
 interface OwnProps {
   projectId: ProjectId;
-  patternPiece: CustomPatternPiece;
+  patternPiece: PatternPieceModel;
   patternPieceIndex: number;
 }
 

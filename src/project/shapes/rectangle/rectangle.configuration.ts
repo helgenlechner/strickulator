@@ -1,4 +1,7 @@
-import { Shape, ShapeConfiguration } from '../../store/custom.model';
+import {
+  Shape,
+  ShapeConfiguration,
+} from '../../../store/project/project.model';
 import { isRectangle } from './rectangle.model';
 import { getNumberOfRows, getNumberOfStitches } from './rectangle.selectors';
 import { RectangleInput } from './RectangleInput';

@@ -1,7 +1,6 @@
 import { Draft } from 'immer';
 import { Action } from 'redux';
 import { KnittingStyle, ProjectStore } from '../../store/project/project.model';
-import { CustomMeasurements } from './custom.model';
 import {
   CustomProjectActions,
   customProjectAddPatternPiece,
@@ -23,16 +22,11 @@ export const CustomProjectReducer = (
         typeof customProjectAddPatternPiece
       >;
 
-      if (!draft[payload.id]?.measurements?.patternPieces) {
-        draft[payload.id].measurements = {
-          // @ts-ignore
-          patternPieces: [],
-        };
+      if (!draft[payload.id]?.patternPieces) {
+        draft[payload.id].patternPieces = [];
       }
 
-      (
-        draft[payload.id]?.measurements as CustomMeasurements | undefined
-      )?.patternPieces?.push({
+      draft[payload.id]?.patternPieces?.push({
         name: '',
         steps: [],
       });
@@ -44,9 +38,8 @@ export const CustomProjectReducer = (
         typeof customProjectUpdatePatternPieceName
       >;
 
-      const patternPiece = (
-        draft[payload.id]?.measurements as CustomMeasurements | undefined
-      )?.patternPieces?.[payload.patternPieceIndex];
+      const patternPiece =
+        draft[payload.id]?.patternPieces?.[payload.patternPieceIndex];
 
       if (patternPiece) {
         patternPiece.name = payload.name;
@@ -57,13 +50,13 @@ export const CustomProjectReducer = (
     case CustomProjectActions.addStep: {
       const { payload } = action as ReturnType<typeof customProjectAddStep>;
 
-      (
-        draft[payload.id]?.measurements as CustomMeasurements | undefined
-      )?.patternPieces?.[payload.patternPieceIndex]?.steps.push({
-        name: '',
-        shape: payload.shape,
-        knittingStyle: KnittingStyle.flat,
-      });
+      draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]?.steps.push(
+        {
+          name: '',
+          shape: payload.shape,
+          knittingStyle: KnittingStyle.flat,
+        },
+      );
 
       return;
     }
@@ -72,9 +65,10 @@ export const CustomProjectReducer = (
         typeof customProjectUpdateStepName
       >;
 
-      const step = (
-        draft[payload.id]?.measurements as CustomMeasurements | undefined
-      )?.patternPieces?.[payload.patternPieceIndex]?.steps[payload.stepIndex];
+      const step =
+        draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]?.steps[
+          payload.stepIndex
+        ];
 
       if (step) {
         step.name = payload.name;
@@ -87,9 +81,10 @@ export const CustomProjectReducer = (
         typeof customProjectUpdateStepShape
       >;
 
-      const step = (
-        draft[payload.id]?.measurements as CustomMeasurements | undefined
-      )?.patternPieces?.[payload.patternPieceIndex]?.steps[payload.stepIndex];
+      const step =
+        draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]?.steps[
+          payload.stepIndex
+        ];
 
       if (step) {
         step.shape = payload.shape;
@@ -102,9 +97,10 @@ export const CustomProjectReducer = (
         typeof customProjectUpdateStepMeasurement
       >;
 
-      const step = (
-        draft[payload.id]?.measurements as CustomMeasurements | undefined
-      )?.patternPieces?.[payload.patternPieceIndex]?.steps[payload.stepIndex];
+      const step =
+        draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]?.steps[
+          payload.stepIndex
+        ];
 
       if (step) {
         // @ts-ignore
@@ -118,9 +114,10 @@ export const CustomProjectReducer = (
         typeof customProjectUpdateStepKnittingStyle
       >;
 
-      const step = (
-        draft[payload.id]?.measurements as CustomMeasurements | undefined
-      )?.patternPieces?.[payload.patternPieceIndex]?.steps[payload.stepIndex];
+      const step =
+        draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]?.steps[
+          payload.stepIndex
+        ];
 
       if (step) {
         step.knittingStyle = payload.knittingStyle;

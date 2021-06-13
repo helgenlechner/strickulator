@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { shapes } from '../shapes/shapes';
-import { Shape } from '../store/custom.model';
+import { Shape } from '../../store/project/project.model';
 import styles from './ShapeSelect.module.css';
 
 interface Props {

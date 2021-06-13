@@ -1,4 +1,4 @@
-import { CustomShape, Shape } from '../../store/custom.model';
+import { CustomShape, Shape } from '../../../store/project/project.model';
 
 export interface Trapezoid extends CustomShape {
   shape: Shape.Trapezoid;

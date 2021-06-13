@@ -12,8 +12,7 @@ export interface Project {
   id: ProjectId;
   label: string;
   swatch: Swatch;
-  measurements: Measurements;
-  knittingStyle: KnittingStyle;
+  patternPieces: PatternPiece[];
   gauge?: GaugeCalculator;
   notes?: string;
   createdAt: number;
@@ -28,8 +27,43 @@ export interface Swatch {
   weight?: number;
 }
 
-export interface Measurements {
-  [key: string]: number | undefined;
+export interface PatternPiece {
+  name: string;
+  steps: Step[];
+}
+
+export type Step = {
+  name: string;
+  knittingStyle: KnittingStyle;
+} & CustomShape;
+
+export interface CustomShape {
+  shape: Shape;
+}
+
+export enum Shape {
+  Rectangle,
+  Trapezoid,
+  RoundNeck,
+}
+
+export interface ShapeConfiguration {
+  name: Shape;
+  label: string;
+  Preview: React.ComponentType<ShapeRendererProps>;
+  Input: React.ComponentType<ShapeRendererProps>;
+  getWidestMeasurement: (shape: Step) => number | undefined;
+  getNumberOfStiches: (
+    shape: Step,
+    widthOfOneStitch: number | undefined,
+    heightOfOneRow: number | undefined,
+  ) => number;
+}
+
+export interface ShapeRendererProps {
+  projectId: ProjectId;
+  patternPieceIndex: number;
+  stepIndex: number;
 }
 
 export enum KnittingStyle {

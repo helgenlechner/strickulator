@@ -8,12 +8,7 @@ import { LineDash } from '../../../components/canvas/LineDash';
 import { Polygon } from '../../../components/canvas/Polygon';
 import { StrokeStyle } from '../../../components/canvas/StrokeStyle';
 import { AppState } from '../../../store/store.model';
-import {
-  leftHalfOfPattern,
-  previewWidth,
-  ShapeRendererProps,
-  verticalMargin,
-} from '../../store/custom.model';
+import { ShapeRendererProps } from '../../../store/project/project.model';
 import {
   getHeight,
   getNumberOfStitches,
@@ -25,6 +20,11 @@ import {
   getIsKnittedInTheRound,
   getScaleFactorForProject,
 } from '../../store/custom.project.selectors';
+import {
+  verticalMargin,
+  previewWidth,
+  leftHalfOfPattern,
+} from '../../../constants/preview';
 
 interface ConnectedState {
   width: number | undefined;

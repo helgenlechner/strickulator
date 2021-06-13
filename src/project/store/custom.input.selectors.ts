@@ -1,7 +1,6 @@
 import { createSelector } from 'redux-views';
 import { getProject } from '../../store/project/project.selectors';
 import { AppState } from '../../store/store.model';
-import { CustomMeasurements } from './custom.model';
 
 const getPatternPieceIndexFromProps = <
   Props extends { patternPieceIndex: number },
@@ -15,18 +14,13 @@ const getStepIndexFromProps = <Props extends { stepIndex: number }>(
   props: Props,
 ) => props.stepIndex;
 
-const getMeasuruments = createSelector(
+export const getMeasurements = createSelector(
   [getProject],
-  (project): CustomMeasurements | undefined => project?.measurements,
-);
-
-export const getPatternPieces = createSelector(
-  [getMeasuruments],
-  (measurements) => measurements?.patternPieces,
+  (project) => project?.patternPieces,
 );
 
 export const getPatternPiece = createSelector(
-  [getPatternPieces, getPatternPieceIndexFromProps],
+  [getMeasurements, getPatternPieceIndexFromProps],
   (patternPieces, index) => patternPieces?.[index],
 );
 

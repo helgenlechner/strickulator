@@ -1,4 +1,4 @@
-import { Shape } from '../store/custom.model';
+import { Shape } from '../../store/project/project.model';
 import { findShapeConfiguration } from './findShapeConfiguration';
 
 export const findPreview = (name: Shape) =>

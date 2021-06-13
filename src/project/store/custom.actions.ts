@@ -1,5 +1,5 @@
 import { KnittingStyle, ProjectId } from '../../store/project/project.model';
-import { Shape } from './custom.model';
+import { Shape } from '../../store/project/project.model';
 
 export enum CustomProjectActions {
   addPatternPiece = '@@customProject/ADD_PATTERN_PIECE',

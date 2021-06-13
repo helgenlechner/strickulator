@@ -38,6 +38,7 @@ export const LabeledNumberInput: FunctionComponent<Props> = ({
       <Input
         name={name}
         placeholder={placeholder}
+        type="number"
         onChange={onChange_}
         value={value ?? ''}
         unit={unit}

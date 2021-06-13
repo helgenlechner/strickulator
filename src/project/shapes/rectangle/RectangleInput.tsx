@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LabeledNumberInput } from '../../../components/labeledInput/LabeledNumberInput';
 import { AppState } from '../../../store/store.model';
-import { ShapeRendererProps } from '../../store/custom.model';
+import { ShapeRendererProps } from '../../../store/project/project.model';
 import { customProjectUpdateStepMeasurement } from '../../store/custom.actions';
 import { getHeight, getWidth } from './rectangle.selectors';
 

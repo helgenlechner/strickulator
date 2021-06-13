@@ -1,4 +1,7 @@
-import { Shape, ShapeConfiguration } from '../../store/custom.model';
+import {
+  Shape,
+  ShapeConfiguration,
+} from '../../../store/project/project.model';
 import { isTrapezoid } from './trapezoid.model';
 import {
   getNumberOfBottomStitches,

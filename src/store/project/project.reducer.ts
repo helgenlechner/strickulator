@@ -6,18 +6,11 @@ import {
   projectCreate,
   projectDelete,
   projectUpdateGaugeCalculator,
-  projectUpdateKnittingStyle,
   projectUpdateLabel,
-  projectUpdateMeasurements,
   projectUpdateNotes,
   projectUpdateSwatch,
 } from './project.actions';
-import {
-  GaugeCalculator,
-  KnittingStyle,
-  ProjectStore,
-  Swatch,
-} from './project.model';
+import { GaugeCalculator, ProjectStore, Swatch } from './project.model';
 
 export const initialState: ProjectStore = {};
 
@@ -40,11 +33,10 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
             (copySource?.swatch &&
               JSON.parse(JSON.stringify(copySource.swatch))) ??
             {},
-          measurements:
-            (copySource?.measurements &&
-              JSON.parse(JSON.stringify(copySource.measurements))) ??
+          patternPieces:
+            (copySource?.patternPieces &&
+              JSON.parse(JSON.stringify(copySource.patternPieces))) ??
             {},
-          knittingStyle: copySource?.knittingStyle ?? KnittingStyle.flat,
           createdAt: Date.now(),
           updatedAt: Date.now(),
         };
@@ -74,37 +66,6 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
             payload.swatch[key as keyof Swatch];
         });
 
-        draft[payload.id].updatedAt = Date.now();
-
-        return;
-      }
-      case ProjectActions.updateMeasurements: {
-        const { payload } = action as ReturnType<
-          typeof projectUpdateMeasurements
-        >;
-
-        if (!draft[payload.id]) {
-          return;
-        }
-
-        Object.keys(payload.measurements).forEach((key) => {
-          draft[payload.id].measurements[key] = payload.measurements[key];
-        });
-
-        draft[payload.id].updatedAt = Date.now();
-
-        return;
-      }
-      case ProjectActions.updateKnittingStyle: {
-        const { payload } = action as ReturnType<
-          typeof projectUpdateKnittingStyle
-        >;
-
-        if (!draft[payload.id]) {
-          return;
-        }
-
-        draft[payload.id].knittingStyle = payload.knittingStyle;
         draft[payload.id].updatedAt = Date.now();
 
         return;
