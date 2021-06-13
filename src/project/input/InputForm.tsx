@@ -2,10 +2,10 @@ import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProjectProps } from '../../store/project/project.model';
 import { AppState } from '../../store/store.model';
-import { customProjectAddPatternPiece } from '../store/custom.actions';
 import { PatternPiece } from './PatternPiece';
 import styles from './InputForm.module.css';
 import { getMeasurements } from '../store/custom.input.selectors';
+import { projectAddPatternPiece } from '../../store/project/project.actions';
 
 export const InputForm: FC<ProjectProps> = ({ projectId }) => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export const InputForm: FC<ProjectProps> = ({ projectId }) => {
     [];
 
   const onAddPatternPieceClicked = () => {
-    dispatch(customProjectAddPatternPiece(projectId));
+    dispatch(projectAddPatternPiece(projectId));
   };
 
   return (

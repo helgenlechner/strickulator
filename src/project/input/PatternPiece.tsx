@@ -1,10 +1,6 @@
 import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSteps } from '../store/custom.input.selectors';
-import {
-  customProjectAddStep,
-  customProjectUpdatePatternPieceName,
-} from '../store/custom.actions';
 import { Step } from './Step';
 import styles from './PatternPiece.module.css';
 import { ProjectId } from '../../store/project/project.model';
@@ -15,6 +11,10 @@ import {
 } from '../../store/project/project.model';
 import { EditableText } from '../../components/editableText/EditableText';
 import { getEstimatedWeightOfPatternPiece } from '../store/custom.project.selectors';
+import {
+  projectUpdatePatternPieceName,
+  projectAddStep,
+} from '../../store/project/project.actions';
 
 interface OwnProps {
   projectId: ProjectId;
@@ -34,14 +34,12 @@ export const PatternPiece: FC<OwnProps> = ({
 
   const onNameChange = (value: string) => {
     dispatch(
-      customProjectUpdatePatternPieceName(projectId, patternPieceIndex, value),
+      projectUpdatePatternPieceName(projectId, patternPieceIndex, value),
     );
   };
 
   const onAddStepClicked = () => {
-    dispatch(
-      customProjectAddStep(projectId, patternPieceIndex, Shape.Rectangle),
-    );
+    dispatch(projectAddStep(projectId, patternPieceIndex, Shape.Rectangle));
   };
 
   const steps =

@@ -1,16 +1,27 @@
 import produce, { Draft } from 'immer';
 import { Reducer } from 'redux';
-import { CustomProjectReducer } from '../../project/store/custom.reducer';
 import {
   ProjectActions,
+  projectAddPatternPiece,
+  projectAddStep,
   projectCreate,
   projectDelete,
   projectUpdateGaugeCalculator,
   projectUpdateLabel,
   projectUpdateNotes,
+  projectUpdatePatternPieceName,
+  projectUpdateStepKnittingStyle,
+  projectUpdateStepMeasurement,
+  projectUpdateStepName,
+  projectUpdateStepShape,
   projectUpdateSwatch,
 } from './project.actions';
-import { GaugeCalculator, ProjectStore, Swatch } from './project.model';
+import {
+  GaugeCalculator,
+  KnittingStyle,
+  ProjectStore,
+  Swatch,
+} from './project.model';
 
 export const initialState: ProjectStore = {};
 
@@ -112,9 +123,109 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
 
         return;
       }
-    }
+      case ProjectActions.addPatternPiece: {
+        const { payload } = action as ReturnType<typeof projectAddPatternPiece>;
 
-    CustomProjectReducer(draft, action);
+        if (!draft[payload.id]?.patternPieces) {
+          draft[payload.id].patternPieces = [];
+        }
+
+        draft[payload.id]?.patternPieces?.push({
+          name: '',
+          steps: [],
+        });
+
+        return;
+      }
+      case ProjectActions.updatePatternPieceName: {
+        const { payload } = action as ReturnType<
+          typeof projectUpdatePatternPieceName
+        >;
+
+        const patternPiece =
+          draft[payload.id]?.patternPieces?.[payload.patternPieceIndex];
+
+        if (patternPiece) {
+          patternPiece.name = payload.name;
+        }
+
+        return;
+      }
+      case ProjectActions.addStep: {
+        const { payload } = action as ReturnType<typeof projectAddStep>;
+
+        draft[payload.id]?.patternPieces?.[
+          payload.patternPieceIndex
+        ]?.steps.push({
+          name: '',
+          shape: payload.shape,
+          knittingStyle: KnittingStyle.flat,
+        });
+
+        return;
+      }
+      case ProjectActions.updateStepName: {
+        const { payload } = action as ReturnType<typeof projectUpdateStepName>;
+
+        const step =
+          draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]?.steps[
+            payload.stepIndex
+          ];
+
+        if (step) {
+          step.name = payload.name;
+        }
+
+        return;
+      }
+      case ProjectActions.updateStepShape: {
+        const { payload } = action as ReturnType<typeof projectUpdateStepShape>;
+
+        const step =
+          draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]?.steps[
+            payload.stepIndex
+          ];
+
+        if (step) {
+          step.shape = payload.shape;
+        }
+
+        return;
+      }
+      case ProjectActions.updateStepMeasurement: {
+        const { payload } = action as ReturnType<
+          typeof projectUpdateStepMeasurement
+        >;
+
+        const step =
+          draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]?.steps[
+            payload.stepIndex
+          ];
+
+        if (step) {
+          // @ts-ignore
+          step[payload.name] = payload.value;
+        }
+
+        return;
+      }
+      case ProjectActions.updateStepKnittingStyle: {
+        const { payload } = action as ReturnType<
+          typeof projectUpdateStepKnittingStyle
+        >;
+
+        const step =
+          draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]?.steps[
+            payload.stepIndex
+          ];
+
+        if (step) {
+          step.knittingStyle = payload.knittingStyle;
+        }
+
+        return;
+      }
+    }
   },
   initialState,
 );

@@ -1,10 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  customProjectUpdateStepKnittingStyle,
-  customProjectUpdateStepName,
-  customProjectUpdateStepShape,
-} from '../store/custom.actions';
 import { ShapeSelect } from './ShapeSelect';
 import styles from './Step.module.css';
 import { findPreview } from '../shapes/findPreview';
@@ -18,6 +13,11 @@ import { EditableText } from '../../components/editableText/EditableText';
 import { Label } from '../../components/label/Label';
 import { KnittingStyle } from '../../components/knittingStyle/KnittingStyle';
 import { Hint } from '../../components/hint/Hint';
+import {
+  projectUpdateStepName,
+  projectUpdateStepShape,
+  projectUpdateStepKnittingStyle,
+} from '../../store/project/project.actions';
 
 interface Props {
   projectId: ProjectId;
@@ -33,29 +33,19 @@ export const Step: FunctionComponent<Props> = (props) => {
 
   const onStepNameChange = (name: string) => {
     dispatch(
-      customProjectUpdateStepName(
-        projectId,
-        patternPieceIndex,
-        stepIndex,
-        name,
-      ),
+      projectUpdateStepName(projectId, patternPieceIndex, stepIndex, name),
     );
   };
 
   const onShapeChange = (shape: Shape) => {
     dispatch(
-      customProjectUpdateStepShape(
-        projectId,
-        patternPieceIndex,
-        stepIndex,
-        shape,
-      ),
+      projectUpdateStepShape(projectId, patternPieceIndex, stepIndex, shape),
     );
   };
 
   const onKnittingStyleChange = (value: KnittingStyleEnum) => {
     dispatch(
-      customProjectUpdateStepKnittingStyle(
+      projectUpdateStepKnittingStyle(
         projectId,
         patternPieceIndex,
         stepIndex,

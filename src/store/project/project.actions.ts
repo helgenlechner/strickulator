@@ -1,4 +1,10 @@
-import { GaugeCalculator, ProjectId, Swatch } from './project.model';
+import {
+  GaugeCalculator,
+  KnittingStyle,
+  ProjectId,
+  Shape,
+  Swatch,
+} from './project.model';
 import { History } from 'history';
 
 export enum ProjectActions {
@@ -8,6 +14,13 @@ export enum ProjectActions {
   updateGaugeCalculator = '@@project/UPDATE_GAUGE_CALCULATOR',
   updateNotes = '@@project/UPDATE_NOTES',
   delete = '@@project/DELETE',
+  addPatternPiece = '@@project/ADD_PATTERN_PIECE',
+  updatePatternPieceName = '@@project/UPDATE_PATTERN_PIECE_NAME',
+  addStep = '@@project/ADD_STEP',
+  updateStepName = '@@project/UPDATE_STEP_NAME',
+  updateStepShape = '@@project/UPDATE_STEP_SHAPE',
+  updateStepMeasurement = '@@project/UPDATE_STEP_MEASUREMENT',
+  updateStepKnittingStyle = '@@project/UPDATE_STEP_KNITTING_STYLE',
 }
 
 export const projectCreate = (history: History, copySource?: ProjectId) => ({
@@ -57,5 +70,98 @@ export const projectDelete = (id: ProjectId) => ({
   type: ProjectActions.delete,
   payload: {
     id,
+  },
+});
+
+export const projectAddPatternPiece = (id: ProjectId) => ({
+  type: ProjectActions.addPatternPiece,
+  payload: { id },
+});
+
+export const projectUpdatePatternPieceName = (
+  id: ProjectId,
+  patternPieceIndex: number,
+  name: string,
+) => ({
+  type: ProjectActions.updatePatternPieceName,
+  payload: {
+    id,
+    patternPieceIndex,
+    name,
+  },
+});
+
+export const projectAddStep = (
+  id: ProjectId,
+  patternPieceIndex: number,
+  shape: Shape,
+) => ({
+  type: ProjectActions.addStep,
+  payload: {
+    id,
+    patternPieceIndex,
+    shape,
+  },
+});
+
+export const projectUpdateStepName = (
+  id: ProjectId,
+  patternPieceIndex: number,
+  stepIndex: number,
+  name: string,
+) => ({
+  type: ProjectActions.updateStepName,
+  payload: {
+    id,
+    patternPieceIndex,
+    stepIndex,
+    name,
+  },
+});
+
+export const projectUpdateStepShape = (
+  id: ProjectId,
+  patternPieceIndex: number,
+  stepIndex: number,
+  shape: Shape,
+) => ({
+  type: ProjectActions.updateStepShape,
+  payload: {
+    id,
+    patternPieceIndex,
+    stepIndex,
+    shape,
+  },
+});
+
+export const projectUpdateStepMeasurement = (
+  id: ProjectId,
+  patternPieceIndex: number,
+  stepIndex: number,
+  name: string,
+  value: number | undefined,
+) => ({
+  type: ProjectActions.updateStepMeasurement,
+  payload: {
+    id,
+    patternPieceIndex,
+    stepIndex,
+    name,
+    value,
+  },
+});
+
+export const projectUpdateStepKnittingStyle = (
+  id: ProjectId,
+  patternPieceIndex: number,
+  stepIndex: number,
+  knittingStyle: KnittingStyle,
+) => ({
+  type: ProjectActions.updateStepKnittingStyle,
+  payload: {
+    id,
+    patternPieceIndex,
+    stepIndex,
+    knittingStyle,
   },
 });

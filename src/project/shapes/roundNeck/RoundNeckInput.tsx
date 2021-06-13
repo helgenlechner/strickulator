@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LabeledNumberInput } from '../../../components/labeledInput/LabeledNumberInput';
 import { AppState } from '../../../store/store.model';
 import { ShapeRendererProps } from '../../../store/project/project.model';
-import { customProjectUpdateStepMeasurement } from '../../store/custom.actions';
 import { getBottomWidth, getHeight, getTopWidth } from './roundNeck.selectors';
+import { projectUpdateStepMeasurement } from '../../../store/project/project.actions';
 
 export const RoundNeckInput: FunctionComponent<ShapeRendererProps> = (
   props,
@@ -19,7 +19,7 @@ export const RoundNeckInput: FunctionComponent<ShapeRendererProps> = (
 
   const onChange = (key: string, value: number | undefined) => {
     dispatch(
-      customProjectUpdateStepMeasurement(
+      projectUpdateStepMeasurement(
         props.projectId,
         props.patternPieceIndex,
         props.stepIndex,
