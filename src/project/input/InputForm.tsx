@@ -4,7 +4,7 @@ import { ProjectProps } from '../../store/project/project.model';
 import { AppState } from '../../store/store.model';
 import { PatternPiece } from './PatternPiece';
 import styles from './InputForm.module.css';
-import { getMeasurements } from '../store/custom.input.selectors';
+import { getMeasurements } from '../../store/project/project.input.selectors';
 import { projectAddPatternPiece } from '../../store/project/project.actions';
 
 export const InputForm: FC<ProjectProps> = ({ projectId }) => {

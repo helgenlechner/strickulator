@@ -5,7 +5,7 @@ import {
   getHeightOfOneRow,
   getWidthOfOneStitch,
 } from '../../../store/project/project.swatch.selectors';
-import { getStep } from '../../store/custom.input.selectors';
+import { getStep } from '../../../store/project/project.input.selectors';
 import { isRectangle } from './rectangle.model';
 
 export const getRectangle = createSelector([getStep], (step) =>

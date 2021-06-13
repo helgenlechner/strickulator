@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSteps } from '../store/custom.input.selectors';
+import { getSteps } from '../../store/project/project.input.selectors';
 import { Step } from './Step';
 import styles from './PatternPiece.module.css';
 import { ProjectId } from '../../store/project/project.model';
@@ -10,11 +10,11 @@ import {
   Shape,
 } from '../../store/project/project.model';
 import { EditableText } from '../../components/editableText/EditableText';
-import { getEstimatedWeightOfPatternPiece } from '../store/custom.project.selectors';
 import {
   projectUpdatePatternPieceName,
   projectAddStep,
 } from '../../store/project/project.actions';
+import { getEstimatedWeightOfPatternPiece } from '../../store/project/project.patternPiece.selectors';
 
 interface OwnProps {
   projectId: ProjectId;

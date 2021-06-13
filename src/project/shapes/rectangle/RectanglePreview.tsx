@@ -17,14 +17,12 @@ import {
 } from './rectangle.selectors';
 import styles from '../Preview.module.css';
 import {
-  getIsKnittedInTheRound,
-  getScaleFactorForProject,
-} from '../../store/custom.project.selectors';
-import {
   verticalMargin,
   previewWidth,
   leftHalfOfPattern,
 } from '../../../constants/preview';
+import { getScaleFactorForProject } from '../../../store/project/project.preview.selectors';
+import { getIsKnittedInTheRound } from '../../../store/project/project.step.selectors';
 
 interface ConnectedState {
   width: number | undefined;

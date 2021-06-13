@@ -6,7 +6,7 @@ import {
   getHeightOfOneRow,
   getWidthOfOneStitch,
 } from '../../../store/project/project.swatch.selectors';
-import { getStep } from '../../store/custom.input.selectors';
+import { getStep } from '../../../store/project/project.input.selectors';
 import { isTrapezoid } from './trapezoid.model';
 
 export const getTrapezoid = createSelector([getStep], (step) =>

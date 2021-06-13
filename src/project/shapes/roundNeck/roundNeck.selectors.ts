@@ -7,7 +7,7 @@ import {
   getWidthOfOneStitch,
   getHeightOfOneRow,
 } from '../../../store/project/project.swatch.selectors';
-import { getStep } from '../../store/custom.input.selectors';
+import { getStep } from '../../../store/project/project.input.selectors';
 import { isRoundNeck } from './roundNeck.model';
 
 export const getRoundNeck = createSelector([getStep], (step) =>
