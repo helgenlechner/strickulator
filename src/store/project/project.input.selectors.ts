@@ -16,10 +16,7 @@ const getStepIndexFromProps = <Props extends { stepIndex: number }>(
 
 export const getPatternPieces = createSelector(
   [getProject],
-  (project) => {
-    console.log(project);
-    return project?.patternPieces;
-  },
+  (project) => project?.patternPieces,
 );
 
 export const getPatternPiece = createSelector(

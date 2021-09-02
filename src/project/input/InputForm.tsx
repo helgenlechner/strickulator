@@ -10,7 +10,6 @@ import { projectAddPatternPiece } from '../../store/project/project.actions';
 export const InputForm: FC<ProjectProps> = ({ projectId }) => {
   const dispatch = useDispatch();
 
-  console.log(projectId);
   const patternPieces =
     useSelector((state: AppState) => getPatternPieces(state, { projectId })) ??
     [];
@@ -18,8 +17,6 @@ export const InputForm: FC<ProjectProps> = ({ projectId }) => {
   const onAddPatternPieceClicked = () => {
     dispatch(projectAddPatternPiece(projectId));
   };
-
-  console.log(patternPieces);
 
   return (
     <div>
