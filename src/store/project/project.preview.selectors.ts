@@ -2,10 +2,10 @@ import { createSelector } from 'redux-views';
 import { previewWidth, leftHalfOfPattern } from '../../constants/preview';
 import { isNotUndefined } from '../../helpers/isNotUndefined';
 import { findShapeConfiguration } from '../../project/shapes/findShapeConfiguration';
-import { getMeasurements } from './project.input.selectors';
+import { getPatternPieces } from './project.input.selectors';
 
 export const getWidestWidthForProject = createSelector(
-  [getMeasurements],
+  [getPatternPieces],
   (patternPieces) => {
     if (!patternPieces) {
       return undefined;

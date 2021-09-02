@@ -14,13 +14,16 @@ const getStepIndexFromProps = <Props extends { stepIndex: number }>(
   props: Props,
 ) => props.stepIndex;
 
-export const getMeasurements = createSelector(
+export const getPatternPieces = createSelector(
   [getProject],
-  (project) => project?.patternPieces,
+  (project) => {
+    console.log(project);
+    return project?.patternPieces;
+  },
 );
 
 export const getPatternPiece = createSelector(
-  [getMeasurements, getPatternPieceIndexFromProps],
+  [getPatternPieces, getPatternPieceIndexFromProps],
   (patternPieces, index) => patternPieces?.[index],
 );
 

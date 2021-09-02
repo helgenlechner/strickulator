@@ -47,7 +47,7 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
           patternPieces:
             (copySource?.patternPieces &&
               JSON.parse(JSON.stringify(copySource.patternPieces))) ??
-            {},
+            [],
           createdAt: Date.now(),
           updatedAt: Date.now(),
         };

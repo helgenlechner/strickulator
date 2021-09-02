@@ -4,18 +4,22 @@ import { ProjectProps } from '../../store/project/project.model';
 import { AppState } from '../../store/store.model';
 import { PatternPiece } from './PatternPiece';
 import styles from './InputForm.module.css';
-import { getMeasurements } from '../../store/project/project.input.selectors';
+import { getPatternPieces } from '../../store/project/project.input.selectors';
 import { projectAddPatternPiece } from '../../store/project/project.actions';
 
 export const InputForm: FC<ProjectProps> = ({ projectId }) => {
   const dispatch = useDispatch();
+
+  console.log(projectId);
   const patternPieces =
-    useSelector((state: AppState) => getMeasurements(state, { projectId })) ??
+    useSelector((state: AppState) => getPatternPieces(state, { projectId })) ??
     [];
 
   const onAddPatternPieceClicked = () => {
     dispatch(projectAddPatternPiece(projectId));
   };
+
+  console.log(patternPieces);
 
   return (
     <div>
