@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import styles from './EditableText.module.css';
 
 interface Props {
@@ -14,6 +14,16 @@ export const EditableText: FunctionComponent<Props> = ({
 }) => {
   const [isBeingEdited, setIsBeingEdited] = useState(false);
 
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(event.target.value);
+  };
+
+  const onInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' || event.key === 'Escape') {
+      setIsBeingEdited(false);
+    }
+  };
+
   if (isBeingEdited) {
     return (
       <>
@@ -21,7 +31,8 @@ export const EditableText: FunctionComponent<Props> = ({
           className={styles.editing}
           data-component={component}
           value={value}
-          onChange={(event) => onChange(event.target.value)}
+          onChange={onInputChange}
+          onKeyDown={onInputKeyDown}
           onBlur={() => setIsBeingEdited(false)}
         />
         <br />

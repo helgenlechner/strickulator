@@ -6,6 +6,7 @@ import {
   projectAddStep,
   projectCreate,
   projectDelete,
+  projectDeleteStep,
   projectUpdateGaugeCalculator,
   projectUpdateLabel,
   projectUpdateNotes,
@@ -227,6 +228,14 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
         if (step) {
           step.knittingStyle = payload.knittingStyle;
         }
+
+        return;
+      }
+      case ProjectActions.deleteStep: {
+        const { payload } = action as ReturnType<typeof projectDeleteStep>;
+
+        delete draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]
+          ?.steps[payload.stepIndex];
 
         return;
       }

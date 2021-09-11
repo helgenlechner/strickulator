@@ -1,4 +1,4 @@
-nav {
+nav.menu {
   width: 200px;
   flex-shrink: 0;
   background-color: var(--light-gray);
@@ -37,10 +37,4 @@ nav button {
   text-decoration: underline;
   font-style: italic;
   padding: 0;
-}
-
-.delete {
-  margin-left: 10px;
-  color: var(--jam-dark);
-  cursor: pointer;
 }

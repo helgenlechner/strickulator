@@ -3,6 +3,11 @@
   overflow: hidden;
 }
 
+.centeredFlexContainer {
+  display: flex;
+  align-items: center;
+}
+
 .step + .step {
   margin-top: 35px;
 }

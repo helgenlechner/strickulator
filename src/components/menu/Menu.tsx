@@ -12,6 +12,7 @@ import { AppState } from '../../store/store.model';
 import styles from './Menu.module.css';
 import { getMenuStructure, MenuItem } from './menu.selectors';
 import { History } from 'history';
+import { DeleteIcon } from '../deleteIcon/DeleteIcon';
 
 interface ConnectedState {
   menuStructure: MenuItem[];
@@ -52,18 +53,16 @@ const Menu_: FunctionComponent<ConnectedState & ConnectedDispatch> = ({
   };
 
   return (
-    <nav data-is-visible={menuIsVisible}>
+    <nav data-is-visible={menuIsVisible} className={styles.menu}>
       <h1>My Projects</h1>
       <ul>
         {menuStructure.map((project) => (
           <li key={project.id}>
             <Link to={`/projects/${project.id}`}>{project.label}</Link>
-            <span
-              className={styles.delete}
+            <DeleteIcon
               onClick={() => onDeleteClick(project.id)}
-            >
-              <i className="far fa-trash-alt"></i>
-            </span>
+              title={`Delete project "${project.label}"`}
+            />
           </li>
         ))}
         <li key="new">

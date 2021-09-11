@@ -17,7 +17,9 @@ import {
   projectUpdateStepName,
   projectUpdateStepShape,
   projectUpdateStepKnittingStyle,
+  projectDeleteStep,
 } from '../../store/project/project.actions';
+import { DeleteIcon } from '../../components/deleteIcon/DeleteIcon';
 
 interface Props {
   projectId: ProjectId;
@@ -54,6 +56,10 @@ export const Step: FunctionComponent<Props> = (props) => {
     );
   };
 
+  const onDeleteStepClick = () => {
+    dispatch(projectDeleteStep(projectId, patternPieceIndex, stepIndex));
+  };
+
   const Preview = findPreview(step.shape);
   const Input = findInput(step.shape);
 
@@ -61,15 +67,23 @@ export const Step: FunctionComponent<Props> = (props) => {
     return null;
   }
 
+  const stepName = step.name || `Step ${stepIndex + 1}`;
+
   return (
     <li className={styles.step}>
+      <div className={styles.centeredFlexContainer}>
+        <EditableText
+          value={stepName}
+          onChange={onStepNameChange}
+          component="p"
+        />
+        <DeleteIcon
+          onClick={onDeleteStepClick}
+          title={`Delete step "${stepName}"`}
+        />
+      </div>
       <div className={styles.flexContainer}>
         <div className={styles.input}>
-          <EditableText
-            value={step.name || `Step ${stepIndex + 1}`}
-            onChange={onStepNameChange}
-            component="p"
-          />
           <Label forInput={`shape-${patternPieceIndex}-${stepIndex}`}>
             Shape
           </Label>
