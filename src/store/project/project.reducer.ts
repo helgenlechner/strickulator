@@ -31,7 +31,12 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
       case ProjectActions.create: {
         const { payload } = action as ReturnType<typeof projectCreate>;
 
-        const projectId = Object.keys(draft).length.toString();
+        const projectId = (
+          Object.keys(draft).reduce(
+            (final, current) => Math.max(final, Number(current)),
+            0,
+          ) + 1
+        ).toString(10);
 
         const copySource = payload.copySource
           ? draft[payload.copySource]
