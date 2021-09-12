@@ -186,7 +186,7 @@ const BottomArmscyePreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
         {numberOfBottomStitches}&times;2 = {bottomWidth}&#8239;cm
       </p>
       <p className={styles.topLabel}>
-        {numberOfTopStitches} = {topWidth}&#8239;cm
+        {numberOfTopStitches}&times;2 = {topWidth}&#8239;cm
       </p>
       <div className={styles.rightLabel}>
         <SlopeDescription slope={neckCurve} doubleRowCounts={doubleRowCount} />
