@@ -4,6 +4,7 @@ import { locationToggleMenuVisibility } from '../../store/location/location.acti
 import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
 import { getIsMenuVisible } from '../../store/location/location.selectors';
+import { ProjectLabel } from './ProjectLabel';
 
 export const Header: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ export const Header: FunctionComponent = () => {
 
   return (
     <div className={styles.header}>
-      <div>
+      <div className={styles.leftMatter}>
         <span
           data-is-menu-open={isMenuOpen}
           onClick={() => dispatch(locationToggleMenuVisibility())}
@@ -24,6 +25,7 @@ export const Header: FunctionComponent = () => {
         <h1>
           <Link to="/">Strickulator</Link>
         </h1>
+        <ProjectLabel />
       </div>
       <p>
         <a href="mailto:hello@look-at-her-sew.com">Contact</a>

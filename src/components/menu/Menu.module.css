@@ -6,9 +6,9 @@ nav.menu {
   box-sizing: border-box;
   margin-left: 0;
   transition: margin-left 250ms ease-in-out;
-  height: calc(100vh - 47px);
+  height: calc(100vh - 44px);
   position: sticky;
-  top: 47px;
+  top: 44px;
   overflow-y: auto;
   border-right: 1px solid var(--gunmetal-light);
 }

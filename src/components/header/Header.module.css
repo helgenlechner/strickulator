@@ -9,6 +9,10 @@
   color: white;
 }
 
+.leftMatter {
+  display: flex;
+}
+
 .header a {
   color: white;
   text-decoration: none;
@@ -16,23 +20,23 @@
 
 .header h1 {
   margin: 0;
-  display: inline-block;
   font-size: 20px;
-  vertical-align: 4px;
   font-weight: normal;
 }
 
 .header p {
   margin: 0;
-  vertical-align: top;
+}
+
+.header .projectLabel {
+  margin: 0 0 0 81px;
 }
 
 .menuToggle {
-  display: inline-block;
   width: 20px;
   height: 19px;
   cursor: pointer;
-  margin-top: 2px;
+  margin-top: 4px;
   margin-right: 10px;
 }
 
