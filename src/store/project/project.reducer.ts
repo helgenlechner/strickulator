@@ -234,8 +234,9 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
       case ProjectActions.deleteStep: {
         const { payload } = action as ReturnType<typeof projectDeleteStep>;
 
-        delete draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]
-          ?.steps[payload.stepIndex];
+        draft[payload.id]?.patternPieces?.[
+          payload.patternPieceIndex
+        ]?.steps.splice(payload.stepIndex, 1);
 
         return;
       }
