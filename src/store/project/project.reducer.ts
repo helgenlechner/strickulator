@@ -7,6 +7,8 @@ import {
   projectCreate,
   projectDelete,
   projectDeleteStep,
+  projectMoveStepDown,
+  projectMoveStepUp,
   projectUpdateGaugeCalculator,
   projectUpdateLabel,
   projectUpdateNotes,
@@ -237,6 +239,50 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
         draft[payload.id]?.patternPieces?.[
           payload.patternPieceIndex
         ]?.steps.splice(payload.stepIndex, 1);
+
+        return;
+      }
+      case ProjectActions.moveStepUp: {
+        const { payload } = action as ReturnType<typeof projectMoveStepUp>;
+
+        if (
+          payload.stepIndex === 0 ||
+          !draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]?.steps
+        ) {
+          return;
+        }
+
+        draft[payload.id].patternPieces[payload.patternPieceIndex].steps.splice(
+          payload.stepIndex - 1,
+          0,
+          draft[payload.id].patternPieces[
+            payload.patternPieceIndex
+          ].steps.splice(payload.stepIndex, 1)[0],
+        );
+
+        return;
+      }
+      case ProjectActions.moveStepDown: {
+        const { payload } = action as ReturnType<typeof projectMoveStepDown>;
+
+        if (
+          !draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]
+            ?.steps ||
+          payload.stepIndex ===
+            draft[payload.id]?.patternPieces?.[payload.patternPieceIndex]?.steps
+              .length -
+              1
+        ) {
+          return;
+        }
+
+        draft[payload.id].patternPieces[payload.patternPieceIndex].steps.splice(
+          payload.stepIndex + 1,
+          0,
+          draft[payload.id].patternPieces[
+            payload.patternPieceIndex
+          ].steps.splice(payload.stepIndex, 1)[0],
+        );
 
         return;
       }

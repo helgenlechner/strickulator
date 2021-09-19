@@ -18,19 +18,24 @@ import {
   projectUpdateStepShape,
   projectUpdateStepKnittingStyle,
   projectDeleteStep,
+  projectMoveStepUp,
+  projectMoveStepDown,
 } from '../../store/project/project.actions';
 import { DeleteIcon } from '../../components/deleteIcon/DeleteIcon';
+import { MoveUpIcon } from '../../components/moveUpDownIcons/moveUpIcon';
+import { MoveDownIcon } from '../../components/moveUpDownIcons/moveDownIcon';
 
 interface Props {
   projectId: ProjectId;
   patternPieceIndex: number;
   step: StepModel;
   stepIndex: number;
+  isLastStep: boolean;
 }
 
 export const Step: FunctionComponent<Props> = (props) => {
   const dispatch = useDispatch();
-  const { step, ...propsToPass } = props;
+  const { step, isLastStep, ...propsToPass } = props;
   const { projectId, patternPieceIndex, stepIndex } = props;
 
   const onStepNameChange = (name: string) => {
@@ -60,6 +65,14 @@ export const Step: FunctionComponent<Props> = (props) => {
     dispatch(projectDeleteStep(projectId, patternPieceIndex, stepIndex));
   };
 
+  const onMoveStepUpClick = () => {
+    dispatch(projectMoveStepUp(projectId, patternPieceIndex, stepIndex));
+  };
+
+  const onMoveStepDownClick = () => {
+    dispatch(projectMoveStepDown(projectId, patternPieceIndex, stepIndex));
+  };
+
   const Preview = findPreview(step.shape);
   const Input = findInput(step.shape);
 
@@ -77,6 +90,8 @@ export const Step: FunctionComponent<Props> = (props) => {
           onChange={onStepNameChange}
           component="p"
         />
+        {stepIndex > 0 && <MoveUpIcon onClick={onMoveStepUpClick} />}
+        {!isLastStep && <MoveDownIcon onClick={onMoveStepDownClick} />}
         <DeleteIcon
           onClick={onDeleteStepClick}
           title={`Delete step "${stepName}"`}

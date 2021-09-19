@@ -22,6 +22,8 @@ export enum ProjectActions {
   updateStepMeasurement = '@@project/UPDATE_STEP_MEASUREMENT',
   updateStepKnittingStyle = '@@project/UPDATE_STEP_KNITTING_STYLE',
   deleteStep = '@@project/DELETE_STEP',
+  moveStepUp = '@@project/MOVE_STEP_UP',
+  moveStepDown = '@@project/MOVE_STEP_DOWN',
 }
 
 export const projectCreate = (history: History, copySource?: ProjectId) => ({
@@ -178,4 +180,22 @@ export const projectDeleteStep = (
     patternPieceIndex,
     stepIndex,
   },
+});
+
+export const projectMoveStepUp = (
+  id: ProjectId,
+  patternPieceIndex: number,
+  stepIndex: number,
+) => ({
+  type: ProjectActions.moveStepUp,
+  payload: { id, patternPieceIndex, stepIndex },
+});
+
+export const projectMoveStepDown = (
+  id: ProjectId,
+  patternPieceIndex: number,
+  stepIndex: number,
+) => ({
+  type: ProjectActions.moveStepDown,
+  payload: { id, patternPieceIndex, stepIndex },
 });

@@ -1,0 +1,9 @@
+.icon {
+  cursor: pointer;
+  color: var(--jam-dark);
+  margin-left: 10px;
+}
+
+.icon + .icon {
+  margin-left: 5px;
+}

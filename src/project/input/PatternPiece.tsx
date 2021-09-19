@@ -65,6 +65,7 @@ export const PatternPiece: FC<OwnProps> = ({
             stepIndex={stepIndex}
             patternPieceIndex={patternPieceIndex}
             projectId={projectId}
+            isLastStep={stepIndex === steps.length - 1}
           />
         ))}
       </ul>
