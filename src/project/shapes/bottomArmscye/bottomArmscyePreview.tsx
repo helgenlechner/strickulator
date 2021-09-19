@@ -161,7 +161,10 @@ const BottomArmscyePreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
               })
               .flat(),
             {
-              x: leftHalfOfPattern + previewTopWidth,
+              x:
+                leftHalfOfPattern +
+                previewBottomWidth -
+                neckCurveDecreasesSoFar * scaleFactor * widthOfOneStitch,
               y: verticalMargin,
             },
             {
