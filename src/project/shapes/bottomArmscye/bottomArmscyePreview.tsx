@@ -97,7 +97,6 @@ const BottomArmscyePreview_: React.FC<ShapeRendererProps & ConnectedState> = ({
   const canvasHeight = height * scaleFactor + 22;
 
   const previewBottomWidth = (bottomWidth * scaleFactor) / 2;
-  const previewTopWidth = (topWidth * scaleFactor) / 2;
   const previewHeight = height * scaleFactor;
 
   let neckCurveDecreasesSoFar = 0;

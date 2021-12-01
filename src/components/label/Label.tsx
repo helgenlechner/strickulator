@@ -7,12 +7,8 @@ interface Props {
   width?: number;
 }
 
-export const Label: FunctionComponent<Props> = ({
-  children,
-  forInput,
-  width,
-}) => (
-  <label htmlFor={forInput} className={styles.label} style={{ width }}>
+export const Label: FunctionComponent<Props> = ({ children, width }) => (
+  <label className={styles.label} style={{ width }}>
     {children}
   </label>
 );
