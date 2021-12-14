@@ -46,6 +46,7 @@ export enum Shape {
   Trapezoid,
   RoundNeck,
   BottomArmscye,
+  Bezier,
 }
 
 export interface ShapeConfiguration {

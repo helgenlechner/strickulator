@@ -67,6 +67,8 @@ export const getWeightOfOneStitch = createSelector(
 
     const numberOfStitches = stitches * rows;
 
+    console.log(weight / numberOfStitches);
+
     return weight / numberOfStitches;
   },
 );
