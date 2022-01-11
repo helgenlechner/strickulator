@@ -36,7 +36,7 @@ describe('Project Reducer', () => {
           ],
           id: 'abc',
           label: 'ABC',
-          swatch: {},
+          swatches: [{}],
           createdAt: 123,
           updatedAt: 234,
         },

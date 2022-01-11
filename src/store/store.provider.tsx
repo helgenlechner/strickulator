@@ -3,16 +3,19 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { rootReducer } from './store.reducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { persistStore, persistReducer } from 'redux-persist';
+import { createMigrate, persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import { PersistGate } from 'redux-persist/integration/react';
 import { projectEpics } from './project/project.epics';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
+import { migrations } from './migrations';
 
 const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['projects'],
+  version: 2,
+  migrate: createMigrate(migrations),
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

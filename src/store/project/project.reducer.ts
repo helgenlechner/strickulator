@@ -48,9 +48,9 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
         draft[projectId] = {
           id: projectId,
           label: 'New Project',
-          swatch:
-            (copySource?.swatch &&
-              JSON.parse(JSON.stringify(copySource.swatch))) ??
+          swatches:
+            (copySource?.swatches &&
+              JSON.parse(JSON.stringify(copySource.swatches))) ??
             {},
           patternPieces:
             (copySource?.patternPieces &&
@@ -81,7 +81,7 @@ export const ProjectReducer: Reducer<ProjectStore> = produce(
         }
 
         Object.keys(payload.swatch).forEach((key) => {
-          draft[payload.id].swatch[key as keyof Swatch] =
+          draft[payload.id].swatches[0][key as keyof Swatch] =
             payload.swatch[key as keyof Swatch];
         });
 

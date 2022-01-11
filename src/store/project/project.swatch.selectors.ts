@@ -1,7 +1,7 @@
 import { createSelector } from 'redux-views';
 import { getProject } from './project.selectors';
 
-const getSwatch = createSelector([getProject], (project) => project?.swatch);
+const getSwatch = createSelector([getProject], (project) => project?.swatches[0]);
 
 export const getNumberOfSwatchStitches = createSelector(
   [getSwatch],

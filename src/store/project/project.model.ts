@@ -11,7 +11,7 @@ export interface ProjectStore {
 export interface Project {
   id: ProjectId;
   label: string;
-  swatch: Swatch;
+  swatches: Swatch[];
   patternPieces: PatternPiece[];
   gauge?: GaugeCalculator;
   notes?: string;
